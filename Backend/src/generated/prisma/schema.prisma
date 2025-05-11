@@ -1,0 +1,161 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User Table :-
+model User {
+  id                 String               @id @default(uuid())
+  firstName          String?
+  lastName           String?
+  email              String               @unique
+  phoneNumber        String
+  password           String
+  role               UserRole
+  isSubscribed       Boolean
+  avatar             String? // May have local or cloudinary URL
+  createdAt          DateTime             @default(now())
+  updateAt           DateTime             @updatedAt
+  Playlist           Playlist[]
+  starredSongs       starredSong[]
+  Subscription       Subscription[]
+  PaymentTransaction PaymentTransaction[]
+}
+
+// Song Table :-
+model Song {
+  id           Int            @id @default(autoincrement())
+  title        String
+  artist       String
+  duration     Int // In Seconds
+  lyrics       String
+  songUrl      String // May have local or cloudinary URL
+  coverImage   String // May have local or cloudinary URL
+  createdAt    DateTime       @default(now())
+  updateAt     DateTime       @updatedAt
+  PlaylistSong PlaylistSong[]
+  AlbumSongs   AlbumSong[]
+  starredSongs starredSong[]
+}
+
+// Album Table :-
+model Album {
+  id         Int         @id @default(autoincrement())
+  albumName  String
+  artist     String // Who Artist Album is this 
+  coverImage String
+  createdAt  DateTime    @default(now())
+  updateAt   DateTime    @updatedAt
+  AlbumSongs AlbumSong[]
+}
+
+// Table for User's Playlist :-
+model Playlist {
+  id           Int      @id @default(autoincrement())
+  playlistName String
+  userId       String
+  createdAt    DateTime @default(now())
+  updateAt     DateTime @updatedAt
+
+  // References 
+  userDetails  User           @relation(fields: [userId], references: [id])
+  PlaylistSong PlaylistSong[]
+}
+
+// Table for Playlist Songs :-
+model PlaylistSong {
+  id         Int      @id @default(autoincrement())
+  songId     Int
+  playlistId Int
+  addedAt    DateTime @default(now())
+
+  // References
+
+  songDetails     Song     @relation(fields: [songId], references: [id])
+  playlistDetails Playlist @relation(fields: [playlistId], references: [id])
+}
+
+// Table for Album Songs :-
+model AlbumSong {
+  id      Int @id @default(autoincrement())
+  albumId Int
+  songId  Int
+
+  // references
+  albumDetails Album @relation(fields: [albumId], references: [id])
+  songDetails  Song  @relation(fields: [songId], references: [id])
+}
+
+// Table For Starring any Songs :-
+model starredSong {
+  id     Int    @id @default(autoincrement())
+  userId String
+  songId Int
+
+  // references 
+  userDetails User @relation(fields: [userId], references: [id])
+  SongDetails Song @relation(fields: [songId], references: [id])
+}
+
+// Table for Pricing Package :-
+model PricingPackage {
+  id                 Int                  @id @default(autoincrement())
+  packageName        String
+  price              Float
+  durationMonth      Int // How Many Months the Subscription will Last
+  description        String
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  Subscription       Subscription[]
+  PaymentTransaction PaymentTransaction[]
+}
+
+// Table for user's Purchased Subscription  
+model Subscription {
+  id            Int      @id @default(autoincrement())
+  startDate     DateTime
+  endDate       DateTime
+  packageId     Int
+  userId        String
+  transactionId Int // Payment Id
+
+  // references
+  userDetails        User                 @relation(fields: [userId], references: [id])
+  packageDetails     PricingPackage       @relation(fields: [packageId], references: [id])
+  PaymentTransaction PaymentTransaction[]
+}
+
+// Table for storing the Payment Transaction Record :-
+model PaymentTransaction {
+  id                    Int      @id @default(autoincrement())
+  userId                String
+  packageId             Int
+  subscriptionId        Int
+  amount                Float
+  currency              String   @default("INR")
+  paymentMethod         String
+  status                String
+  paymentProvider       String // "stripe", "razorpay", etc.
+  providerTransactionId String // the actual `paymentId`
+  createdAt             DateTime @default(now())
+
+  user         User           @relation(fields: [userId], references: [id])
+  package      PricingPackage @relation(fields: [packageId], references: [id])
+  subscription Subscription   @relation(fields: [subscriptionId], references: [id])
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}

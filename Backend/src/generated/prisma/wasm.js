@@ -215,6 +215,17 @@ exports.Prisma.PaymentTransactionScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.VerificationCodesScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  otp: 'otp',
+  isVerified: 'isVerified',
+  type: 'type',
+  expiry: 'expiry',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -234,6 +245,11 @@ exports.UserRole = exports.$Enums.UserRole = {
   USER: 'USER'
 };
 
+exports.VerificationCodeType = exports.$Enums.VerificationCodeType = {
+  VERIFY: 'VERIFY',
+  FORGOT: 'FORGOT'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Song: 'Song',
@@ -244,7 +260,8 @@ exports.Prisma.ModelName = {
   starredSong: 'starredSong',
   PricingPackage: 'PricingPackage',
   Subscription: 'Subscription',
-  PaymentTransaction: 'PaymentTransaction'
+  PaymentTransaction: 'PaymentTransaction',
+  VerificationCodes: 'VerificationCodes'
 };
 
 /**

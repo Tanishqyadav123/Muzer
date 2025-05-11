@@ -17,10 +17,10 @@ datasource db {
 // User Table :-
 model User {
   id                 String               @id @default(uuid())
-  firstName          String?
-  lastName           String?
+  firstName          String
+  lastName           String
   email              String               @unique
-  phoneNumber        String
+  phoneNumber        String?
   password           String
   role               UserRole
   isSubscribed       Boolean
@@ -155,7 +155,25 @@ model PaymentTransaction {
   subscription Subscription   @relation(fields: [subscriptionId], references: [id])
 }
 
+// Table for verification of forgot Password :-
+
+model VerificationCodes {
+  id         Int                  @id @default(autoincrement())
+  email      String               @unique
+  otp        String?
+  isVerified Boolean
+  type       VerificationCodeType
+  expiry     String
+  createdAt  DateTime             @default(now())
+  updatedAt  DateTime             @updatedAt
+}
+
 enum UserRole {
   ADMIN
   USER
+}
+
+enum VerificationCodeType {
+  VERIFY
+  FORGOT
 }

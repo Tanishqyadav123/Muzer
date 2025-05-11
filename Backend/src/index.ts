@@ -1,14 +1,24 @@
 import express from "express";
-import router from "./routes/index";
+import router from "./routes";
 import * as dotenv from "dotenv";
+import errorMiddleware from "./handlers/error.handler";
 
 dotenv.config({ path: ".env" });
 
 const app = express();
+const PORT = process.env.PORT || 8000;
+
+// Middleware for express :-
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/v1", router);
 
+// Using Error Middleware :-
+
+app.use(errorMiddleware);
+
 // Listening the Server on the PORT :-
-app.listen(8080, () => {
-  console.log(`Server is running on port 8080`);
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

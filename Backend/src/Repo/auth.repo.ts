@@ -71,6 +71,7 @@ export async function verifyEmailOtp(
       email: verifyOtpDetails.email,
       otp: verifyOtpDetails.otp,
       isVerified: false,
+      type: verifyOtpDetails.type,
     },
   });
 
@@ -90,18 +91,63 @@ export async function verifyEmailOtp(
 export async function updateVerificationEntry({
   email,
   otp,
+  type,
 }: {
   email: string;
   otp: string;
+  type: "FORGOT" | "VERIFY";
 }) {
   return await prisma.verificationCodes.update({
     where: {
       email: email,
       otp: otp,
+      type,
+    },
+    data: {
+      otp: type == "FORGOT" ? otp : null,
+      isVerified: true,
+    },
+  });
+}
+
+export async function verifyOTPForSetNewPassword({
+  email,
+  otp,
+}: {
+  email: string;
+  otp: string;
+}) {
+  const entry = await prisma.verificationCodes.findFirst({
+    where: {
+      email,
+      otp,
+      type: "FORGOT",
+      isVerified: true,
+    },
+  });
+
+  if (!entry) {
+    return false;
+  }
+
+  await prisma.verificationCodes.update({
+    where: {
+      email,
     },
     data: {
       otp: null,
-      isVerified: true,
     },
+  });
+
+  return true;
+}
+
+// update User Details :-
+export async function updateUserDetails(userId: string, userData: any) {
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: { ...userData },
   });
 }

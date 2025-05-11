@@ -13,7 +13,9 @@ export interface upsertVerificationInterface {
   type: VerificationCodeType;
   expiry: string;
 }
+
 export interface verifyEmailOtpInterface {
   email: string;
   otp: string;
+  type: "FORGOT" | "VERIFY";
 }

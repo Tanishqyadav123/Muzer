@@ -2,6 +2,7 @@ import { Request, NextFunction, Response, response } from "express";
 import { ErrorHandler } from "../middlewares/error.middleware";
 import {
   sendOtpOnEmailSchema,
+  setNewPasswordSchema,
   signinUserSchema,
   signupUserSchema,
   verifyEmailOtpSchema,
@@ -11,9 +12,11 @@ import {
   checkEmailVerified,
   checkUserExistByEmail,
   CreateNewUser,
+  updateUserDetails,
   updateVerificationEntry,
   UpsertTheVerificationEntry,
   verifyEmailOtp,
+  verifyOTPForSetNewPassword,
 } from "../Repo/auth.repo";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
@@ -98,16 +101,16 @@ async function verifyOTPOnEmail(
       return next(new ErrorHandler("Validation Error", 400));
     }
 
-    const { email, otp } = parsedResponse.data;
+    const { email, otp, type } = parsedResponse.data;
 
-    const isValidOtp = await verifyEmailOtp({ email, otp });
+    const isValidOtp = await verifyEmailOtp({ email, otp, type });
 
     if (!isValidOtp) {
       return next(new ErrorHandler("Invalid OTP or may be expired", 400));
     }
 
     // update the entry :-
-    await updateVerificationEntry({ email, otp });
+    await updateVerificationEntry({ email, otp, type });
 
     return responseHandler(res, 200, "Email Verified SuccessFully");
   } catch (error: any) {
@@ -207,4 +210,115 @@ async function signinUser(
   }
 }
 
-export { signupUser, sendOtpOnEmail, verifyOTPOnEmail, signinUser };
+// Function for send OTP for forgot PAssword :-
+async function forgotPasswordOtp(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<any> {
+  try {
+    const parsedResponse = sendOtpOnEmailSchema.safeParse(req.body);
+
+    if (!parsedResponse.success) {
+      const errors = formatError(parsedResponse.error?.errors);
+
+      return next(
+        new ErrorHandler(`Validation Faild , ${errors.join(",")}`, 400)
+      );
+    }
+
+    const { email } = parsedResponse.data;
+
+    const otp = generateOTP();
+
+    const expiry = new Date();
+    expiry.setMinutes(expiry.getMinutes() + 5); // 5 min Expiry :-
+
+    // Send Email for forgot Password :-
+    const emailResponse = await sendEmail(
+      email,
+      "OTP for Forgot-Password",
+      `The OTP is ${otp}`
+    );
+
+    if (!emailResponse) {
+      return next(new ErrorHandler("Email could not be sent", 500));
+    }
+
+    // Upsert the entry of the verification Table :-
+    await UpsertTheVerificationEntry({
+      email,
+      expiry: expiry.toISOString(),
+      isVerified: false,
+      otp,
+      type: VerificationCodeType.FORGOT,
+    });
+
+    return responseHandler(
+      res,
+      200,
+      "Email for forgot Password sent Successfully"
+    );
+  } catch (error: any) {
+    return next(new ErrorHandler(error.message, 500));
+  }
+}
+
+// Function for set New Password after forgot :-
+async function setNewPasword(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<any> {
+  try {
+    const parseResponse = setNewPasswordSchema.safeParse(req.body);
+
+    if (!parseResponse.success) {
+      const errors = formatError(parseResponse.error?.errors);
+
+      return next(
+        new ErrorHandler(`Validation Failed , ${errors.join(",")}`, 400)
+      );
+    }
+
+    const { email, newPassword, otp } = parseResponse.data;
+
+    // Verify User exist :-
+
+    const isUserExist = await checkUserExistByEmail(email);
+
+    if (!isUserExist) {
+      return next(new ErrorHandler("User with email not found", 400));
+    }
+    // verify OTP &&  Update the verification Code Details :- :-
+
+    const isValidOtp = await verifyOTPForSetNewPassword({ email, otp });
+
+    if (!isValidOtp) {
+      return next(
+        new ErrorHandler("you are not allowed to change password", 400)
+      );
+    }
+
+    // hash the Password :-
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update the user Password :-
+
+    await updateUserDetails(isUserExist.id, { password: hashedPassword });
+
+    return responseHandler(res, 200, "User's Password updated successfully");
+  } catch (error: any) {
+    return next(new ErrorHandler(error.message, 500));
+  }
+}
+
+export {
+  signupUser,
+  sendOtpOnEmail,
+  verifyOTPOnEmail,
+  signinUser,
+  forgotPasswordOtp,
+  setNewPasword,
+};

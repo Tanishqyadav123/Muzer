@@ -6,7 +6,7 @@ import errorMiddleware from "./handlers/error.handler";
 dotenv.config({ path: ".env" });
 
 const app = express();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8080;
 
 // Middleware for express :-
 app.use(express.json());

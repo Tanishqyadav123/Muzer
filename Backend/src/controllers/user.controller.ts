@@ -1,24 +1,23 @@
 // Controller for fetching all the Users :-
 
 import { NextFunction, Request, Response } from "express";
-import { prisma } from "../DB";
 import { ErrorHandler } from "../middlewares/error.middleware";
 import { responseHandler } from "../handlers/response.handler";
 
-async function getAllUsers(
+async function updateUserProfile(
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<any> {
-  const isUserExist = true;
+  try {
+    const files = req.file;
 
-  if (!isUserExist) {
-    return next(new ErrorHandler("User Can not fetched", 400));
+    console.log("Uploaded User File Image ", files);
+
+    return responseHandler(res, 200, "Profile Updated SuccessFully");
+  } catch (error: any) {
+    next(new ErrorHandler(error.message, 500));
   }
-
-  return responseHandler(res, 200, "User Found SuccessFully!!!!", {
-    id: "123",
-  });
 }
 
-export { getAllUsers };
+export { updateUserProfile };

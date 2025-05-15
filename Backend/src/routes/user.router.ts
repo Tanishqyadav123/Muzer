@@ -1,7 +1,8 @@
 import express from "express";
-import { getAllUsers } from "../controllers/user.controller";
+import { updateUserDetails } from "../controllers/user.controller";
+import { upload } from "../middlewares/multer.middleware";
 
 export const userRouter = express.Router();
 
 // Router for fetching all the Users :-
-userRouter.get("/getUsers", getAllUsers);
+userRouter.patch("/updateProfile", upload.single("avatar"), updateUserDetails);

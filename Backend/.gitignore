@@ -4,4 +4,5 @@ node_modules
 dist
 prisma/migrations
 tsconfig.tsbuildinfo
-./src/generated/
+/src/generated/prisma
+/src/DB/data

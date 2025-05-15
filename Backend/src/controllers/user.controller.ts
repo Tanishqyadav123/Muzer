@@ -5,20 +5,15 @@ import { prisma } from "../DB";
 import { ErrorHandler } from "../middlewares/error.middleware";
 import { responseHandler } from "../handlers/response.handler";
 
-async function getAllUsers(
+async function updateUserDetails(
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<any> {
-  const isUserExist = true;
-
-  if (!isUserExist) {
-    return next(new ErrorHandler("User Can not fetched", 400));
+  try {
+  } catch (error: any) {
+    return next(new ErrorHandler(error.message, 500));
   }
-
-  return responseHandler(res, 200, "User Found SuccessFully!!!!", {
-    id: "123",
-  });
 }
 
-export { getAllUsers };
+export { updateUserDetails };

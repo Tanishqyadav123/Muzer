@@ -24,7 +24,8 @@ model User {
   password           String
   role               UserRole
   isSubscribed       Boolean
-  avatar             String? // May have local or cloudinary URL
+  avatarUrl          String? // May have local or cloudinary URL
+  publicId           String?
   createdAt          DateTime             @default(now())
   updateAt           DateTime             @updatedAt
   Playlist           Playlist[]

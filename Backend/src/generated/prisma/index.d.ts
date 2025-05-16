@@ -2066,7 +2066,8 @@ export namespace Prisma {
     password: string | null
     role: $Enums.UserRole | null
     isSubscribed: boolean | null
-    avatar: string | null
+    avatarUrl: string | null
+    publicId: string | null
     createdAt: Date | null
     updateAt: Date | null
   }
@@ -2080,7 +2081,8 @@ export namespace Prisma {
     password: string | null
     role: $Enums.UserRole | null
     isSubscribed: boolean | null
-    avatar: string | null
+    avatarUrl: string | null
+    publicId: string | null
     createdAt: Date | null
     updateAt: Date | null
   }
@@ -2094,7 +2096,8 @@ export namespace Prisma {
     password: number
     role: number
     isSubscribed: number
-    avatar: number
+    avatarUrl: number
+    publicId: number
     createdAt: number
     updateAt: number
     _all: number
@@ -2110,7 +2113,8 @@ export namespace Prisma {
     password?: true
     role?: true
     isSubscribed?: true
-    avatar?: true
+    avatarUrl?: true
+    publicId?: true
     createdAt?: true
     updateAt?: true
   }
@@ -2124,7 +2128,8 @@ export namespace Prisma {
     password?: true
     role?: true
     isSubscribed?: true
-    avatar?: true
+    avatarUrl?: true
+    publicId?: true
     createdAt?: true
     updateAt?: true
   }
@@ -2138,7 +2143,8 @@ export namespace Prisma {
     password?: true
     role?: true
     isSubscribed?: true
-    avatar?: true
+    avatarUrl?: true
+    publicId?: true
     createdAt?: true
     updateAt?: true
     _all?: true
@@ -2225,7 +2231,8 @@ export namespace Prisma {
     password: string
     role: $Enums.UserRole
     isSubscribed: boolean
-    avatar: string | null
+    avatarUrl: string | null
+    publicId: string | null
     createdAt: Date
     updateAt: Date
     _count: UserCountAggregateOutputType | null
@@ -2256,7 +2263,8 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     isSubscribed?: boolean
-    avatar?: boolean
+    avatarUrl?: boolean
+    publicId?: boolean
     createdAt?: boolean
     updateAt?: boolean
     Playlist?: boolean | User$PlaylistArgs<ExtArgs>
@@ -2275,7 +2283,8 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     isSubscribed?: boolean
-    avatar?: boolean
+    avatarUrl?: boolean
+    publicId?: boolean
     createdAt?: boolean
     updateAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -2289,7 +2298,8 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     isSubscribed?: boolean
-    avatar?: boolean
+    avatarUrl?: boolean
+    publicId?: boolean
     createdAt?: boolean
     updateAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -2303,12 +2313,13 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     isSubscribed?: boolean
-    avatar?: boolean
+    avatarUrl?: boolean
+    publicId?: boolean
     createdAt?: boolean
     updateAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "phoneNumber" | "password" | "role" | "isSubscribed" | "avatar" | "createdAt" | "updateAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "phoneNumber" | "password" | "role" | "isSubscribed" | "avatarUrl" | "publicId" | "createdAt" | "updateAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Playlist?: boolean | User$PlaylistArgs<ExtArgs>
     starredSongs?: boolean | User$starredSongsArgs<ExtArgs>
@@ -2336,7 +2347,8 @@ export namespace Prisma {
       password: string
       role: $Enums.UserRole
       isSubscribed: boolean
-      avatar: string | null
+      avatarUrl: string | null
+      publicId: string | null
       createdAt: Date
       updateAt: Date
     }, ExtArgs["result"]["user"]>
@@ -2774,7 +2786,8 @@ export namespace Prisma {
     readonly password: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'UserRole'>
     readonly isSubscribed: FieldRef<"User", 'Boolean'>
-    readonly avatar: FieldRef<"User", 'String'>
+    readonly avatarUrl: FieldRef<"User", 'String'>
+    readonly publicId: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updateAt: FieldRef<"User", 'DateTime'>
   }
@@ -14595,7 +14608,8 @@ export namespace Prisma {
     password: 'password',
     role: 'role',
     isSubscribed: 'isSubscribed',
-    avatar: 'avatar',
+    avatarUrl: 'avatarUrl',
+    publicId: 'publicId',
     createdAt: 'createdAt',
     updateAt: 'updateAt'
   };
@@ -14860,7 +14874,8 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     isSubscribed?: BoolFilter<"User"> | boolean
-    avatar?: StringNullableFilter<"User"> | string | null
+    avatarUrl?: StringNullableFilter<"User"> | string | null
+    publicId?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updateAt?: DateTimeFilter<"User"> | Date | string
     Playlist?: PlaylistListRelationFilter
@@ -14878,7 +14893,8 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     isSubscribed?: SortOrder
-    avatar?: SortOrderInput | SortOrder
+    avatarUrl?: SortOrderInput | SortOrder
+    publicId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
     Playlist?: PlaylistOrderByRelationAggregateInput
@@ -14899,7 +14915,8 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     isSubscribed?: BoolFilter<"User"> | boolean
-    avatar?: StringNullableFilter<"User"> | string | null
+    avatarUrl?: StringNullableFilter<"User"> | string | null
+    publicId?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updateAt?: DateTimeFilter<"User"> | Date | string
     Playlist?: PlaylistListRelationFilter
@@ -14917,7 +14934,8 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     isSubscribed?: SortOrder
-    avatar?: SortOrderInput | SortOrder
+    avatarUrl?: SortOrderInput | SortOrder
+    publicId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -14937,7 +14955,8 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"User"> | string
     role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
     isSubscribed?: BoolWithAggregatesFilter<"User"> | boolean
-    avatar?: StringNullableWithAggregatesFilter<"User"> | string | null
+    avatarUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
+    publicId?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updateAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -15611,7 +15630,8 @@ export namespace Prisma {
     password: string
     role: $Enums.UserRole
     isSubscribed: boolean
-    avatar?: string | null
+    avatarUrl?: string | null
+    publicId?: string | null
     createdAt?: Date | string
     updateAt?: Date | string
     Playlist?: PlaylistCreateNestedManyWithoutUserDetailsInput
@@ -15629,7 +15649,8 @@ export namespace Prisma {
     password: string
     role: $Enums.UserRole
     isSubscribed: boolean
-    avatar?: string | null
+    avatarUrl?: string | null
+    publicId?: string | null
     createdAt?: Date | string
     updateAt?: Date | string
     Playlist?: PlaylistUncheckedCreateNestedManyWithoutUserDetailsInput
@@ -15647,7 +15668,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Playlist?: PlaylistUpdateManyWithoutUserDetailsNestedInput
@@ -15665,7 +15687,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Playlist?: PlaylistUncheckedUpdateManyWithoutUserDetailsNestedInput
@@ -15683,7 +15706,8 @@ export namespace Prisma {
     password: string
     role: $Enums.UserRole
     isSubscribed: boolean
-    avatar?: string | null
+    avatarUrl?: string | null
+    publicId?: string | null
     createdAt?: Date | string
     updateAt?: Date | string
   }
@@ -15697,7 +15721,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15711,7 +15736,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16459,7 +16485,8 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     isSubscribed?: SortOrder
-    avatar?: SortOrder
+    avatarUrl?: SortOrder
+    publicId?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
   }
@@ -16473,7 +16500,8 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     isSubscribed?: SortOrder
-    avatar?: SortOrder
+    avatarUrl?: SortOrder
+    publicId?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
   }
@@ -16487,7 +16515,8 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     isSubscribed?: SortOrder
-    avatar?: SortOrder
+    avatarUrl?: SortOrder
+    publicId?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
   }
@@ -18363,7 +18392,8 @@ export namespace Prisma {
     password: string
     role: $Enums.UserRole
     isSubscribed: boolean
-    avatar?: string | null
+    avatarUrl?: string | null
+    publicId?: string | null
     createdAt?: Date | string
     updateAt?: Date | string
     starredSongs?: starredSongCreateNestedManyWithoutUserDetailsInput
@@ -18380,7 +18410,8 @@ export namespace Prisma {
     password: string
     role: $Enums.UserRole
     isSubscribed: boolean
-    avatar?: string | null
+    avatarUrl?: string | null
+    publicId?: string | null
     createdAt?: Date | string
     updateAt?: Date | string
     starredSongs?: starredSongUncheckedCreateNestedManyWithoutUserDetailsInput
@@ -18434,7 +18465,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     starredSongs?: starredSongUpdateManyWithoutUserDetailsNestedInput
@@ -18451,7 +18483,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     starredSongs?: starredSongUncheckedUpdateManyWithoutUserDetailsNestedInput
@@ -18720,7 +18753,8 @@ export namespace Prisma {
     password: string
     role: $Enums.UserRole
     isSubscribed: boolean
-    avatar?: string | null
+    avatarUrl?: string | null
+    publicId?: string | null
     createdAt?: Date | string
     updateAt?: Date | string
     Playlist?: PlaylistCreateNestedManyWithoutUserDetailsInput
@@ -18737,7 +18771,8 @@ export namespace Prisma {
     password: string
     role: $Enums.UserRole
     isSubscribed: boolean
-    avatar?: string | null
+    avatarUrl?: string | null
+    publicId?: string | null
     createdAt?: Date | string
     updateAt?: Date | string
     Playlist?: PlaylistUncheckedCreateNestedManyWithoutUserDetailsInput
@@ -18802,7 +18837,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Playlist?: PlaylistUpdateManyWithoutUserDetailsNestedInput
@@ -18819,7 +18855,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Playlist?: PlaylistUncheckedUpdateManyWithoutUserDetailsNestedInput
@@ -18968,7 +19005,8 @@ export namespace Prisma {
     password: string
     role: $Enums.UserRole
     isSubscribed: boolean
-    avatar?: string | null
+    avatarUrl?: string | null
+    publicId?: string | null
     createdAt?: Date | string
     updateAt?: Date | string
     Playlist?: PlaylistCreateNestedManyWithoutUserDetailsInput
@@ -18985,7 +19023,8 @@ export namespace Prisma {
     password: string
     role: $Enums.UserRole
     isSubscribed: boolean
-    avatar?: string | null
+    avatarUrl?: string | null
+    publicId?: string | null
     createdAt?: Date | string
     updateAt?: Date | string
     Playlist?: PlaylistUncheckedCreateNestedManyWithoutUserDetailsInput
@@ -19079,7 +19118,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Playlist?: PlaylistUpdateManyWithoutUserDetailsNestedInput
@@ -19096,7 +19136,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Playlist?: PlaylistUncheckedUpdateManyWithoutUserDetailsNestedInput
@@ -19161,7 +19202,8 @@ export namespace Prisma {
     password: string
     role: $Enums.UserRole
     isSubscribed: boolean
-    avatar?: string | null
+    avatarUrl?: string | null
+    publicId?: string | null
     createdAt?: Date | string
     updateAt?: Date | string
     Playlist?: PlaylistCreateNestedManyWithoutUserDetailsInput
@@ -19178,7 +19220,8 @@ export namespace Prisma {
     password: string
     role: $Enums.UserRole
     isSubscribed: boolean
-    avatar?: string | null
+    avatarUrl?: string | null
+    publicId?: string | null
     createdAt?: Date | string
     updateAt?: Date | string
     Playlist?: PlaylistUncheckedCreateNestedManyWithoutUserDetailsInput
@@ -19259,7 +19302,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Playlist?: PlaylistUpdateManyWithoutUserDetailsNestedInput
@@ -19276,7 +19320,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Playlist?: PlaylistUncheckedUpdateManyWithoutUserDetailsNestedInput

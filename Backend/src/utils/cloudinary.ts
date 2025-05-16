@@ -5,7 +5,10 @@ import fs from "fs";
 import { ErrorHandler } from "../middlewares/error.middleware";
 import { NextFunction } from "express";
 
-async function uploadToCloudinary(filePath: string, next: NextFunction) {
+async function uploadToCloudinary(
+  filePath: string,
+  next: NextFunction
+): Promise<{ assestUrl: string; publicId: string } | undefined | void> {
   try {
     const cloudinaryResponse = await cloudinary.uploader.upload(filePath, {
       resource_type: "auto",

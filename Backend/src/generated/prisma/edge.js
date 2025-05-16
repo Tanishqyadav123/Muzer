@@ -274,11 +274,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://postgres:Tanishq@16@localhost:5432/Muzer"
+        "value": null
       }
     }
   },

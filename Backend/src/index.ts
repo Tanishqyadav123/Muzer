@@ -2,11 +2,11 @@ import express from "express";
 import router from "./routes";
 import * as dotenv from "dotenv";
 import errorMiddleware from "./handlers/error.handler";
-
+// import './types/global'
 dotenv.config({ path: ".env" });
 
 const app = express();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8080;
 
 // Middleware for express :-
 app.use(express.json());

@@ -6,6 +6,8 @@ import { prisma } from "../DB";
 import { getUserByIdAndRole, updateUserDetails } from "../Repo/user.repo";
 import { updateUserInterface } from "../interfaces/user.interface";
 import { uploadToCloudinary } from "../utils/cloudinary";
+import { updateUserDetailsSchema } from "../schemaValidation/user.schema";
+import { formatError } from "../utils/formaterror";
 
 async function getMeProfile(
   req: Request,
@@ -31,6 +33,17 @@ async function updateUserProfile(
     const file = req.file;
 
     const userId = req.user?.userId!;
+
+    const parsedResponse = updateUserDetailsSchema.safeParse(req.body);
+
+    if (!parsedResponse.success) {
+      const errors = formatError(parsedResponse.error.errors);
+
+      return next(
+        new ErrorHandler(`Validation Failed , ${errors.join(",")}`, 400)
+      );
+    }
+
     const updateUserData: updateUserInterface = req.body;
 
     if (file && file?.path) {
@@ -43,15 +56,22 @@ async function updateUserProfile(
       updateUserData.avatarUrl = assestUrl;
       updateUserData.publicId = publicId;
 
-
-
       // Need to unlink the file from our server after uploading on Cloudinary :-
-      
+    }
 
+    if (!updateUserData.removeAvatar) {
+      updateUserData.avatarUrl = null;
+      updateUserData.publicId = null;
+    }
+
+    if (updateUserData.removeAvatar || (file && file?.path)) {
+       
     }
 
     // We need to update the user Data as per userId :-
-    const updatedUserDetails = await updateUserDetails(userId, updateUserData);
+    const updatedUserDetails = await updateUserDetails(userId, {
+      ...updateUserData,
+    });
 
     if (!updatedUserDetails) {
       next(new ErrorHandler("You Details could not get updated", 417));

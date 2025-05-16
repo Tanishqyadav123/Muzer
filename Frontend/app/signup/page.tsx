@@ -5,32 +5,32 @@ import Button from "../Components/Button";
 import { FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { useForm } from "react-hook-form";
-import { signInSchema } from "../validations/signIn.validation";
+import { signUpSchema } from "../validations/signUp.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Link from "next/link";
 
 const page = () => {
-  type SignInFormData = z.infer<typeof signInSchema>;
+  type SignUpFormData = z.infer<typeof signUpSchema>;
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignInFormData>({
-    resolver: zodResolver(signInSchema),
+  } = useForm<SignUpFormData>({
+    resolver: zodResolver(signUpSchema),
     mode: "onChange",
   });
 
-  const submitForm = (data: SignInFormData) => {
+  const submitForm = (data: SignUpFormData) => {
     console.log("Data ", data);
   };
 
   return (
-    <div className="bg-[#121212] min-h-[80vh] w-full flex items-center justify-center">
-      <div className="signin-form  bg-[#1f1f1f] w-[24vw] h-[70vh] flex   p-6 rounded-sm flex-col">
+    <div className="bg-[#121212] min-h-[85vh] w-full flex items-center justify-center">
+      <div className="signin-form  bg-[#1f1f1f] w-[24vw] min-h-[60vh] flex   p-6 rounded-sm flex-col">
         <div className="heading flex flex-col items-center gap-2">
           <h2 className="text-xl">Welcome To Muzer</h2>
-          <p className="text-xs text-gray-400">Sign in to continue</p>
+          <p className="text-xs text-gray-400">Sign up to join</p>
         </div>
 
         {/* Creating the form for sign In  */}
@@ -39,6 +39,36 @@ const page = () => {
           onSubmit={handleSubmit(submitForm)}
           className="px-4 mt-8  min-h-[45%] flex justify-start flex-col gap-5"
         >
+          {/* First Name  */}
+
+          <div className="flex flex-col items-start gap-2">
+            <label className="text-sm">First Name</label>
+            <input
+              {...register("firstName")}
+              className="border-gray-400 border-1 w-full h-8 bg-[#121212] text-sm px-2"
+            />
+
+            {errors.firstName?.message && (
+              <p className="text-red-500">{errors.firstName?.message}</p>
+            )}
+          </div>
+
+          {/*  Last Name */}
+
+          <div className="flex flex-col items-start gap-2">
+            <label className="text-sm">Last Name</label>
+            <input
+              {...register("lastName")}
+              className="border-gray-400 border-1 w-full h-8 bg-[#121212] text-sm px-2"
+            />
+
+            {errors.lastName?.message && (
+              <p className="text-red-500">{errors.lastName?.message}</p>
+            )}
+          </div>
+
+          {/* Email Address */}
+
           <div className="flex flex-col items-start gap-2">
             <label className="text-sm">Email</label>
             <input
@@ -50,6 +80,8 @@ const page = () => {
               <p className="text-red-500">{errors.email?.message}</p>
             )}
           </div>
+
+          {/* Password  */}
           <div className="flex flex-col items-start gap-2">
             <label className="text-sm">Password</label>
             <input
@@ -62,43 +94,16 @@ const page = () => {
             )}
           </div>
 
-          {/* Creating the Checkbox  */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <input type="checkbox" {...register("rememberMe")} />
-              <label className="text-sm" htmlFor="rememberMe">
-                Remember me
-              </label>
-            </div>
-
-            <p className="text-xs hover:cursor-pointer hover:text-gray-200 text-gray-300">
-              Forgot Password ?
-            </p>
-          </div>
-
-          {/* Button for signIn  */}
-          <Button btnText="Sign In" color="bg-gray-500" />
+          {/* Button for Sign Up  */}
+          <Button btnText="Sign Up" color="bg-gray-500" />
         </form>
 
         <p className=" flex items-center justify-center text-gray-600 my-5 mx-3 text-xs  w-full ">
-          Don't have an account?
-          <Link href={"/signup"} className="text-gray-400 font-bold ">
-            Sign up
+          Already have an account?
+          <Link href={"/signin"} className="text-gray-400 font-bold ">
+            Sign in
           </Link>
         </p>
-
-        <p className="w-full flex items-center justify-center ">OR</p>
-
-        <Button
-          btnText="Continue with Google"
-          btnIcon={FaGoogle}
-          color="transparent"
-        />
-        <Button
-          btnText="Continue with Github"
-          btnIcon={FaGithub}
-          color="transparent"
-        />
       </div>
     </div>
   );

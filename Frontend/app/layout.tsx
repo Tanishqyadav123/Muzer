@@ -3,6 +3,8 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
+import { Toaster } from 'react-hot-toast';
+import { AuthContextProvider } from "./Context/AuthContext";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -23,9 +25,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
+        <AuthContextProvider>
+        <div>
         <Navbar />
         <div className="w-full min-h-[75vh]">{children}</div>
         <Footer />
+        <Toaster />
+        </div>
+        </AuthContextProvider>
       </body>
     </html>
   );

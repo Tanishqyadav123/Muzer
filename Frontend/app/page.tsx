@@ -1,7 +1,10 @@
 export default function App() {
+
+
+
   return (
     <>
-      <h1>My Muzer App.</h1>
+       <h1>Hello My Profile Page</h1>
     </>
   );
 }

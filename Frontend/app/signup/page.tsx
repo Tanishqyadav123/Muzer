@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Button from "../Components/Button";
 import { FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
@@ -9,9 +9,11 @@ import { signUpSchema } from "../validations/signUp.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Link from "next/link";
+import { signUpUserService } from "../service/auth.service";
+import { useRouter } from "next/navigation";
 
+export type SignUpFormData = z.infer<typeof signUpSchema>;
 const page = () => {
-  type SignUpFormData = z.infer<typeof signUpSchema>;
   const {
     register,
     handleSubmit,
@@ -21,8 +23,20 @@ const page = () => {
     mode: "onChange",
   });
 
-  const submitForm = (data: SignUpFormData) => {
-    console.log("Data ", data);
+  const router = useRouter();
+  const [isLoading , setIsLoading] = useState<boolean>(false);
+  const submitForm = async (data: SignUpFormData) => {
+
+       setIsLoading(true);
+      const isRegistered =  await signUpUserService(data);
+
+      if (isRegistered.success) {
+         router.push('/signin')
+      }
+      else if (!isRegistered.success && isRegistered?.errMessage === "Email is not verified") {
+           router.push('/verify-email')
+      }
+        setIsLoading(false)
   };
 
   return (
@@ -49,7 +63,7 @@ const page = () => {
             />
 
             {errors.firstName?.message && (
-              <p className="text-red-500">{errors.firstName?.message}</p>
+              <p className="text-red-500 text-sm">{errors.firstName?.message}</p>
             )}
           </div>
 
@@ -63,7 +77,7 @@ const page = () => {
             />
 
             {errors.lastName?.message && (
-              <p className="text-red-500">{errors.lastName?.message}</p>
+              <p className="text-red-500 text-sm">{errors.lastName?.message}</p>
             )}
           </div>
 
@@ -77,7 +91,7 @@ const page = () => {
             />
 
             {errors.email?.message && (
-              <p className="text-red-500">{errors.email?.message}</p>
+              <p className="text-red-500 text-sm">{errors.email?.message}</p>
             )}
           </div>
 
@@ -90,12 +104,15 @@ const page = () => {
               className="border-gray-400 border-1 w-full h-8 bg-[#121212] text-sm px-2"
             />
             {errors.password?.message && (
-              <p className="text-red-500">{errors.password?.message}</p>
+              <p className="text-red-500 text-sm">{errors.password?.message}</p>
             )}
           </div>
 
           {/* Button for Sign Up  */}
-          <Button btnText="Sign Up" color="bg-gray-500" />
+          {
+            isLoading ? <Button btnText="Signing up..." color="bg-gray-600" isDisabled = {true} /> : <Button btnText="Sign Up" color="bg-gray-500" isDisabled = {false} /> 
+          }
+          
         </form>
 
         <p className=" flex items-center justify-center text-gray-600 my-5 mx-3 text-xs  w-full ">

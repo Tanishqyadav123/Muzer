@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React from "react";
+import React, { useState } from "react";
 import Button from "../Components/Button";
 import { FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
@@ -9,6 +9,9 @@ import { signInSchema } from "../validations/signIn.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Link from "next/link";
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useAuth } from "../Context/AuthContext";
 
 const page = () => {
   type SignInFormData = z.infer<typeof signInSchema>;
@@ -20,14 +23,23 @@ const page = () => {
     resolver: zodResolver(signInSchema),
     mode: "onChange",
   });
+  const [isloading , setIsLoading] = useState<boolean>(false);
+  const {login} = useAuth();
 
-  const submitForm = (data: SignInFormData) => {
-    console.log("Data ", data);
+  const submitForm = async (data: SignInFormData) => {
+    setIsLoading(true);
+    await login(data)
+
+    
+
+     setIsLoading(false);
+  
+
   };
 
   return (
     <div className="bg-[#121212] min-h-[80vh] w-full flex items-center justify-center">
-      <div className="signin-form  bg-[#1f1f1f] w-[24vw] h-[70vh] flex   p-6 rounded-sm flex-col">
+      <div className="signin-form  bg-[#1f1f1f] w-[24vw] min-h-[70vh] flex   p-6 rounded-sm flex-col">
         <div className="heading flex flex-col items-center gap-2">
           <h2 className="text-xl">Welcome To Muzer</h2>
           <p className="text-xs text-gray-400">Sign in to continue</p>
@@ -37,7 +49,7 @@ const page = () => {
 
         <form
           onSubmit={handleSubmit(submitForm)}
-          className="px-4 mt-8  min-h-[45%] flex justify-start flex-col gap-5"
+          className="px-4 mt-8  min-h-[42%] flex justify-start flex-col gap-5"
         >
           <div className="flex flex-col items-start gap-2">
             <label className="text-sm">Email</label>
@@ -47,7 +59,7 @@ const page = () => {
             />
 
             {errors.email?.message && (
-              <p className="text-red-500">{errors.email?.message}</p>
+              <p className= "text-red-500 text-sm">{errors.email?.message}</p>
             )}
           </div>
           <div className="flex flex-col items-start gap-2">
@@ -58,7 +70,7 @@ const page = () => {
               className="border-gray-400 border-1 w-full h-8 bg-[#121212] text-sm px-2"
             />
             {errors.password?.message && (
-              <p className="text-red-500">{errors.password?.message}</p>
+              <p className="text-red-500 text-sm">{errors.password?.message}</p>
             )}
           </div>
 
@@ -77,10 +89,12 @@ const page = () => {
           </div>
 
           {/* Button for signIn  */}
-          <Button btnText="Sign In" color="bg-gray-500" />
+         {
+          isloading ?  <Button btnText="Signing..." color="bg-gray-600" isDisabled = {true}   /> :  <Button btnText="Sign In" color="bg-gray-500" isDisabled = {false}/>
+         }
         </form>
 
-        <p className=" flex items-center justify-center text-gray-600 my-5 mx-3 text-xs  w-full ">
+        <p className=" flex items-center justify-center text-gray-600 my-8 mx-3 text-xs  w-full ">
           Don't have an account?
           <Link href={"/signup"} className="text-gray-400 font-bold ">
             Sign up
@@ -93,11 +107,13 @@ const page = () => {
           btnText="Continue with Google"
           btnIcon={FaGoogle}
           color="transparent"
+          isDisabled = {false}
         />
         <Button
           btnText="Continue with Github"
           btnIcon={FaGithub}
           color="transparent"
+          isDisabled = {false}
         />
       </div>
     </div>

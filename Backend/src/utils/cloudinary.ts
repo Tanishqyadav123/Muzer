@@ -37,7 +37,7 @@ async function deleteFromCloudinary(
   publicId: string,
   resourceType: "image" | "video" | "raw",
   next: NextFunction
-) {
+) : Promise<boolean | void>{
   try {
     const deletedAssesst = await cloudinary.uploader.destroy(publicId, {
       resource_type: resourceType,
@@ -48,7 +48,7 @@ async function deleteFromCloudinary(
     }
     return false;
   } catch (error: any) {
-    next(new ErrorHandler(error?.message, 500));
+    return next(new ErrorHandler(error?.message, 500));
   }
 }
 

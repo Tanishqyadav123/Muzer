@@ -9,6 +9,5 @@ export const updateUserDetailsSchema = z.object({
     .string()
     .min(3, { message: "Last Name must be of atleast 3 char" })
     .optional(),
-  avatarUrl: z.string().optional(),
-  publicId: z.string().optional(),
+   removeAvatar : z.enum(["true" , "false"])
 });

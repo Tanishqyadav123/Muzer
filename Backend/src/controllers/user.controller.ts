@@ -5,7 +5,7 @@ import { responseHandler } from "../handlers/response.handler";
 import { prisma } from "../DB";
 import { getUserByIdAndRole, updateUserDetails } from "../Repo/user.repo";
 import { updateUserInterface } from "../interfaces/user.interface";
-import { uploadToCloudinary } from "../utils/cloudinary";
+import { deleteFromCloudinary, uploadToCloudinary } from "../utils/cloudinary";
 import { updateUserDetailsSchema } from "../schemaValidation/user.schema";
 import { formatError } from "../utils/formaterror";
 
@@ -34,6 +34,13 @@ async function updateUserProfile(
 
     const userId = req.user?.userId!;
 
+  
+     const userToUpdate = await prisma.user.findUnique({
+       where : {
+         id : userId
+       }
+     })
+
     const parsedResponse = updateUserDetailsSchema.safeParse(req.body);
 
     if (!parsedResponse.success) {
@@ -46,7 +53,7 @@ async function updateUserProfile(
 
     const updateUserData: updateUserInterface = req.body;
 
-    if (file && file?.path) {
+    if ( updateUserData.removeAvatar === "false" && file && file?.path) {
       // upload the file on Cloudinary :-
       const uploadedAssesst = await uploadToCloudinary(file.path, next);
       if (!uploadedAssesst) {
@@ -56,16 +63,20 @@ async function updateUserProfile(
       updateUserData.avatarUrl = assestUrl;
       updateUserData.publicId = publicId;
 
-      // Need to unlink the file from our server after uploading on Cloudinary :-
+     
     }
 
-    if (!updateUserData.removeAvatar) {
+    if (updateUserData.removeAvatar === "true") {
       updateUserData.avatarUrl = null;
       updateUserData.publicId = null;
     }
 
-    if (updateUserData.removeAvatar || (file && file?.path)) {
-       
+    if (updateUserData.removeAvatar == "true" || (file && file?.path)) {
+       //  delete the assess from the cloudinary currently representing the user Avatar :-
+       if (userToUpdate?.avatarUrl && userToUpdate?.publicId) {
+          await deleteFromCloudinary(userToUpdate?.publicId , "image" ,next)
+       }
+        
     }
 
     // We need to update the user Data as per userId :-

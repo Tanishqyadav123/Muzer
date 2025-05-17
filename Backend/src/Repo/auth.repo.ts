@@ -23,6 +23,7 @@ export async function checkEmailVerified(
 }
 
 export async function checkUserExistByEmail(email: string) {
+  console.log("In Rerpo " , email)
   return await prisma.user.findFirst({
     where: {
       email,

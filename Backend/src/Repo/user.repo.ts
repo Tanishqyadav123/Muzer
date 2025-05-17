@@ -20,10 +20,16 @@ export async function updateUserDetails(
   userDetailsToUpdate: updateUserInterface
 ) {
   console.log("userID ", userId);
+  console.log("object" , userDetailsToUpdate)
+
+   const payload : any = userDetailsToUpdate;
+
+   delete payload.removeAvatar;
+
   return await prisma.user.update({
     where: {
       id: userId,
     },
-    data: { ...userDetailsToUpdate },
+    data: { ...payload },
   });
 }

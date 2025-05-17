@@ -10,5 +10,5 @@ export interface updateUserInterface {
   lastName?: string;
   avatarUrl: string | null;
   publicId: string | null;
-  removeAvatar: boolean;
+  removeAvatar: "true" | "false";
 }

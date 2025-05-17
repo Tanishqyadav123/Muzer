@@ -180,7 +180,7 @@ async function signinUser(
       return next(new ErrorHandler(`Validation error `, 400));
     }
 
-    const { email, password } = parseResponse.data;
+    const { email, password , rememberMe } = parseResponse.data;
 
     const isUserExist = await checkUserExistByEmail(email);
 
@@ -196,11 +196,12 @@ async function signinUser(
     }
 
     // Generate the JWT Token :-
+
     const token = jwt.sign(
       { userId: isUserExist.id, userRole: isUserExist.role },
       process.env.JWT_SECRET!,
       {
-        expiresIn: "7d",
+        expiresIn:  rememberMe ? "15d" : "7d",
       }
     );
 

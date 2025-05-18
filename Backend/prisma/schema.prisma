@@ -32,6 +32,9 @@ model User {
   starredSongs       starredSong[]
   Subscription       Subscription[]
   PaymentTransaction PaymentTransaction[]
+  Streams       Stream[]
+  Votes         Vote[]
+  StreamSongs   StreamSong[]
 }
 
 // Song Table :-
@@ -49,7 +52,6 @@ model Song {
   AlbumSongs   AlbumSong[]
   starredSongs starredSong[]
 }
-
 // Album Table :-
 model Album {
   id         Int         @id @default(autoincrement())
@@ -169,10 +171,99 @@ model VerificationCodes {
   updatedAt  DateTime             @updatedAt
 }
 
+
+// model Stream {
+//    id  String  @id @default(uuid())
+//    streamName  String
+//    userId  String
+   
+
+//    // References 
+//    userDetails User @relation(fields: [userId] , references: [id])
+//    RoomDetails Room[]
+//    StreamSongDetails StreamSongs[]
+  
+// }
+
+
+
+// model Room {
+//    id  String @id @default(uuid())
+//    streamId  String 
+
+//    // Reference :-
+
+//    StreamDetails Stream  @relation(fields: [streamId] , references: [id])
+// }
+
+
+// model StreamSongs {
+//    id  String @id @default(uuid())
+//    url  String
+//    streamId String
+
+//    StreamDetails Stream  @relation(fields: [streamId] , references: [id])
+// }
+
+
+// model voting {
+//    id   String  @id @default(uuid())
+//    songId  String
+//    StreamId String
+//    userId  String
+//    type    VoteType
+
+// }
+
+// A Stream represents a "room" with a queue
+model Stream {
+  id          String       @id @default(uuid())
+  streamName  String
+  hostId      String       // FK to User
+  createdAt   DateTime     @default(now())
+  active     Boolean   @default(true)
+
+  host         User        @relation(fields: [hostId], references: [id])
+  songs        StreamSong[]
+}
+
+// Songs added to a stream (can include metadata if needed)
+model StreamSong {
+  id         String     @id @default(uuid())
+  url        String
+  title      String?
+  streamId   String
+  userId     String
+ 
+  addedAt    DateTime   @default(now())
+
+  stream     Stream     @relation(fields: [streamId], references: [id])
+  User       User   @relation(fields: [userId], references: [id])
+  votes      Vote[]
+}
+
+// Votes on songs
+model Vote {
+  id        String    @id @default(uuid())
+  songId    String
+  userId    String
+  type      VoteType
+
+  song      StreamSong  @relation(fields: [songId], references: [id])
+  user      User        @relation(fields: [userId], references: [id])
+}
+
+// Enum for upvote/downvote
+enum VoteType {
+  UP
+  DOWN
+}
+
 enum UserRole {
   ADMIN
   USER
 }
+
 
 enum VerificationCodeType {
   VERIFY

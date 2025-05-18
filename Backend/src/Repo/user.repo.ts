@@ -12,7 +12,7 @@ export async function getUserByIdAndRole(
       id: userData.userId,
       role: userData.userRole,
     },
-  });
+  }); 
 }
 
 export async function updateUserDetails(

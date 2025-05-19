@@ -1,14 +1,32 @@
-import React from 'react'
+import React from "react";
 
-function PricingCardButton ({btnText , btnIcon , color  } : {btnText : string , btnIcon ?: any , color : string }) {
-
-    return <>
-    
-     <button  className={`${color}  p-2 border-1 rounded-md text-xs mt-4 transition-all  hover:bg-gray-600 cursor-pointer flex items-center justify-center gap-3 w-[15vw] `}> {btnIcon && btnIcon()} {btnText}</button>
-      
-    </>
-
+function PricingCardButton({
+  btnText,
+  btnIcon,
+  color,
+}: {
+  btnText: string;
+  btnIcon?: any;
+  color: string;
+}) {
+  return (
+    <button
+      className={`${color} 
+        px-4 py-2 
+        text-xs md:text-sm 
+        rounded-md 
+        transition-all 
+        hover:bg-gray-600 
+        cursor-pointer 
+        flex items-center justify-center 
+        gap-2 
+        w-full sm:w-[200px]
+        border border-gray-500`}
+    >
+      {btnIcon && btnIcon()}
+      {btnText}
+    </button>
+  );
 }
 
 export default PricingCardButton;
-

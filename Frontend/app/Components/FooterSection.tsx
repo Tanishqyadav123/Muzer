@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 
 function FooterSection({
@@ -6,24 +7,23 @@ function FooterSection({
   isIcons,
 }: {
   heading: string;
-  list: (string | React.ElementType)[];
+  list: (string | React.ElementType)[]; // Icons or text
   isIcons?: boolean;
 }) {
   return (
-    <div className="flex items-start flex-col gap-4 w-[20%] h-[60%]">
-      <h2>{heading}</h2>
+    <div className="flex flex-col gap-4 w-full sm:w-[45%] md:w-[30%] lg:w-[20%]">
+      <h2 className="text-white font-semibold text-sm">{heading}</h2>
 
       <ul
-        className={`flex items-start justify-start ${
-          isIcons ? "flex-row gap-5" : "flex-col gap-3"
-        } `}
+        className={`flex ${
+          isIcons ? "flex-row gap-5" : "flex-col gap-2"
+        } items-start justify-start flex-wrap`}
       >
-        {list.map((Elem: any, index): any => {
-          return (
+        {list.map((Elem: any, index) => (
+          <li key={index}>
             <Link
-              className="text-xs hover:text-gray-200 text-gray-300"
               href="/"
-              key={index}
+              className="text-xs text-gray-400 hover:text-gray-200 transition"
             >
               {isIcons && typeof Elem === "function" ? (
                 <Elem className="w-4 h-4" />
@@ -31,8 +31,8 @@ function FooterSection({
                 Elem
               )}
             </Link>
-          );
-        })}
+          </li>
+        ))}
       </ul>
     </div>
   );

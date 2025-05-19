@@ -335,12 +335,7 @@ async function OAuthCallback(
   next: NextFunction
 ): Promise<any> {
   try {
-    // const payload = {
-    //   id: req.user.id,
-    //   name: req.user.displayName,
-    //   email: req.user.emails[0].value,
-    //   avatar: req.user.photos[0].value,
-    // };
+
 
     const userProfileDetails = req.user! as GoogleProfile;
 
@@ -372,33 +367,3 @@ export {
   OAuthCallback,
 };
 
-// My Requested User  {
-//   id: '102249055643214953400',
-//   displayName: 'Tanishq Yadav',
-//   name: { familyName: 'Yadav', givenName: 'Tanishq' },
-//   emails: [ { value: 'yadavtanishq949@gmail.com', verified: true } ],
-//   photos: [
-//     {
-//       value: 'https://lh3.googleusercontent.com/a/ACg8ocJ46yJ5HnTC441-88sO1LiIsEaj_usqtYizC6lTJf3_TsjK9A=s96-c'
-//     }
-//   ],
-//   provider: 'google',
-//   _raw: '{\n' +
-//     '  "sub": "102249055643214953400",\n' +
-//     '  "name": "Tanishq Yadav",\n' +
-//     '  "given_name": "Tanishq",\n' +
-//     '  "family_name": "Yadav",\n' +
-//     '  "picture": "https://lh3.googleusercontent.com/a/ACg8ocJ46yJ5HnTC441-88sO1LiIsEaj_usqtYizC6lTJf3_TsjK9A\\u003ds96-c",\n' +
-//     '  "email": "yadavtanishq949@gmail.com",\n' +
-//     '  "email_verified": true\n' +
-//     '}',
-//   _json: {
-//     sub: '102249055643214953400',
-//     name: 'Tanishq Yadav',
-//     given_name: 'Tanishq',
-//     family_name: 'Yadav',
-//     picture: 'https://lh3.googleusercontent.com/a/ACg8ocJ46yJ5HnTC441-88sO1LiIsEaj_usqtYizC6lTJf3_TsjK9A=s96-c',
-//     email: 'yadavtanishq949@gmail.com',
-//     email_verified: true
-//   }
-// }

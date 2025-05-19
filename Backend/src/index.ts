@@ -7,8 +7,23 @@ dotenv.config({ path: ".env" });
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import passport from "passport";
 import { prisma } from "./DB";
+import { Server, Socket } from "socket.io";
+import { createServer } from "http";
 
 const app = express();
+
+// Creating a Socket Server using the express Server :-
+
+const httpServer = createServer(app);
+const io = new Server(httpServer);
+
+io.on("connection", (socket: Socket) => {
+  console.log("Socket Connected SuccessFully ", socket.id);
+
+    io.on("disconnect", () => {
+      io.emit("disconnect-msg   ", socket.id);
+    });
+});
 const PORT = process.env.PORT || 8080;
 
 // Middleware for express :-
@@ -29,9 +44,7 @@ passport.use(
       clientSecret: process.env.OAUTH_CLIENT_SECRET!,
       callbackURL: `http://localhost:8080/api/v1/auth/google/callback`,
     },
-    async (accessToken, refreshToken, profile, done) => {
-      // Here you can save the user to your DB if needed
-
+    async (_, _a, profile, done) => {
       // Check in the DB is user with email already exist :-
       const email = profile?.emails?.[0]?.value;
 
@@ -68,6 +81,6 @@ app.use("/api/v1", router);
 app.use(errorMiddleware);
 
 // Listening the Server on the PORT :-
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

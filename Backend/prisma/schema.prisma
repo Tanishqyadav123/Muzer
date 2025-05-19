@@ -21,7 +21,8 @@ model User {
   lastName           String
   email              String               @unique
   phoneNumber        String?
-  password           String
+  password           String?
+  socialLogin        Boolean              @default(false)
   role               UserRole
   isSubscribed       Boolean
   avatarUrl          String? // May have local or cloudinary URL
@@ -32,9 +33,9 @@ model User {
   starredSongs       starredSong[]
   Subscription       Subscription[]
   PaymentTransaction PaymentTransaction[]
-  Streams       Stream[]
-  Votes         Vote[]
-  StreamSongs   StreamSong[]
+  Streams            Stream[]
+  Votes              Vote[]
+  StreamSongs        StreamSong[]
 }
 
 // Song Table :-
@@ -52,6 +53,7 @@ model Song {
   AlbumSongs   AlbumSong[]
   starredSongs starredSong[]
 }
+
 // Album Table :-
 model Album {
   id         Int         @id @default(autoincrement())
@@ -171,21 +173,17 @@ model VerificationCodes {
   updatedAt  DateTime             @updatedAt
 }
 
-
 // model Stream {
 //    id  String  @id @default(uuid())
 //    streamName  String
 //    userId  String
-   
 
 //    // References 
 //    userDetails User @relation(fields: [userId] , references: [id])
 //    RoomDetails Room[]
 //    StreamSongDetails StreamSongs[]
-  
+
 // }
-
-
 
 // model Room {
 //    id  String @id @default(uuid())
@@ -196,7 +194,6 @@ model VerificationCodes {
 //    StreamDetails Stream  @relation(fields: [streamId] , references: [id])
 // }
 
-
 // model StreamSongs {
 //    id  String @id @default(uuid())
 //    url  String
@@ -204,7 +201,6 @@ model VerificationCodes {
 
 //    StreamDetails Stream  @relation(fields: [streamId] , references: [id])
 // }
-
 
 // model voting {
 //    id   String  @id @default(uuid())
@@ -217,40 +213,40 @@ model VerificationCodes {
 
 // A Stream represents a "room" with a queue
 model Stream {
-  id          String       @id @default(uuid())
-  streamName  String
-  hostId      String       // FK to User
-  createdAt   DateTime     @default(now())
-  active     Boolean   @default(true)
+  id         String   @id @default(uuid())
+  streamName String
+  hostId     String // FK to User
+  createdAt  DateTime @default(now())
+  active     Boolean  @default(true)
 
-  host         User        @relation(fields: [hostId], references: [id])
-  songs        StreamSong[]
+  host  User         @relation(fields: [hostId], references: [id])
+  songs StreamSong[]
 }
 
 // Songs added to a stream (can include metadata if needed)
 model StreamSong {
-  id         String     @id @default(uuid())
-  url        String
-  title      String?
-  streamId   String
-  userId     String
- 
-  addedAt    DateTime   @default(now())
+  id       String  @id @default(uuid())
+  url      String
+  title    String?
+  streamId String
+  userId   String
 
-  stream     Stream     @relation(fields: [streamId], references: [id])
-  User       User   @relation(fields: [userId], references: [id])
-  votes      Vote[]
+  addedAt DateTime @default(now())
+
+  stream Stream @relation(fields: [streamId], references: [id])
+  User   User   @relation(fields: [userId], references: [id])
+  votes  Vote[]
 }
 
 // Votes on songs
 model Vote {
-  id        String    @id @default(uuid())
-  songId    String
-  userId    String
-  type      VoteType
+  id     String   @id @default(uuid())
+  songId String
+  userId String
+  type   VoteType
 
-  song      StreamSong  @relation(fields: [songId], references: [id])
-  user      User        @relation(fields: [userId], references: [id])
+  song StreamSong @relation(fields: [songId], references: [id])
+  user User       @relation(fields: [userId], references: [id])
 }
 
 // Enum for upvote/downvote
@@ -263,7 +259,6 @@ enum UserRole {
   ADMIN
   USER
 }
-
 
 enum VerificationCodeType {
   VERIFY

@@ -24,6 +24,9 @@ import { responseHandler } from "../handlers/response.handler";
 import { sendEmail } from "../services/emailService";
 import { VerificationCodeType } from "../entity/auth.entity";
 import { generateOTP } from "../utils/generateOtp";
+import { GoogleCallbackParameters } from "passport-google-oauth20";
+import { DecodedUserType } from "../entity/decodedUser";
+import { GoogleProfile } from "../interfaces/google.auth.interface";
 
 // Function for send Otp on email :-
 
@@ -180,7 +183,7 @@ async function signinUser(
       return next(new ErrorHandler(`Validation error `, 400));
     }
 
-    const { email, password , rememberMe } = parseResponse.data;
+    const { email, password, rememberMe } = parseResponse.data;
 
     const isUserExist = await checkUserExistByEmail(email);
 
@@ -188,11 +191,21 @@ async function signinUser(
       return next(new ErrorHandler("Invalid Credentails", 400));
     }
 
+    if (!isUserExist?.password) {
+      return next(
+        new ErrorHandler(
+          "You have not set password yet...use forgot password",
+          400
+        )
+      );
+    }
     // Matching the Password :-
-    const isMatch = await bcrypt.compare(password, isUserExist.password);
+    if (isUserExist?.password) {
+      const isMatch = await bcrypt.compare(password, isUserExist?.password);
 
-    if (!isMatch) {
-      return next(new ErrorHandler("Invalid Credentails", 400));
+      if (!isMatch) {
+        return next(new ErrorHandler("Invalid Credentails", 400));
+      }
     }
 
     // Generate the JWT Token :-
@@ -201,7 +214,7 @@ async function signinUser(
       { userId: isUserExist.id, userRole: isUserExist.role },
       process.env.JWT_SECRET!,
       {
-        expiresIn:  rememberMe ? "15d" : "7d",
+        expiresIn: rememberMe ? "15d" : "7d",
       }
     );
 
@@ -315,6 +328,40 @@ async function setNewPasword(
   }
 }
 
+// Function For Initializing the OAUth :-
+async function OAuthCallback(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<any> {
+  try {
+    // const payload = {
+    //   id: req.user.id,
+    //   name: req.user.displayName,
+    //   email: req.user.emails[0].value,
+    //   avatar: req.user.photos[0].value,
+    // };
+
+    const userProfileDetails = req.user! as GoogleProfile;
+
+    const userEmail = userProfileDetails.emails?.[0].value;
+    const isUserExist = await checkUserExistByEmail(userEmail);
+
+    const token = jwt.sign(
+      {
+        userId: isUserExist?.id,
+        role: isUserExist?.role,
+      },
+      process.env.JWT_SECRET!,
+      { expiresIn: "7d" }
+    );
+
+    return res.redirect(`http://localhost:3000?token=${token}`);
+  } catch (error: any) {
+    return next(new ErrorHandler(error.message, 500));
+  }
+}
+
 export {
   signupUser,
   sendOtpOnEmail,
@@ -322,4 +369,36 @@ export {
   signinUser,
   forgotPasswordOtp,
   setNewPasword,
+  OAuthCallback,
 };
+
+// My Requested User  {
+//   id: '102249055643214953400',
+//   displayName: 'Tanishq Yadav',
+//   name: { familyName: 'Yadav', givenName: 'Tanishq' },
+//   emails: [ { value: 'yadavtanishq949@gmail.com', verified: true } ],
+//   photos: [
+//     {
+//       value: 'https://lh3.googleusercontent.com/a/ACg8ocJ46yJ5HnTC441-88sO1LiIsEaj_usqtYizC6lTJf3_TsjK9A=s96-c'
+//     }
+//   ],
+//   provider: 'google',
+//   _raw: '{\n' +
+//     '  "sub": "102249055643214953400",\n' +
+//     '  "name": "Tanishq Yadav",\n' +
+//     '  "given_name": "Tanishq",\n' +
+//     '  "family_name": "Yadav",\n' +
+//     '  "picture": "https://lh3.googleusercontent.com/a/ACg8ocJ46yJ5HnTC441-88sO1LiIsEaj_usqtYizC6lTJf3_TsjK9A\\u003ds96-c",\n' +
+//     '  "email": "yadavtanishq949@gmail.com",\n' +
+//     '  "email_verified": true\n' +
+//     '}',
+//   _json: {
+//     sub: '102249055643214953400',
+//     name: 'Tanishq Yadav',
+//     given_name: 'Tanishq',
+//     family_name: 'Yadav',
+//     picture: 'https://lh3.googleusercontent.com/a/ACg8ocJ46yJ5HnTC441-88sO1LiIsEaj_usqtYizC6lTJf3_TsjK9A=s96-c',
+//     email: 'yadavtanishq949@gmail.com',
+//     email_verified: true
+//   }
+// }

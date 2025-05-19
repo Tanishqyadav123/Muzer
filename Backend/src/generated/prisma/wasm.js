@@ -127,6 +127,7 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   phoneNumber: 'phoneNumber',
   password: 'password',
+  socialLogin: 'socialLogin',
   role: 'role',
   isSubscribed: 'isSubscribed',
   avatarUrl: 'avatarUrl',
@@ -227,6 +228,30 @@ exports.Prisma.VerificationCodesScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.StreamScalarFieldEnum = {
+  id: 'id',
+  streamName: 'streamName',
+  hostId: 'hostId',
+  createdAt: 'createdAt',
+  active: 'active'
+};
+
+exports.Prisma.StreamSongScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  title: 'title',
+  streamId: 'streamId',
+  userId: 'userId',
+  addedAt: 'addedAt'
+};
+
+exports.Prisma.VoteScalarFieldEnum = {
+  id: 'id',
+  songId: 'songId',
+  userId: 'userId',
+  type: 'type'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -251,6 +276,11 @@ exports.VerificationCodeType = exports.$Enums.VerificationCodeType = {
   FORGOT: 'FORGOT'
 };
 
+exports.VoteType = exports.$Enums.VoteType = {
+  UP: 'UP',
+  DOWN: 'DOWN'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Song: 'Song',
@@ -262,7 +292,10 @@ exports.Prisma.ModelName = {
   PricingPackage: 'PricingPackage',
   Subscription: 'Subscription',
   PaymentTransaction: 'PaymentTransaction',
-  VerificationCodes: 'VerificationCodes'
+  VerificationCodes: 'VerificationCodes',
+  Stream: 'Stream',
+  StreamSong: 'StreamSong',
+  Vote: 'Vote'
 };
 
 /**

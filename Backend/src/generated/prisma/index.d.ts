@@ -68,12 +68,35 @@ export type PaymentTransaction = $Result.DefaultSelection<Prisma.$PaymentTransac
  * 
  */
 export type VerificationCodes = $Result.DefaultSelection<Prisma.$VerificationCodesPayload>
+/**
+ * Model Stream
+ * 
+ */
+export type Stream = $Result.DefaultSelection<Prisma.$StreamPayload>
+/**
+ * Model StreamSong
+ * 
+ */
+export type StreamSong = $Result.DefaultSelection<Prisma.$StreamSongPayload>
+/**
+ * Model Vote
+ * 
+ */
+export type Vote = $Result.DefaultSelection<Prisma.$VotePayload>
 
 /**
  * Enums
  */
 export namespace $Enums {
-  export const UserRole: {
+  export const VoteType: {
+  UP: 'UP',
+  DOWN: 'DOWN'
+};
+
+export type VoteType = (typeof VoteType)[keyof typeof VoteType]
+
+
+export const UserRole: {
   ADMIN: 'ADMIN',
   USER: 'USER'
 };
@@ -89,6 +112,10 @@ export const VerificationCodeType: {
 export type VerificationCodeType = (typeof VerificationCodeType)[keyof typeof VerificationCodeType]
 
 }
+
+export type VoteType = $Enums.VoteType
+
+export const VoteType: typeof $Enums.VoteType
 
 export type UserRole = $Enums.UserRole
 
@@ -332,6 +359,36 @@ export class PrismaClient<
     * ```
     */
   get verificationCodes(): Prisma.VerificationCodesDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.stream`: Exposes CRUD operations for the **Stream** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Streams
+    * const streams = await prisma.stream.findMany()
+    * ```
+    */
+  get stream(): Prisma.StreamDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.streamSong`: Exposes CRUD operations for the **StreamSong** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more StreamSongs
+    * const streamSongs = await prisma.streamSong.findMany()
+    * ```
+    */
+  get streamSong(): Prisma.StreamSongDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.vote`: Exposes CRUD operations for the **Vote** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Votes
+    * const votes = await prisma.vote.findMany()
+    * ```
+    */
+  get vote(): Prisma.VoteDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -782,7 +839,10 @@ export namespace Prisma {
     PricingPackage: 'PricingPackage',
     Subscription: 'Subscription',
     PaymentTransaction: 'PaymentTransaction',
-    VerificationCodes: 'VerificationCodes'
+    VerificationCodes: 'VerificationCodes',
+    Stream: 'Stream',
+    StreamSong: 'StreamSong',
+    Vote: 'Vote'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -801,7 +861,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "song" | "album" | "playlist" | "playlistSong" | "albumSong" | "starredSong" | "pricingPackage" | "subscription" | "paymentTransaction" | "verificationCodes"
+      modelProps: "user" | "song" | "album" | "playlist" | "playlistSong" | "albumSong" | "starredSong" | "pricingPackage" | "subscription" | "paymentTransaction" | "verificationCodes" | "stream" | "streamSong" | "vote"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1619,6 +1679,228 @@ export namespace Prisma {
           }
         }
       }
+      Stream: {
+        payload: Prisma.$StreamPayload<ExtArgs>
+        fields: Prisma.StreamFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.StreamFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.StreamFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamPayload>
+          }
+          findFirst: {
+            args: Prisma.StreamFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.StreamFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamPayload>
+          }
+          findMany: {
+            args: Prisma.StreamFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamPayload>[]
+          }
+          create: {
+            args: Prisma.StreamCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamPayload>
+          }
+          createMany: {
+            args: Prisma.StreamCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.StreamCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamPayload>[]
+          }
+          delete: {
+            args: Prisma.StreamDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamPayload>
+          }
+          update: {
+            args: Prisma.StreamUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamPayload>
+          }
+          deleteMany: {
+            args: Prisma.StreamDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.StreamUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.StreamUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamPayload>[]
+          }
+          upsert: {
+            args: Prisma.StreamUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamPayload>
+          }
+          aggregate: {
+            args: Prisma.StreamAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStream>
+          }
+          groupBy: {
+            args: Prisma.StreamGroupByArgs<ExtArgs>
+            result: $Utils.Optional<StreamGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.StreamCountArgs<ExtArgs>
+            result: $Utils.Optional<StreamCountAggregateOutputType> | number
+          }
+        }
+      }
+      StreamSong: {
+        payload: Prisma.$StreamSongPayload<ExtArgs>
+        fields: Prisma.StreamSongFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.StreamSongFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamSongPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.StreamSongFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamSongPayload>
+          }
+          findFirst: {
+            args: Prisma.StreamSongFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamSongPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.StreamSongFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamSongPayload>
+          }
+          findMany: {
+            args: Prisma.StreamSongFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamSongPayload>[]
+          }
+          create: {
+            args: Prisma.StreamSongCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamSongPayload>
+          }
+          createMany: {
+            args: Prisma.StreamSongCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.StreamSongCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamSongPayload>[]
+          }
+          delete: {
+            args: Prisma.StreamSongDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamSongPayload>
+          }
+          update: {
+            args: Prisma.StreamSongUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamSongPayload>
+          }
+          deleteMany: {
+            args: Prisma.StreamSongDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.StreamSongUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.StreamSongUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamSongPayload>[]
+          }
+          upsert: {
+            args: Prisma.StreamSongUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StreamSongPayload>
+          }
+          aggregate: {
+            args: Prisma.StreamSongAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStreamSong>
+          }
+          groupBy: {
+            args: Prisma.StreamSongGroupByArgs<ExtArgs>
+            result: $Utils.Optional<StreamSongGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.StreamSongCountArgs<ExtArgs>
+            result: $Utils.Optional<StreamSongCountAggregateOutputType> | number
+          }
+        }
+      }
+      Vote: {
+        payload: Prisma.$VotePayload<ExtArgs>
+        fields: Prisma.VoteFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VoteFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VoteFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload>
+          }
+          findFirst: {
+            args: Prisma.VoteFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VoteFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload>
+          }
+          findMany: {
+            args: Prisma.VoteFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload>[]
+          }
+          create: {
+            args: Prisma.VoteCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload>
+          }
+          createMany: {
+            args: Prisma.VoteCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VoteCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload>[]
+          }
+          delete: {
+            args: Prisma.VoteDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload>
+          }
+          update: {
+            args: Prisma.VoteUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload>
+          }
+          deleteMany: {
+            args: Prisma.VoteDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VoteUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.VoteUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload>[]
+          }
+          upsert: {
+            args: Prisma.VoteUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload>
+          }
+          aggregate: {
+            args: Prisma.VoteAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVote>
+          }
+          groupBy: {
+            args: Prisma.VoteGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VoteGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VoteCountArgs<ExtArgs>
+            result: $Utils.Optional<VoteCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1714,6 +1996,9 @@ export namespace Prisma {
     subscription?: SubscriptionOmit
     paymentTransaction?: PaymentTransactionOmit
     verificationCodes?: VerificationCodesOmit
+    stream?: StreamOmit
+    streamSong?: StreamSongOmit
+    vote?: VoteOmit
   }
 
   /* Types for Logging */
@@ -1812,6 +2097,9 @@ export namespace Prisma {
     starredSongs: number
     Subscription: number
     PaymentTransaction: number
+    Streams: number
+    Votes: number
+    StreamSongs: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1819,6 +2107,9 @@ export namespace Prisma {
     starredSongs?: boolean | UserCountOutputTypeCountStarredSongsArgs
     Subscription?: boolean | UserCountOutputTypeCountSubscriptionArgs
     PaymentTransaction?: boolean | UserCountOutputTypeCountPaymentTransactionArgs
+    Streams?: boolean | UserCountOutputTypeCountStreamsArgs
+    Votes?: boolean | UserCountOutputTypeCountVotesArgs
+    StreamSongs?: boolean | UserCountOutputTypeCountStreamSongsArgs
   }
 
   // Custom InputTypes
@@ -1858,6 +2149,27 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountPaymentTransactionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PaymentTransactionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountStreamsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StreamWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountVotesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VoteWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountStreamSongsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StreamSongWhereInput
   }
 
 
@@ -2044,6 +2356,68 @@ export namespace Prisma {
 
 
   /**
+   * Count Type StreamCountOutputType
+   */
+
+  export type StreamCountOutputType = {
+    songs: number
+  }
+
+  export type StreamCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    songs?: boolean | StreamCountOutputTypeCountSongsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * StreamCountOutputType without action
+   */
+  export type StreamCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StreamCountOutputType
+     */
+    select?: StreamCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * StreamCountOutputType without action
+   */
+  export type StreamCountOutputTypeCountSongsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StreamSongWhereInput
+  }
+
+
+  /**
+   * Count Type StreamSongCountOutputType
+   */
+
+  export type StreamSongCountOutputType = {
+    votes: number
+  }
+
+  export type StreamSongCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    votes?: boolean | StreamSongCountOutputTypeCountVotesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * StreamSongCountOutputType without action
+   */
+  export type StreamSongCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StreamSongCountOutputType
+     */
+    select?: StreamSongCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * StreamSongCountOutputType without action
+   */
+  export type StreamSongCountOutputTypeCountVotesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VoteWhereInput
+  }
+
+
+  /**
    * Models
    */
 
@@ -2064,6 +2438,7 @@ export namespace Prisma {
     email: string | null
     phoneNumber: string | null
     password: string | null
+    socialLogin: boolean | null
     role: $Enums.UserRole | null
     isSubscribed: boolean | null
     avatarUrl: string | null
@@ -2079,6 +2454,7 @@ export namespace Prisma {
     email: string | null
     phoneNumber: string | null
     password: string | null
+    socialLogin: boolean | null
     role: $Enums.UserRole | null
     isSubscribed: boolean | null
     avatarUrl: string | null
@@ -2094,6 +2470,7 @@ export namespace Prisma {
     email: number
     phoneNumber: number
     password: number
+    socialLogin: number
     role: number
     isSubscribed: number
     avatarUrl: number
@@ -2111,6 +2488,7 @@ export namespace Prisma {
     email?: true
     phoneNumber?: true
     password?: true
+    socialLogin?: true
     role?: true
     isSubscribed?: true
     avatarUrl?: true
@@ -2126,6 +2504,7 @@ export namespace Prisma {
     email?: true
     phoneNumber?: true
     password?: true
+    socialLogin?: true
     role?: true
     isSubscribed?: true
     avatarUrl?: true
@@ -2141,6 +2520,7 @@ export namespace Prisma {
     email?: true
     phoneNumber?: true
     password?: true
+    socialLogin?: true
     role?: true
     isSubscribed?: true
     avatarUrl?: true
@@ -2228,7 +2608,8 @@ export namespace Prisma {
     lastName: string
     email: string
     phoneNumber: string | null
-    password: string
+    password: string | null
+    socialLogin: boolean
     role: $Enums.UserRole
     isSubscribed: boolean
     avatarUrl: string | null
@@ -2261,6 +2642,7 @@ export namespace Prisma {
     email?: boolean
     phoneNumber?: boolean
     password?: boolean
+    socialLogin?: boolean
     role?: boolean
     isSubscribed?: boolean
     avatarUrl?: boolean
@@ -2271,6 +2653,9 @@ export namespace Prisma {
     starredSongs?: boolean | User$starredSongsArgs<ExtArgs>
     Subscription?: boolean | User$SubscriptionArgs<ExtArgs>
     PaymentTransaction?: boolean | User$PaymentTransactionArgs<ExtArgs>
+    Streams?: boolean | User$StreamsArgs<ExtArgs>
+    Votes?: boolean | User$VotesArgs<ExtArgs>
+    StreamSongs?: boolean | User$StreamSongsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2281,6 +2666,7 @@ export namespace Prisma {
     email?: boolean
     phoneNumber?: boolean
     password?: boolean
+    socialLogin?: boolean
     role?: boolean
     isSubscribed?: boolean
     avatarUrl?: boolean
@@ -2296,6 +2682,7 @@ export namespace Prisma {
     email?: boolean
     phoneNumber?: boolean
     password?: boolean
+    socialLogin?: boolean
     role?: boolean
     isSubscribed?: boolean
     avatarUrl?: boolean
@@ -2311,6 +2698,7 @@ export namespace Prisma {
     email?: boolean
     phoneNumber?: boolean
     password?: boolean
+    socialLogin?: boolean
     role?: boolean
     isSubscribed?: boolean
     avatarUrl?: boolean
@@ -2319,12 +2707,15 @@ export namespace Prisma {
     updateAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "phoneNumber" | "password" | "role" | "isSubscribed" | "avatarUrl" | "publicId" | "createdAt" | "updateAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "phoneNumber" | "password" | "socialLogin" | "role" | "isSubscribed" | "avatarUrl" | "publicId" | "createdAt" | "updateAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Playlist?: boolean | User$PlaylistArgs<ExtArgs>
     starredSongs?: boolean | User$starredSongsArgs<ExtArgs>
     Subscription?: boolean | User$SubscriptionArgs<ExtArgs>
     PaymentTransaction?: boolean | User$PaymentTransactionArgs<ExtArgs>
+    Streams?: boolean | User$StreamsArgs<ExtArgs>
+    Votes?: boolean | User$VotesArgs<ExtArgs>
+    StreamSongs?: boolean | User$StreamSongsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2337,6 +2728,9 @@ export namespace Prisma {
       starredSongs: Prisma.$starredSongPayload<ExtArgs>[]
       Subscription: Prisma.$SubscriptionPayload<ExtArgs>[]
       PaymentTransaction: Prisma.$PaymentTransactionPayload<ExtArgs>[]
+      Streams: Prisma.$StreamPayload<ExtArgs>[]
+      Votes: Prisma.$VotePayload<ExtArgs>[]
+      StreamSongs: Prisma.$StreamSongPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2344,7 +2738,8 @@ export namespace Prisma {
       lastName: string
       email: string
       phoneNumber: string | null
-      password: string
+      password: string | null
+      socialLogin: boolean
       role: $Enums.UserRole
       isSubscribed: boolean
       avatarUrl: string | null
@@ -2749,6 +3144,9 @@ export namespace Prisma {
     starredSongs<T extends User$starredSongsArgs<ExtArgs> = {}>(args?: Subset<T, User$starredSongsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$starredSongPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Subscription<T extends User$SubscriptionArgs<ExtArgs> = {}>(args?: Subset<T, User$SubscriptionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     PaymentTransaction<T extends User$PaymentTransactionArgs<ExtArgs> = {}>(args?: Subset<T, User$PaymentTransactionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Streams<T extends User$StreamsArgs<ExtArgs> = {}>(args?: Subset<T, User$StreamsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StreamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Votes<T extends User$VotesArgs<ExtArgs> = {}>(args?: Subset<T, User$VotesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    StreamSongs<T extends User$StreamSongsArgs<ExtArgs> = {}>(args?: Subset<T, User$StreamSongsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StreamSongPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2784,6 +3182,7 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly phoneNumber: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
+    readonly socialLogin: FieldRef<"User", 'Boolean'>
     readonly role: FieldRef<"User", 'UserRole'>
     readonly isSubscribed: FieldRef<"User", 'Boolean'>
     readonly avatarUrl: FieldRef<"User", 'String'>
@@ -3271,6 +3670,78 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PaymentTransactionScalarFieldEnum | PaymentTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * User.Streams
+   */
+  export type User$StreamsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Stream
+     */
+    select?: StreamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Stream
+     */
+    omit?: StreamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamInclude<ExtArgs> | null
+    where?: StreamWhereInput
+    orderBy?: StreamOrderByWithRelationInput | StreamOrderByWithRelationInput[]
+    cursor?: StreamWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StreamScalarFieldEnum | StreamScalarFieldEnum[]
+  }
+
+  /**
+   * User.Votes
+   */
+  export type User$VotesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    where?: VoteWhereInput
+    orderBy?: VoteOrderByWithRelationInput | VoteOrderByWithRelationInput[]
+    cursor?: VoteWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VoteScalarFieldEnum | VoteScalarFieldEnum[]
+  }
+
+  /**
+   * User.StreamSongs
+   */
+  export type User$StreamSongsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StreamSong
+     */
+    select?: StreamSongSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StreamSong
+     */
+    omit?: StreamSongOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamSongInclude<ExtArgs> | null
+    where?: StreamSongWhereInput
+    orderBy?: StreamSongOrderByWithRelationInput | StreamSongOrderByWithRelationInput[]
+    cursor?: StreamSongWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StreamSongScalarFieldEnum | StreamSongScalarFieldEnum[]
   }
 
   /**
@@ -14586,6 +15057,3256 @@ export namespace Prisma {
 
 
   /**
+   * Model Stream
+   */
+
+  export type AggregateStream = {
+    _count: StreamCountAggregateOutputType | null
+    _min: StreamMinAggregateOutputType | null
+    _max: StreamMaxAggregateOutputType | null
+  }
+
+  export type StreamMinAggregateOutputType = {
+    id: string | null
+    streamName: string | null
+    hostId: string | null
+    createdAt: Date | null
+    active: boolean | null
+  }
+
+  export type StreamMaxAggregateOutputType = {
+    id: string | null
+    streamName: string | null
+    hostId: string | null
+    createdAt: Date | null
+    active: boolean | null
+  }
+
+  export type StreamCountAggregateOutputType = {
+    id: number
+    streamName: number
+    hostId: number
+    createdAt: number
+    active: number
+    _all: number
+  }
+
+
+  export type StreamMinAggregateInputType = {
+    id?: true
+    streamName?: true
+    hostId?: true
+    createdAt?: true
+    active?: true
+  }
+
+  export type StreamMaxAggregateInputType = {
+    id?: true
+    streamName?: true
+    hostId?: true
+    createdAt?: true
+    active?: true
+  }
+
+  export type StreamCountAggregateInputType = {
+    id?: true
+    streamName?: true
+    hostId?: true
+    createdAt?: true
+    active?: true
+    _all?: true
+  }
+
+  export type StreamAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Stream to aggregate.
+     */
+    where?: StreamWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Streams to fetch.
+     */
+    orderBy?: StreamOrderByWithRelationInput | StreamOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: StreamWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Streams from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Streams.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Streams
+    **/
+    _count?: true | StreamCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: StreamMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: StreamMaxAggregateInputType
+  }
+
+  export type GetStreamAggregateType<T extends StreamAggregateArgs> = {
+        [P in keyof T & keyof AggregateStream]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStream[P]>
+      : GetScalarType<T[P], AggregateStream[P]>
+  }
+
+
+
+
+  export type StreamGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StreamWhereInput
+    orderBy?: StreamOrderByWithAggregationInput | StreamOrderByWithAggregationInput[]
+    by: StreamScalarFieldEnum[] | StreamScalarFieldEnum
+    having?: StreamScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: StreamCountAggregateInputType | true
+    _min?: StreamMinAggregateInputType
+    _max?: StreamMaxAggregateInputType
+  }
+
+  export type StreamGroupByOutputType = {
+    id: string
+    streamName: string
+    hostId: string
+    createdAt: Date
+    active: boolean
+    _count: StreamCountAggregateOutputType | null
+    _min: StreamMinAggregateOutputType | null
+    _max: StreamMaxAggregateOutputType | null
+  }
+
+  type GetStreamGroupByPayload<T extends StreamGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<StreamGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof StreamGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], StreamGroupByOutputType[P]>
+            : GetScalarType<T[P], StreamGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type StreamSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    streamName?: boolean
+    hostId?: boolean
+    createdAt?: boolean
+    active?: boolean
+    host?: boolean | UserDefaultArgs<ExtArgs>
+    songs?: boolean | Stream$songsArgs<ExtArgs>
+    _count?: boolean | StreamCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["stream"]>
+
+  export type StreamSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    streamName?: boolean
+    hostId?: boolean
+    createdAt?: boolean
+    active?: boolean
+    host?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["stream"]>
+
+  export type StreamSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    streamName?: boolean
+    hostId?: boolean
+    createdAt?: boolean
+    active?: boolean
+    host?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["stream"]>
+
+  export type StreamSelectScalar = {
+    id?: boolean
+    streamName?: boolean
+    hostId?: boolean
+    createdAt?: boolean
+    active?: boolean
+  }
+
+  export type StreamOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "streamName" | "hostId" | "createdAt" | "active", ExtArgs["result"]["stream"]>
+  export type StreamInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    host?: boolean | UserDefaultArgs<ExtArgs>
+    songs?: boolean | Stream$songsArgs<ExtArgs>
+    _count?: boolean | StreamCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type StreamIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    host?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type StreamIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    host?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $StreamPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Stream"
+    objects: {
+      host: Prisma.$UserPayload<ExtArgs>
+      songs: Prisma.$StreamSongPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      streamName: string
+      hostId: string
+      createdAt: Date
+      active: boolean
+    }, ExtArgs["result"]["stream"]>
+    composites: {}
+  }
+
+  type StreamGetPayload<S extends boolean | null | undefined | StreamDefaultArgs> = $Result.GetResult<Prisma.$StreamPayload, S>
+
+  type StreamCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<StreamFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: StreamCountAggregateInputType | true
+    }
+
+  export interface StreamDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Stream'], meta: { name: 'Stream' } }
+    /**
+     * Find zero or one Stream that matches the filter.
+     * @param {StreamFindUniqueArgs} args - Arguments to find a Stream
+     * @example
+     * // Get one Stream
+     * const stream = await prisma.stream.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends StreamFindUniqueArgs>(args: SelectSubset<T, StreamFindUniqueArgs<ExtArgs>>): Prisma__StreamClient<$Result.GetResult<Prisma.$StreamPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Stream that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {StreamFindUniqueOrThrowArgs} args - Arguments to find a Stream
+     * @example
+     * // Get one Stream
+     * const stream = await prisma.stream.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends StreamFindUniqueOrThrowArgs>(args: SelectSubset<T, StreamFindUniqueOrThrowArgs<ExtArgs>>): Prisma__StreamClient<$Result.GetResult<Prisma.$StreamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Stream that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StreamFindFirstArgs} args - Arguments to find a Stream
+     * @example
+     * // Get one Stream
+     * const stream = await prisma.stream.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends StreamFindFirstArgs>(args?: SelectSubset<T, StreamFindFirstArgs<ExtArgs>>): Prisma__StreamClient<$Result.GetResult<Prisma.$StreamPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Stream that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StreamFindFirstOrThrowArgs} args - Arguments to find a Stream
+     * @example
+     * // Get one Stream
+     * const stream = await prisma.stream.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends StreamFindFirstOrThrowArgs>(args?: SelectSubset<T, StreamFindFirstOrThrowArgs<ExtArgs>>): Prisma__StreamClient<$Result.GetResult<Prisma.$StreamPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Streams that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StreamFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Streams
+     * const streams = await prisma.stream.findMany()
+     * 
+     * // Get first 10 Streams
+     * const streams = await prisma.stream.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const streamWithIdOnly = await prisma.stream.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends StreamFindManyArgs>(args?: SelectSubset<T, StreamFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StreamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Stream.
+     * @param {StreamCreateArgs} args - Arguments to create a Stream.
+     * @example
+     * // Create one Stream
+     * const Stream = await prisma.stream.create({
+     *   data: {
+     *     // ... data to create a Stream
+     *   }
+     * })
+     * 
+     */
+    create<T extends StreamCreateArgs>(args: SelectSubset<T, StreamCreateArgs<ExtArgs>>): Prisma__StreamClient<$Result.GetResult<Prisma.$StreamPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Streams.
+     * @param {StreamCreateManyArgs} args - Arguments to create many Streams.
+     * @example
+     * // Create many Streams
+     * const stream = await prisma.stream.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends StreamCreateManyArgs>(args?: SelectSubset<T, StreamCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Streams and returns the data saved in the database.
+     * @param {StreamCreateManyAndReturnArgs} args - Arguments to create many Streams.
+     * @example
+     * // Create many Streams
+     * const stream = await prisma.stream.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Streams and only return the `id`
+     * const streamWithIdOnly = await prisma.stream.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends StreamCreateManyAndReturnArgs>(args?: SelectSubset<T, StreamCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StreamPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Stream.
+     * @param {StreamDeleteArgs} args - Arguments to delete one Stream.
+     * @example
+     * // Delete one Stream
+     * const Stream = await prisma.stream.delete({
+     *   where: {
+     *     // ... filter to delete one Stream
+     *   }
+     * })
+     * 
+     */
+    delete<T extends StreamDeleteArgs>(args: SelectSubset<T, StreamDeleteArgs<ExtArgs>>): Prisma__StreamClient<$Result.GetResult<Prisma.$StreamPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Stream.
+     * @param {StreamUpdateArgs} args - Arguments to update one Stream.
+     * @example
+     * // Update one Stream
+     * const stream = await prisma.stream.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends StreamUpdateArgs>(args: SelectSubset<T, StreamUpdateArgs<ExtArgs>>): Prisma__StreamClient<$Result.GetResult<Prisma.$StreamPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Streams.
+     * @param {StreamDeleteManyArgs} args - Arguments to filter Streams to delete.
+     * @example
+     * // Delete a few Streams
+     * const { count } = await prisma.stream.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends StreamDeleteManyArgs>(args?: SelectSubset<T, StreamDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Streams.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StreamUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Streams
+     * const stream = await prisma.stream.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends StreamUpdateManyArgs>(args: SelectSubset<T, StreamUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Streams and returns the data updated in the database.
+     * @param {StreamUpdateManyAndReturnArgs} args - Arguments to update many Streams.
+     * @example
+     * // Update many Streams
+     * const stream = await prisma.stream.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Streams and only return the `id`
+     * const streamWithIdOnly = await prisma.stream.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends StreamUpdateManyAndReturnArgs>(args: SelectSubset<T, StreamUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StreamPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Stream.
+     * @param {StreamUpsertArgs} args - Arguments to update or create a Stream.
+     * @example
+     * // Update or create a Stream
+     * const stream = await prisma.stream.upsert({
+     *   create: {
+     *     // ... data to create a Stream
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Stream we want to update
+     *   }
+     * })
+     */
+    upsert<T extends StreamUpsertArgs>(args: SelectSubset<T, StreamUpsertArgs<ExtArgs>>): Prisma__StreamClient<$Result.GetResult<Prisma.$StreamPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Streams.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StreamCountArgs} args - Arguments to filter Streams to count.
+     * @example
+     * // Count the number of Streams
+     * const count = await prisma.stream.count({
+     *   where: {
+     *     // ... the filter for the Streams we want to count
+     *   }
+     * })
+    **/
+    count<T extends StreamCountArgs>(
+      args?: Subset<T, StreamCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], StreamCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Stream.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StreamAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends StreamAggregateArgs>(args: Subset<T, StreamAggregateArgs>): Prisma.PrismaPromise<GetStreamAggregateType<T>>
+
+    /**
+     * Group by Stream.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StreamGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends StreamGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: StreamGroupByArgs['orderBy'] }
+        : { orderBy?: StreamGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, StreamGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStreamGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Stream model
+   */
+  readonly fields: StreamFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Stream.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__StreamClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    host<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    songs<T extends Stream$songsArgs<ExtArgs> = {}>(args?: Subset<T, Stream$songsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StreamSongPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Stream model
+   */
+  interface StreamFieldRefs {
+    readonly id: FieldRef<"Stream", 'String'>
+    readonly streamName: FieldRef<"Stream", 'String'>
+    readonly hostId: FieldRef<"Stream", 'String'>
+    readonly createdAt: FieldRef<"Stream", 'DateTime'>
+    readonly active: FieldRef<"Stream", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Stream findUnique
+   */
+  export type StreamFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Stream
+     */
+    select?: StreamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Stream
+     */
+    omit?: StreamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamInclude<ExtArgs> | null
+    /**
+     * Filter, which Stream to fetch.
+     */
+    where: StreamWhereUniqueInput
+  }
+
+  /**
+   * Stream findUniqueOrThrow
+   */
+  export type StreamFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Stream
+     */
+    select?: StreamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Stream
+     */
+    omit?: StreamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamInclude<ExtArgs> | null
+    /**
+     * Filter, which Stream to fetch.
+     */
+    where: StreamWhereUniqueInput
+  }
+
+  /**
+   * Stream findFirst
+   */
+  export type StreamFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Stream
+     */
+    select?: StreamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Stream
+     */
+    omit?: StreamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamInclude<ExtArgs> | null
+    /**
+     * Filter, which Stream to fetch.
+     */
+    where?: StreamWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Streams to fetch.
+     */
+    orderBy?: StreamOrderByWithRelationInput | StreamOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Streams.
+     */
+    cursor?: StreamWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Streams from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Streams.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Streams.
+     */
+    distinct?: StreamScalarFieldEnum | StreamScalarFieldEnum[]
+  }
+
+  /**
+   * Stream findFirstOrThrow
+   */
+  export type StreamFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Stream
+     */
+    select?: StreamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Stream
+     */
+    omit?: StreamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamInclude<ExtArgs> | null
+    /**
+     * Filter, which Stream to fetch.
+     */
+    where?: StreamWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Streams to fetch.
+     */
+    orderBy?: StreamOrderByWithRelationInput | StreamOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Streams.
+     */
+    cursor?: StreamWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Streams from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Streams.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Streams.
+     */
+    distinct?: StreamScalarFieldEnum | StreamScalarFieldEnum[]
+  }
+
+  /**
+   * Stream findMany
+   */
+  export type StreamFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Stream
+     */
+    select?: StreamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Stream
+     */
+    omit?: StreamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamInclude<ExtArgs> | null
+    /**
+     * Filter, which Streams to fetch.
+     */
+    where?: StreamWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Streams to fetch.
+     */
+    orderBy?: StreamOrderByWithRelationInput | StreamOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Streams.
+     */
+    cursor?: StreamWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Streams from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Streams.
+     */
+    skip?: number
+    distinct?: StreamScalarFieldEnum | StreamScalarFieldEnum[]
+  }
+
+  /**
+   * Stream create
+   */
+  export type StreamCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Stream
+     */
+    select?: StreamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Stream
+     */
+    omit?: StreamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Stream.
+     */
+    data: XOR<StreamCreateInput, StreamUncheckedCreateInput>
+  }
+
+  /**
+   * Stream createMany
+   */
+  export type StreamCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Streams.
+     */
+    data: StreamCreateManyInput | StreamCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Stream createManyAndReturn
+   */
+  export type StreamCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Stream
+     */
+    select?: StreamSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Stream
+     */
+    omit?: StreamOmit<ExtArgs> | null
+    /**
+     * The data used to create many Streams.
+     */
+    data: StreamCreateManyInput | StreamCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Stream update
+   */
+  export type StreamUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Stream
+     */
+    select?: StreamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Stream
+     */
+    omit?: StreamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Stream.
+     */
+    data: XOR<StreamUpdateInput, StreamUncheckedUpdateInput>
+    /**
+     * Choose, which Stream to update.
+     */
+    where: StreamWhereUniqueInput
+  }
+
+  /**
+   * Stream updateMany
+   */
+  export type StreamUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Streams.
+     */
+    data: XOR<StreamUpdateManyMutationInput, StreamUncheckedUpdateManyInput>
+    /**
+     * Filter which Streams to update
+     */
+    where?: StreamWhereInput
+    /**
+     * Limit how many Streams to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Stream updateManyAndReturn
+   */
+  export type StreamUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Stream
+     */
+    select?: StreamSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Stream
+     */
+    omit?: StreamOmit<ExtArgs> | null
+    /**
+     * The data used to update Streams.
+     */
+    data: XOR<StreamUpdateManyMutationInput, StreamUncheckedUpdateManyInput>
+    /**
+     * Filter which Streams to update
+     */
+    where?: StreamWhereInput
+    /**
+     * Limit how many Streams to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Stream upsert
+   */
+  export type StreamUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Stream
+     */
+    select?: StreamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Stream
+     */
+    omit?: StreamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Stream to update in case it exists.
+     */
+    where: StreamWhereUniqueInput
+    /**
+     * In case the Stream found by the `where` argument doesn't exist, create a new Stream with this data.
+     */
+    create: XOR<StreamCreateInput, StreamUncheckedCreateInput>
+    /**
+     * In case the Stream was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<StreamUpdateInput, StreamUncheckedUpdateInput>
+  }
+
+  /**
+   * Stream delete
+   */
+  export type StreamDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Stream
+     */
+    select?: StreamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Stream
+     */
+    omit?: StreamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamInclude<ExtArgs> | null
+    /**
+     * Filter which Stream to delete.
+     */
+    where: StreamWhereUniqueInput
+  }
+
+  /**
+   * Stream deleteMany
+   */
+  export type StreamDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Streams to delete
+     */
+    where?: StreamWhereInput
+    /**
+     * Limit how many Streams to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Stream.songs
+   */
+  export type Stream$songsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StreamSong
+     */
+    select?: StreamSongSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StreamSong
+     */
+    omit?: StreamSongOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamSongInclude<ExtArgs> | null
+    where?: StreamSongWhereInput
+    orderBy?: StreamSongOrderByWithRelationInput | StreamSongOrderByWithRelationInput[]
+    cursor?: StreamSongWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StreamSongScalarFieldEnum | StreamSongScalarFieldEnum[]
+  }
+
+  /**
+   * Stream without action
+   */
+  export type StreamDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Stream
+     */
+    select?: StreamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Stream
+     */
+    omit?: StreamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model StreamSong
+   */
+
+  export type AggregateStreamSong = {
+    _count: StreamSongCountAggregateOutputType | null
+    _min: StreamSongMinAggregateOutputType | null
+    _max: StreamSongMaxAggregateOutputType | null
+  }
+
+  export type StreamSongMinAggregateOutputType = {
+    id: string | null
+    url: string | null
+    title: string | null
+    streamId: string | null
+    userId: string | null
+    addedAt: Date | null
+  }
+
+  export type StreamSongMaxAggregateOutputType = {
+    id: string | null
+    url: string | null
+    title: string | null
+    streamId: string | null
+    userId: string | null
+    addedAt: Date | null
+  }
+
+  export type StreamSongCountAggregateOutputType = {
+    id: number
+    url: number
+    title: number
+    streamId: number
+    userId: number
+    addedAt: number
+    _all: number
+  }
+
+
+  export type StreamSongMinAggregateInputType = {
+    id?: true
+    url?: true
+    title?: true
+    streamId?: true
+    userId?: true
+    addedAt?: true
+  }
+
+  export type StreamSongMaxAggregateInputType = {
+    id?: true
+    url?: true
+    title?: true
+    streamId?: true
+    userId?: true
+    addedAt?: true
+  }
+
+  export type StreamSongCountAggregateInputType = {
+    id?: true
+    url?: true
+    title?: true
+    streamId?: true
+    userId?: true
+    addedAt?: true
+    _all?: true
+  }
+
+  export type StreamSongAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StreamSong to aggregate.
+     */
+    where?: StreamSongWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StreamSongs to fetch.
+     */
+    orderBy?: StreamSongOrderByWithRelationInput | StreamSongOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: StreamSongWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StreamSongs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StreamSongs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned StreamSongs
+    **/
+    _count?: true | StreamSongCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: StreamSongMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: StreamSongMaxAggregateInputType
+  }
+
+  export type GetStreamSongAggregateType<T extends StreamSongAggregateArgs> = {
+        [P in keyof T & keyof AggregateStreamSong]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStreamSong[P]>
+      : GetScalarType<T[P], AggregateStreamSong[P]>
+  }
+
+
+
+
+  export type StreamSongGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StreamSongWhereInput
+    orderBy?: StreamSongOrderByWithAggregationInput | StreamSongOrderByWithAggregationInput[]
+    by: StreamSongScalarFieldEnum[] | StreamSongScalarFieldEnum
+    having?: StreamSongScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: StreamSongCountAggregateInputType | true
+    _min?: StreamSongMinAggregateInputType
+    _max?: StreamSongMaxAggregateInputType
+  }
+
+  export type StreamSongGroupByOutputType = {
+    id: string
+    url: string
+    title: string | null
+    streamId: string
+    userId: string
+    addedAt: Date
+    _count: StreamSongCountAggregateOutputType | null
+    _min: StreamSongMinAggregateOutputType | null
+    _max: StreamSongMaxAggregateOutputType | null
+  }
+
+  type GetStreamSongGroupByPayload<T extends StreamSongGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<StreamSongGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof StreamSongGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], StreamSongGroupByOutputType[P]>
+            : GetScalarType<T[P], StreamSongGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type StreamSongSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    url?: boolean
+    title?: boolean
+    streamId?: boolean
+    userId?: boolean
+    addedAt?: boolean
+    stream?: boolean | StreamDefaultArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
+    votes?: boolean | StreamSong$votesArgs<ExtArgs>
+    _count?: boolean | StreamSongCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["streamSong"]>
+
+  export type StreamSongSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    url?: boolean
+    title?: boolean
+    streamId?: boolean
+    userId?: boolean
+    addedAt?: boolean
+    stream?: boolean | StreamDefaultArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["streamSong"]>
+
+  export type StreamSongSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    url?: boolean
+    title?: boolean
+    streamId?: boolean
+    userId?: boolean
+    addedAt?: boolean
+    stream?: boolean | StreamDefaultArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["streamSong"]>
+
+  export type StreamSongSelectScalar = {
+    id?: boolean
+    url?: boolean
+    title?: boolean
+    streamId?: boolean
+    userId?: boolean
+    addedAt?: boolean
+  }
+
+  export type StreamSongOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "url" | "title" | "streamId" | "userId" | "addedAt", ExtArgs["result"]["streamSong"]>
+  export type StreamSongInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    stream?: boolean | StreamDefaultArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
+    votes?: boolean | StreamSong$votesArgs<ExtArgs>
+    _count?: boolean | StreamSongCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type StreamSongIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    stream?: boolean | StreamDefaultArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type StreamSongIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    stream?: boolean | StreamDefaultArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $StreamSongPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "StreamSong"
+    objects: {
+      stream: Prisma.$StreamPayload<ExtArgs>
+      User: Prisma.$UserPayload<ExtArgs>
+      votes: Prisma.$VotePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      url: string
+      title: string | null
+      streamId: string
+      userId: string
+      addedAt: Date
+    }, ExtArgs["result"]["streamSong"]>
+    composites: {}
+  }
+
+  type StreamSongGetPayload<S extends boolean | null | undefined | StreamSongDefaultArgs> = $Result.GetResult<Prisma.$StreamSongPayload, S>
+
+  type StreamSongCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<StreamSongFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: StreamSongCountAggregateInputType | true
+    }
+
+  export interface StreamSongDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['StreamSong'], meta: { name: 'StreamSong' } }
+    /**
+     * Find zero or one StreamSong that matches the filter.
+     * @param {StreamSongFindUniqueArgs} args - Arguments to find a StreamSong
+     * @example
+     * // Get one StreamSong
+     * const streamSong = await prisma.streamSong.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends StreamSongFindUniqueArgs>(args: SelectSubset<T, StreamSongFindUniqueArgs<ExtArgs>>): Prisma__StreamSongClient<$Result.GetResult<Prisma.$StreamSongPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one StreamSong that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {StreamSongFindUniqueOrThrowArgs} args - Arguments to find a StreamSong
+     * @example
+     * // Get one StreamSong
+     * const streamSong = await prisma.streamSong.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends StreamSongFindUniqueOrThrowArgs>(args: SelectSubset<T, StreamSongFindUniqueOrThrowArgs<ExtArgs>>): Prisma__StreamSongClient<$Result.GetResult<Prisma.$StreamSongPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StreamSong that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StreamSongFindFirstArgs} args - Arguments to find a StreamSong
+     * @example
+     * // Get one StreamSong
+     * const streamSong = await prisma.streamSong.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends StreamSongFindFirstArgs>(args?: SelectSubset<T, StreamSongFindFirstArgs<ExtArgs>>): Prisma__StreamSongClient<$Result.GetResult<Prisma.$StreamSongPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StreamSong that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StreamSongFindFirstOrThrowArgs} args - Arguments to find a StreamSong
+     * @example
+     * // Get one StreamSong
+     * const streamSong = await prisma.streamSong.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends StreamSongFindFirstOrThrowArgs>(args?: SelectSubset<T, StreamSongFindFirstOrThrowArgs<ExtArgs>>): Prisma__StreamSongClient<$Result.GetResult<Prisma.$StreamSongPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more StreamSongs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StreamSongFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all StreamSongs
+     * const streamSongs = await prisma.streamSong.findMany()
+     * 
+     * // Get first 10 StreamSongs
+     * const streamSongs = await prisma.streamSong.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const streamSongWithIdOnly = await prisma.streamSong.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends StreamSongFindManyArgs>(args?: SelectSubset<T, StreamSongFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StreamSongPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a StreamSong.
+     * @param {StreamSongCreateArgs} args - Arguments to create a StreamSong.
+     * @example
+     * // Create one StreamSong
+     * const StreamSong = await prisma.streamSong.create({
+     *   data: {
+     *     // ... data to create a StreamSong
+     *   }
+     * })
+     * 
+     */
+    create<T extends StreamSongCreateArgs>(args: SelectSubset<T, StreamSongCreateArgs<ExtArgs>>): Prisma__StreamSongClient<$Result.GetResult<Prisma.$StreamSongPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many StreamSongs.
+     * @param {StreamSongCreateManyArgs} args - Arguments to create many StreamSongs.
+     * @example
+     * // Create many StreamSongs
+     * const streamSong = await prisma.streamSong.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends StreamSongCreateManyArgs>(args?: SelectSubset<T, StreamSongCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many StreamSongs and returns the data saved in the database.
+     * @param {StreamSongCreateManyAndReturnArgs} args - Arguments to create many StreamSongs.
+     * @example
+     * // Create many StreamSongs
+     * const streamSong = await prisma.streamSong.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many StreamSongs and only return the `id`
+     * const streamSongWithIdOnly = await prisma.streamSong.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends StreamSongCreateManyAndReturnArgs>(args?: SelectSubset<T, StreamSongCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StreamSongPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a StreamSong.
+     * @param {StreamSongDeleteArgs} args - Arguments to delete one StreamSong.
+     * @example
+     * // Delete one StreamSong
+     * const StreamSong = await prisma.streamSong.delete({
+     *   where: {
+     *     // ... filter to delete one StreamSong
+     *   }
+     * })
+     * 
+     */
+    delete<T extends StreamSongDeleteArgs>(args: SelectSubset<T, StreamSongDeleteArgs<ExtArgs>>): Prisma__StreamSongClient<$Result.GetResult<Prisma.$StreamSongPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one StreamSong.
+     * @param {StreamSongUpdateArgs} args - Arguments to update one StreamSong.
+     * @example
+     * // Update one StreamSong
+     * const streamSong = await prisma.streamSong.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends StreamSongUpdateArgs>(args: SelectSubset<T, StreamSongUpdateArgs<ExtArgs>>): Prisma__StreamSongClient<$Result.GetResult<Prisma.$StreamSongPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more StreamSongs.
+     * @param {StreamSongDeleteManyArgs} args - Arguments to filter StreamSongs to delete.
+     * @example
+     * // Delete a few StreamSongs
+     * const { count } = await prisma.streamSong.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends StreamSongDeleteManyArgs>(args?: SelectSubset<T, StreamSongDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StreamSongs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StreamSongUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many StreamSongs
+     * const streamSong = await prisma.streamSong.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends StreamSongUpdateManyArgs>(args: SelectSubset<T, StreamSongUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StreamSongs and returns the data updated in the database.
+     * @param {StreamSongUpdateManyAndReturnArgs} args - Arguments to update many StreamSongs.
+     * @example
+     * // Update many StreamSongs
+     * const streamSong = await prisma.streamSong.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more StreamSongs and only return the `id`
+     * const streamSongWithIdOnly = await prisma.streamSong.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends StreamSongUpdateManyAndReturnArgs>(args: SelectSubset<T, StreamSongUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StreamSongPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one StreamSong.
+     * @param {StreamSongUpsertArgs} args - Arguments to update or create a StreamSong.
+     * @example
+     * // Update or create a StreamSong
+     * const streamSong = await prisma.streamSong.upsert({
+     *   create: {
+     *     // ... data to create a StreamSong
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the StreamSong we want to update
+     *   }
+     * })
+     */
+    upsert<T extends StreamSongUpsertArgs>(args: SelectSubset<T, StreamSongUpsertArgs<ExtArgs>>): Prisma__StreamSongClient<$Result.GetResult<Prisma.$StreamSongPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of StreamSongs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StreamSongCountArgs} args - Arguments to filter StreamSongs to count.
+     * @example
+     * // Count the number of StreamSongs
+     * const count = await prisma.streamSong.count({
+     *   where: {
+     *     // ... the filter for the StreamSongs we want to count
+     *   }
+     * })
+    **/
+    count<T extends StreamSongCountArgs>(
+      args?: Subset<T, StreamSongCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], StreamSongCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a StreamSong.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StreamSongAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends StreamSongAggregateArgs>(args: Subset<T, StreamSongAggregateArgs>): Prisma.PrismaPromise<GetStreamSongAggregateType<T>>
+
+    /**
+     * Group by StreamSong.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StreamSongGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends StreamSongGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: StreamSongGroupByArgs['orderBy'] }
+        : { orderBy?: StreamSongGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, StreamSongGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStreamSongGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the StreamSong model
+   */
+  readonly fields: StreamSongFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for StreamSong.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__StreamSongClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    stream<T extends StreamDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StreamDefaultArgs<ExtArgs>>): Prisma__StreamClient<$Result.GetResult<Prisma.$StreamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    User<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    votes<T extends StreamSong$votesArgs<ExtArgs> = {}>(args?: Subset<T, StreamSong$votesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the StreamSong model
+   */
+  interface StreamSongFieldRefs {
+    readonly id: FieldRef<"StreamSong", 'String'>
+    readonly url: FieldRef<"StreamSong", 'String'>
+    readonly title: FieldRef<"StreamSong", 'String'>
+    readonly streamId: FieldRef<"StreamSong", 'String'>
+    readonly userId: FieldRef<"StreamSong", 'String'>
+    readonly addedAt: FieldRef<"StreamSong", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * StreamSong findUnique
+   */
+  export type StreamSongFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StreamSong
+     */
+    select?: StreamSongSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StreamSong
+     */
+    omit?: StreamSongOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamSongInclude<ExtArgs> | null
+    /**
+     * Filter, which StreamSong to fetch.
+     */
+    where: StreamSongWhereUniqueInput
+  }
+
+  /**
+   * StreamSong findUniqueOrThrow
+   */
+  export type StreamSongFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StreamSong
+     */
+    select?: StreamSongSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StreamSong
+     */
+    omit?: StreamSongOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamSongInclude<ExtArgs> | null
+    /**
+     * Filter, which StreamSong to fetch.
+     */
+    where: StreamSongWhereUniqueInput
+  }
+
+  /**
+   * StreamSong findFirst
+   */
+  export type StreamSongFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StreamSong
+     */
+    select?: StreamSongSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StreamSong
+     */
+    omit?: StreamSongOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamSongInclude<ExtArgs> | null
+    /**
+     * Filter, which StreamSong to fetch.
+     */
+    where?: StreamSongWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StreamSongs to fetch.
+     */
+    orderBy?: StreamSongOrderByWithRelationInput | StreamSongOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StreamSongs.
+     */
+    cursor?: StreamSongWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StreamSongs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StreamSongs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StreamSongs.
+     */
+    distinct?: StreamSongScalarFieldEnum | StreamSongScalarFieldEnum[]
+  }
+
+  /**
+   * StreamSong findFirstOrThrow
+   */
+  export type StreamSongFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StreamSong
+     */
+    select?: StreamSongSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StreamSong
+     */
+    omit?: StreamSongOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamSongInclude<ExtArgs> | null
+    /**
+     * Filter, which StreamSong to fetch.
+     */
+    where?: StreamSongWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StreamSongs to fetch.
+     */
+    orderBy?: StreamSongOrderByWithRelationInput | StreamSongOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StreamSongs.
+     */
+    cursor?: StreamSongWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StreamSongs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StreamSongs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StreamSongs.
+     */
+    distinct?: StreamSongScalarFieldEnum | StreamSongScalarFieldEnum[]
+  }
+
+  /**
+   * StreamSong findMany
+   */
+  export type StreamSongFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StreamSong
+     */
+    select?: StreamSongSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StreamSong
+     */
+    omit?: StreamSongOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamSongInclude<ExtArgs> | null
+    /**
+     * Filter, which StreamSongs to fetch.
+     */
+    where?: StreamSongWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StreamSongs to fetch.
+     */
+    orderBy?: StreamSongOrderByWithRelationInput | StreamSongOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing StreamSongs.
+     */
+    cursor?: StreamSongWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StreamSongs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StreamSongs.
+     */
+    skip?: number
+    distinct?: StreamSongScalarFieldEnum | StreamSongScalarFieldEnum[]
+  }
+
+  /**
+   * StreamSong create
+   */
+  export type StreamSongCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StreamSong
+     */
+    select?: StreamSongSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StreamSong
+     */
+    omit?: StreamSongOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamSongInclude<ExtArgs> | null
+    /**
+     * The data needed to create a StreamSong.
+     */
+    data: XOR<StreamSongCreateInput, StreamSongUncheckedCreateInput>
+  }
+
+  /**
+   * StreamSong createMany
+   */
+  export type StreamSongCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many StreamSongs.
+     */
+    data: StreamSongCreateManyInput | StreamSongCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * StreamSong createManyAndReturn
+   */
+  export type StreamSongCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StreamSong
+     */
+    select?: StreamSongSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StreamSong
+     */
+    omit?: StreamSongOmit<ExtArgs> | null
+    /**
+     * The data used to create many StreamSongs.
+     */
+    data: StreamSongCreateManyInput | StreamSongCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamSongIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * StreamSong update
+   */
+  export type StreamSongUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StreamSong
+     */
+    select?: StreamSongSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StreamSong
+     */
+    omit?: StreamSongOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamSongInclude<ExtArgs> | null
+    /**
+     * The data needed to update a StreamSong.
+     */
+    data: XOR<StreamSongUpdateInput, StreamSongUncheckedUpdateInput>
+    /**
+     * Choose, which StreamSong to update.
+     */
+    where: StreamSongWhereUniqueInput
+  }
+
+  /**
+   * StreamSong updateMany
+   */
+  export type StreamSongUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update StreamSongs.
+     */
+    data: XOR<StreamSongUpdateManyMutationInput, StreamSongUncheckedUpdateManyInput>
+    /**
+     * Filter which StreamSongs to update
+     */
+    where?: StreamSongWhereInput
+    /**
+     * Limit how many StreamSongs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * StreamSong updateManyAndReturn
+   */
+  export type StreamSongUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StreamSong
+     */
+    select?: StreamSongSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StreamSong
+     */
+    omit?: StreamSongOmit<ExtArgs> | null
+    /**
+     * The data used to update StreamSongs.
+     */
+    data: XOR<StreamSongUpdateManyMutationInput, StreamSongUncheckedUpdateManyInput>
+    /**
+     * Filter which StreamSongs to update
+     */
+    where?: StreamSongWhereInput
+    /**
+     * Limit how many StreamSongs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamSongIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * StreamSong upsert
+   */
+  export type StreamSongUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StreamSong
+     */
+    select?: StreamSongSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StreamSong
+     */
+    omit?: StreamSongOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamSongInclude<ExtArgs> | null
+    /**
+     * The filter to search for the StreamSong to update in case it exists.
+     */
+    where: StreamSongWhereUniqueInput
+    /**
+     * In case the StreamSong found by the `where` argument doesn't exist, create a new StreamSong with this data.
+     */
+    create: XOR<StreamSongCreateInput, StreamSongUncheckedCreateInput>
+    /**
+     * In case the StreamSong was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<StreamSongUpdateInput, StreamSongUncheckedUpdateInput>
+  }
+
+  /**
+   * StreamSong delete
+   */
+  export type StreamSongDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StreamSong
+     */
+    select?: StreamSongSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StreamSong
+     */
+    omit?: StreamSongOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamSongInclude<ExtArgs> | null
+    /**
+     * Filter which StreamSong to delete.
+     */
+    where: StreamSongWhereUniqueInput
+  }
+
+  /**
+   * StreamSong deleteMany
+   */
+  export type StreamSongDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StreamSongs to delete
+     */
+    where?: StreamSongWhereInput
+    /**
+     * Limit how many StreamSongs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * StreamSong.votes
+   */
+  export type StreamSong$votesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    where?: VoteWhereInput
+    orderBy?: VoteOrderByWithRelationInput | VoteOrderByWithRelationInput[]
+    cursor?: VoteWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VoteScalarFieldEnum | VoteScalarFieldEnum[]
+  }
+
+  /**
+   * StreamSong without action
+   */
+  export type StreamSongDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StreamSong
+     */
+    select?: StreamSongSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StreamSong
+     */
+    omit?: StreamSongOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StreamSongInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Vote
+   */
+
+  export type AggregateVote = {
+    _count: VoteCountAggregateOutputType | null
+    _min: VoteMinAggregateOutputType | null
+    _max: VoteMaxAggregateOutputType | null
+  }
+
+  export type VoteMinAggregateOutputType = {
+    id: string | null
+    songId: string | null
+    userId: string | null
+    type: $Enums.VoteType | null
+  }
+
+  export type VoteMaxAggregateOutputType = {
+    id: string | null
+    songId: string | null
+    userId: string | null
+    type: $Enums.VoteType | null
+  }
+
+  export type VoteCountAggregateOutputType = {
+    id: number
+    songId: number
+    userId: number
+    type: number
+    _all: number
+  }
+
+
+  export type VoteMinAggregateInputType = {
+    id?: true
+    songId?: true
+    userId?: true
+    type?: true
+  }
+
+  export type VoteMaxAggregateInputType = {
+    id?: true
+    songId?: true
+    userId?: true
+    type?: true
+  }
+
+  export type VoteCountAggregateInputType = {
+    id?: true
+    songId?: true
+    userId?: true
+    type?: true
+    _all?: true
+  }
+
+  export type VoteAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Vote to aggregate.
+     */
+    where?: VoteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Votes to fetch.
+     */
+    orderBy?: VoteOrderByWithRelationInput | VoteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VoteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Votes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Votes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Votes
+    **/
+    _count?: true | VoteCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VoteMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VoteMaxAggregateInputType
+  }
+
+  export type GetVoteAggregateType<T extends VoteAggregateArgs> = {
+        [P in keyof T & keyof AggregateVote]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVote[P]>
+      : GetScalarType<T[P], AggregateVote[P]>
+  }
+
+
+
+
+  export type VoteGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VoteWhereInput
+    orderBy?: VoteOrderByWithAggregationInput | VoteOrderByWithAggregationInput[]
+    by: VoteScalarFieldEnum[] | VoteScalarFieldEnum
+    having?: VoteScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VoteCountAggregateInputType | true
+    _min?: VoteMinAggregateInputType
+    _max?: VoteMaxAggregateInputType
+  }
+
+  export type VoteGroupByOutputType = {
+    id: string
+    songId: string
+    userId: string
+    type: $Enums.VoteType
+    _count: VoteCountAggregateOutputType | null
+    _min: VoteMinAggregateOutputType | null
+    _max: VoteMaxAggregateOutputType | null
+  }
+
+  type GetVoteGroupByPayload<T extends VoteGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VoteGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VoteGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VoteGroupByOutputType[P]>
+            : GetScalarType<T[P], VoteGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VoteSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    songId?: boolean
+    userId?: boolean
+    type?: boolean
+    song?: boolean | StreamSongDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vote"]>
+
+  export type VoteSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    songId?: boolean
+    userId?: boolean
+    type?: boolean
+    song?: boolean | StreamSongDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vote"]>
+
+  export type VoteSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    songId?: boolean
+    userId?: boolean
+    type?: boolean
+    song?: boolean | StreamSongDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vote"]>
+
+  export type VoteSelectScalar = {
+    id?: boolean
+    songId?: boolean
+    userId?: boolean
+    type?: boolean
+  }
+
+  export type VoteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "songId" | "userId" | "type", ExtArgs["result"]["vote"]>
+  export type VoteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    song?: boolean | StreamSongDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type VoteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    song?: boolean | StreamSongDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type VoteIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    song?: boolean | StreamSongDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $VotePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Vote"
+    objects: {
+      song: Prisma.$StreamSongPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      songId: string
+      userId: string
+      type: $Enums.VoteType
+    }, ExtArgs["result"]["vote"]>
+    composites: {}
+  }
+
+  type VoteGetPayload<S extends boolean | null | undefined | VoteDefaultArgs> = $Result.GetResult<Prisma.$VotePayload, S>
+
+  type VoteCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<VoteFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: VoteCountAggregateInputType | true
+    }
+
+  export interface VoteDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Vote'], meta: { name: 'Vote' } }
+    /**
+     * Find zero or one Vote that matches the filter.
+     * @param {VoteFindUniqueArgs} args - Arguments to find a Vote
+     * @example
+     * // Get one Vote
+     * const vote = await prisma.vote.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VoteFindUniqueArgs>(args: SelectSubset<T, VoteFindUniqueArgs<ExtArgs>>): Prisma__VoteClient<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Vote that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {VoteFindUniqueOrThrowArgs} args - Arguments to find a Vote
+     * @example
+     * // Get one Vote
+     * const vote = await prisma.vote.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VoteFindUniqueOrThrowArgs>(args: SelectSubset<T, VoteFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VoteClient<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Vote that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VoteFindFirstArgs} args - Arguments to find a Vote
+     * @example
+     * // Get one Vote
+     * const vote = await prisma.vote.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VoteFindFirstArgs>(args?: SelectSubset<T, VoteFindFirstArgs<ExtArgs>>): Prisma__VoteClient<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Vote that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VoteFindFirstOrThrowArgs} args - Arguments to find a Vote
+     * @example
+     * // Get one Vote
+     * const vote = await prisma.vote.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VoteFindFirstOrThrowArgs>(args?: SelectSubset<T, VoteFindFirstOrThrowArgs<ExtArgs>>): Prisma__VoteClient<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Votes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VoteFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Votes
+     * const votes = await prisma.vote.findMany()
+     * 
+     * // Get first 10 Votes
+     * const votes = await prisma.vote.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const voteWithIdOnly = await prisma.vote.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends VoteFindManyArgs>(args?: SelectSubset<T, VoteFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Vote.
+     * @param {VoteCreateArgs} args - Arguments to create a Vote.
+     * @example
+     * // Create one Vote
+     * const Vote = await prisma.vote.create({
+     *   data: {
+     *     // ... data to create a Vote
+     *   }
+     * })
+     * 
+     */
+    create<T extends VoteCreateArgs>(args: SelectSubset<T, VoteCreateArgs<ExtArgs>>): Prisma__VoteClient<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Votes.
+     * @param {VoteCreateManyArgs} args - Arguments to create many Votes.
+     * @example
+     * // Create many Votes
+     * const vote = await prisma.vote.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VoteCreateManyArgs>(args?: SelectSubset<T, VoteCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Votes and returns the data saved in the database.
+     * @param {VoteCreateManyAndReturnArgs} args - Arguments to create many Votes.
+     * @example
+     * // Create many Votes
+     * const vote = await prisma.vote.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Votes and only return the `id`
+     * const voteWithIdOnly = await prisma.vote.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VoteCreateManyAndReturnArgs>(args?: SelectSubset<T, VoteCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Vote.
+     * @param {VoteDeleteArgs} args - Arguments to delete one Vote.
+     * @example
+     * // Delete one Vote
+     * const Vote = await prisma.vote.delete({
+     *   where: {
+     *     // ... filter to delete one Vote
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VoteDeleteArgs>(args: SelectSubset<T, VoteDeleteArgs<ExtArgs>>): Prisma__VoteClient<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Vote.
+     * @param {VoteUpdateArgs} args - Arguments to update one Vote.
+     * @example
+     * // Update one Vote
+     * const vote = await prisma.vote.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VoteUpdateArgs>(args: SelectSubset<T, VoteUpdateArgs<ExtArgs>>): Prisma__VoteClient<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Votes.
+     * @param {VoteDeleteManyArgs} args - Arguments to filter Votes to delete.
+     * @example
+     * // Delete a few Votes
+     * const { count } = await prisma.vote.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VoteDeleteManyArgs>(args?: SelectSubset<T, VoteDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Votes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VoteUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Votes
+     * const vote = await prisma.vote.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VoteUpdateManyArgs>(args: SelectSubset<T, VoteUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Votes and returns the data updated in the database.
+     * @param {VoteUpdateManyAndReturnArgs} args - Arguments to update many Votes.
+     * @example
+     * // Update many Votes
+     * const vote = await prisma.vote.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Votes and only return the `id`
+     * const voteWithIdOnly = await prisma.vote.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends VoteUpdateManyAndReturnArgs>(args: SelectSubset<T, VoteUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Vote.
+     * @param {VoteUpsertArgs} args - Arguments to update or create a Vote.
+     * @example
+     * // Update or create a Vote
+     * const vote = await prisma.vote.upsert({
+     *   create: {
+     *     // ... data to create a Vote
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Vote we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VoteUpsertArgs>(args: SelectSubset<T, VoteUpsertArgs<ExtArgs>>): Prisma__VoteClient<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Votes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VoteCountArgs} args - Arguments to filter Votes to count.
+     * @example
+     * // Count the number of Votes
+     * const count = await prisma.vote.count({
+     *   where: {
+     *     // ... the filter for the Votes we want to count
+     *   }
+     * })
+    **/
+    count<T extends VoteCountArgs>(
+      args?: Subset<T, VoteCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VoteCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Vote.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VoteAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VoteAggregateArgs>(args: Subset<T, VoteAggregateArgs>): Prisma.PrismaPromise<GetVoteAggregateType<T>>
+
+    /**
+     * Group by Vote.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VoteGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VoteGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VoteGroupByArgs['orderBy'] }
+        : { orderBy?: VoteGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VoteGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVoteGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Vote model
+   */
+  readonly fields: VoteFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Vote.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VoteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    song<T extends StreamSongDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StreamSongDefaultArgs<ExtArgs>>): Prisma__StreamSongClient<$Result.GetResult<Prisma.$StreamSongPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Vote model
+   */
+  interface VoteFieldRefs {
+    readonly id: FieldRef<"Vote", 'String'>
+    readonly songId: FieldRef<"Vote", 'String'>
+    readonly userId: FieldRef<"Vote", 'String'>
+    readonly type: FieldRef<"Vote", 'VoteType'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Vote findUnique
+   */
+  export type VoteFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    /**
+     * Filter, which Vote to fetch.
+     */
+    where: VoteWhereUniqueInput
+  }
+
+  /**
+   * Vote findUniqueOrThrow
+   */
+  export type VoteFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    /**
+     * Filter, which Vote to fetch.
+     */
+    where: VoteWhereUniqueInput
+  }
+
+  /**
+   * Vote findFirst
+   */
+  export type VoteFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    /**
+     * Filter, which Vote to fetch.
+     */
+    where?: VoteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Votes to fetch.
+     */
+    orderBy?: VoteOrderByWithRelationInput | VoteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Votes.
+     */
+    cursor?: VoteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Votes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Votes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Votes.
+     */
+    distinct?: VoteScalarFieldEnum | VoteScalarFieldEnum[]
+  }
+
+  /**
+   * Vote findFirstOrThrow
+   */
+  export type VoteFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    /**
+     * Filter, which Vote to fetch.
+     */
+    where?: VoteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Votes to fetch.
+     */
+    orderBy?: VoteOrderByWithRelationInput | VoteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Votes.
+     */
+    cursor?: VoteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Votes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Votes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Votes.
+     */
+    distinct?: VoteScalarFieldEnum | VoteScalarFieldEnum[]
+  }
+
+  /**
+   * Vote findMany
+   */
+  export type VoteFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    /**
+     * Filter, which Votes to fetch.
+     */
+    where?: VoteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Votes to fetch.
+     */
+    orderBy?: VoteOrderByWithRelationInput | VoteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Votes.
+     */
+    cursor?: VoteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Votes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Votes.
+     */
+    skip?: number
+    distinct?: VoteScalarFieldEnum | VoteScalarFieldEnum[]
+  }
+
+  /**
+   * Vote create
+   */
+  export type VoteCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Vote.
+     */
+    data: XOR<VoteCreateInput, VoteUncheckedCreateInput>
+  }
+
+  /**
+   * Vote createMany
+   */
+  export type VoteCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Votes.
+     */
+    data: VoteCreateManyInput | VoteCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Vote createManyAndReturn
+   */
+  export type VoteCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * The data used to create many Votes.
+     */
+    data: VoteCreateManyInput | VoteCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Vote update
+   */
+  export type VoteUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Vote.
+     */
+    data: XOR<VoteUpdateInput, VoteUncheckedUpdateInput>
+    /**
+     * Choose, which Vote to update.
+     */
+    where: VoteWhereUniqueInput
+  }
+
+  /**
+   * Vote updateMany
+   */
+  export type VoteUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Votes.
+     */
+    data: XOR<VoteUpdateManyMutationInput, VoteUncheckedUpdateManyInput>
+    /**
+     * Filter which Votes to update
+     */
+    where?: VoteWhereInput
+    /**
+     * Limit how many Votes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Vote updateManyAndReturn
+   */
+  export type VoteUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * The data used to update Votes.
+     */
+    data: XOR<VoteUpdateManyMutationInput, VoteUncheckedUpdateManyInput>
+    /**
+     * Filter which Votes to update
+     */
+    where?: VoteWhereInput
+    /**
+     * Limit how many Votes to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Vote upsert
+   */
+  export type VoteUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Vote to update in case it exists.
+     */
+    where: VoteWhereUniqueInput
+    /**
+     * In case the Vote found by the `where` argument doesn't exist, create a new Vote with this data.
+     */
+    create: XOR<VoteCreateInput, VoteUncheckedCreateInput>
+    /**
+     * In case the Vote was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VoteUpdateInput, VoteUncheckedUpdateInput>
+  }
+
+  /**
+   * Vote delete
+   */
+  export type VoteDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    /**
+     * Filter which Vote to delete.
+     */
+    where: VoteWhereUniqueInput
+  }
+
+  /**
+   * Vote deleteMany
+   */
+  export type VoteDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Votes to delete
+     */
+    where?: VoteWhereInput
+    /**
+     * Limit how many Votes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Vote without action
+   */
+  export type VoteDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -14606,6 +18327,7 @@ export namespace Prisma {
     email: 'email',
     phoneNumber: 'phoneNumber',
     password: 'password',
+    socialLogin: 'socialLogin',
     role: 'role',
     isSubscribed: 'isSubscribed',
     avatarUrl: 'avatarUrl',
@@ -14739,6 +18461,39 @@ export namespace Prisma {
   export type VerificationCodesScalarFieldEnum = (typeof VerificationCodesScalarFieldEnum)[keyof typeof VerificationCodesScalarFieldEnum]
 
 
+  export const StreamScalarFieldEnum: {
+    id: 'id',
+    streamName: 'streamName',
+    hostId: 'hostId',
+    createdAt: 'createdAt',
+    active: 'active'
+  };
+
+  export type StreamScalarFieldEnum = (typeof StreamScalarFieldEnum)[keyof typeof StreamScalarFieldEnum]
+
+
+  export const StreamSongScalarFieldEnum: {
+    id: 'id',
+    url: 'url',
+    title: 'title',
+    streamId: 'streamId',
+    userId: 'userId',
+    addedAt: 'addedAt'
+  };
+
+  export type StreamSongScalarFieldEnum = (typeof StreamSongScalarFieldEnum)[keyof typeof StreamSongScalarFieldEnum]
+
+
+  export const VoteScalarFieldEnum: {
+    id: 'id',
+    songId: 'songId',
+    userId: 'userId',
+    type: 'type'
+  };
+
+  export type VoteScalarFieldEnum = (typeof VoteScalarFieldEnum)[keyof typeof VoteScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -14783,6 +18538,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'UserRole'
    */
   export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
@@ -14793,13 +18555,6 @@ export namespace Prisma {
    * Reference to a field of type 'UserRole[]'
    */
   export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -14857,6 +18612,20 @@ export namespace Prisma {
    */
   export type ListEnumVerificationCodeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VerificationCodeType[]'>
     
+
+
+  /**
+   * Reference to a field of type 'VoteType'
+   */
+  export type EnumVoteTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VoteType'>
+    
+
+
+  /**
+   * Reference to a field of type 'VoteType[]'
+   */
+  export type ListEnumVoteTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VoteType[]'>
+    
   /**
    * Deep Input Types
    */
@@ -14871,7 +18640,8 @@ export namespace Prisma {
     lastName?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     phoneNumber?: StringNullableFilter<"User"> | string | null
-    password?: StringFilter<"User"> | string
+    password?: StringNullableFilter<"User"> | string | null
+    socialLogin?: BoolFilter<"User"> | boolean
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     isSubscribed?: BoolFilter<"User"> | boolean
     avatarUrl?: StringNullableFilter<"User"> | string | null
@@ -14882,6 +18652,9 @@ export namespace Prisma {
     starredSongs?: StarredSongListRelationFilter
     Subscription?: SubscriptionListRelationFilter
     PaymentTransaction?: PaymentTransactionListRelationFilter
+    Streams?: StreamListRelationFilter
+    Votes?: VoteListRelationFilter
+    StreamSongs?: StreamSongListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -14890,7 +18663,8 @@ export namespace Prisma {
     lastName?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrderInput | SortOrder
-    password?: SortOrder
+    password?: SortOrderInput | SortOrder
+    socialLogin?: SortOrder
     role?: SortOrder
     isSubscribed?: SortOrder
     avatarUrl?: SortOrderInput | SortOrder
@@ -14901,6 +18675,9 @@ export namespace Prisma {
     starredSongs?: starredSongOrderByRelationAggregateInput
     Subscription?: SubscriptionOrderByRelationAggregateInput
     PaymentTransaction?: PaymentTransactionOrderByRelationAggregateInput
+    Streams?: StreamOrderByRelationAggregateInput
+    Votes?: VoteOrderByRelationAggregateInput
+    StreamSongs?: StreamSongOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -14912,7 +18689,8 @@ export namespace Prisma {
     firstName?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
     phoneNumber?: StringNullableFilter<"User"> | string | null
-    password?: StringFilter<"User"> | string
+    password?: StringNullableFilter<"User"> | string | null
+    socialLogin?: BoolFilter<"User"> | boolean
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     isSubscribed?: BoolFilter<"User"> | boolean
     avatarUrl?: StringNullableFilter<"User"> | string | null
@@ -14923,6 +18701,9 @@ export namespace Prisma {
     starredSongs?: StarredSongListRelationFilter
     Subscription?: SubscriptionListRelationFilter
     PaymentTransaction?: PaymentTransactionListRelationFilter
+    Streams?: StreamListRelationFilter
+    Votes?: VoteListRelationFilter
+    StreamSongs?: StreamSongListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -14931,7 +18712,8 @@ export namespace Prisma {
     lastName?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrderInput | SortOrder
-    password?: SortOrder
+    password?: SortOrderInput | SortOrder
+    socialLogin?: SortOrder
     role?: SortOrder
     isSubscribed?: SortOrder
     avatarUrl?: SortOrderInput | SortOrder
@@ -14952,7 +18734,8 @@ export namespace Prisma {
     lastName?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     phoneNumber?: StringNullableWithAggregatesFilter<"User"> | string | null
-    password?: StringWithAggregatesFilter<"User"> | string
+    password?: StringNullableWithAggregatesFilter<"User"> | string | null
+    socialLogin?: BoolWithAggregatesFilter<"User"> | boolean
     role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
     isSubscribed?: BoolWithAggregatesFilter<"User"> | boolean
     avatarUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
@@ -15621,13 +19404,191 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"VerificationCodes"> | Date | string
   }
 
+  export type StreamWhereInput = {
+    AND?: StreamWhereInput | StreamWhereInput[]
+    OR?: StreamWhereInput[]
+    NOT?: StreamWhereInput | StreamWhereInput[]
+    id?: StringFilter<"Stream"> | string
+    streamName?: StringFilter<"Stream"> | string
+    hostId?: StringFilter<"Stream"> | string
+    createdAt?: DateTimeFilter<"Stream"> | Date | string
+    active?: BoolFilter<"Stream"> | boolean
+    host?: XOR<UserScalarRelationFilter, UserWhereInput>
+    songs?: StreamSongListRelationFilter
+  }
+
+  export type StreamOrderByWithRelationInput = {
+    id?: SortOrder
+    streamName?: SortOrder
+    hostId?: SortOrder
+    createdAt?: SortOrder
+    active?: SortOrder
+    host?: UserOrderByWithRelationInput
+    songs?: StreamSongOrderByRelationAggregateInput
+  }
+
+  export type StreamWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: StreamWhereInput | StreamWhereInput[]
+    OR?: StreamWhereInput[]
+    NOT?: StreamWhereInput | StreamWhereInput[]
+    streamName?: StringFilter<"Stream"> | string
+    hostId?: StringFilter<"Stream"> | string
+    createdAt?: DateTimeFilter<"Stream"> | Date | string
+    active?: BoolFilter<"Stream"> | boolean
+    host?: XOR<UserScalarRelationFilter, UserWhereInput>
+    songs?: StreamSongListRelationFilter
+  }, "id">
+
+  export type StreamOrderByWithAggregationInput = {
+    id?: SortOrder
+    streamName?: SortOrder
+    hostId?: SortOrder
+    createdAt?: SortOrder
+    active?: SortOrder
+    _count?: StreamCountOrderByAggregateInput
+    _max?: StreamMaxOrderByAggregateInput
+    _min?: StreamMinOrderByAggregateInput
+  }
+
+  export type StreamScalarWhereWithAggregatesInput = {
+    AND?: StreamScalarWhereWithAggregatesInput | StreamScalarWhereWithAggregatesInput[]
+    OR?: StreamScalarWhereWithAggregatesInput[]
+    NOT?: StreamScalarWhereWithAggregatesInput | StreamScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Stream"> | string
+    streamName?: StringWithAggregatesFilter<"Stream"> | string
+    hostId?: StringWithAggregatesFilter<"Stream"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Stream"> | Date | string
+    active?: BoolWithAggregatesFilter<"Stream"> | boolean
+  }
+
+  export type StreamSongWhereInput = {
+    AND?: StreamSongWhereInput | StreamSongWhereInput[]
+    OR?: StreamSongWhereInput[]
+    NOT?: StreamSongWhereInput | StreamSongWhereInput[]
+    id?: StringFilter<"StreamSong"> | string
+    url?: StringFilter<"StreamSong"> | string
+    title?: StringNullableFilter<"StreamSong"> | string | null
+    streamId?: StringFilter<"StreamSong"> | string
+    userId?: StringFilter<"StreamSong"> | string
+    addedAt?: DateTimeFilter<"StreamSong"> | Date | string
+    stream?: XOR<StreamScalarRelationFilter, StreamWhereInput>
+    User?: XOR<UserScalarRelationFilter, UserWhereInput>
+    votes?: VoteListRelationFilter
+  }
+
+  export type StreamSongOrderByWithRelationInput = {
+    id?: SortOrder
+    url?: SortOrder
+    title?: SortOrderInput | SortOrder
+    streamId?: SortOrder
+    userId?: SortOrder
+    addedAt?: SortOrder
+    stream?: StreamOrderByWithRelationInput
+    User?: UserOrderByWithRelationInput
+    votes?: VoteOrderByRelationAggregateInput
+  }
+
+  export type StreamSongWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: StreamSongWhereInput | StreamSongWhereInput[]
+    OR?: StreamSongWhereInput[]
+    NOT?: StreamSongWhereInput | StreamSongWhereInput[]
+    url?: StringFilter<"StreamSong"> | string
+    title?: StringNullableFilter<"StreamSong"> | string | null
+    streamId?: StringFilter<"StreamSong"> | string
+    userId?: StringFilter<"StreamSong"> | string
+    addedAt?: DateTimeFilter<"StreamSong"> | Date | string
+    stream?: XOR<StreamScalarRelationFilter, StreamWhereInput>
+    User?: XOR<UserScalarRelationFilter, UserWhereInput>
+    votes?: VoteListRelationFilter
+  }, "id">
+
+  export type StreamSongOrderByWithAggregationInput = {
+    id?: SortOrder
+    url?: SortOrder
+    title?: SortOrderInput | SortOrder
+    streamId?: SortOrder
+    userId?: SortOrder
+    addedAt?: SortOrder
+    _count?: StreamSongCountOrderByAggregateInput
+    _max?: StreamSongMaxOrderByAggregateInput
+    _min?: StreamSongMinOrderByAggregateInput
+  }
+
+  export type StreamSongScalarWhereWithAggregatesInput = {
+    AND?: StreamSongScalarWhereWithAggregatesInput | StreamSongScalarWhereWithAggregatesInput[]
+    OR?: StreamSongScalarWhereWithAggregatesInput[]
+    NOT?: StreamSongScalarWhereWithAggregatesInput | StreamSongScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"StreamSong"> | string
+    url?: StringWithAggregatesFilter<"StreamSong"> | string
+    title?: StringNullableWithAggregatesFilter<"StreamSong"> | string | null
+    streamId?: StringWithAggregatesFilter<"StreamSong"> | string
+    userId?: StringWithAggregatesFilter<"StreamSong"> | string
+    addedAt?: DateTimeWithAggregatesFilter<"StreamSong"> | Date | string
+  }
+
+  export type VoteWhereInput = {
+    AND?: VoteWhereInput | VoteWhereInput[]
+    OR?: VoteWhereInput[]
+    NOT?: VoteWhereInput | VoteWhereInput[]
+    id?: StringFilter<"Vote"> | string
+    songId?: StringFilter<"Vote"> | string
+    userId?: StringFilter<"Vote"> | string
+    type?: EnumVoteTypeFilter<"Vote"> | $Enums.VoteType
+    song?: XOR<StreamSongScalarRelationFilter, StreamSongWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type VoteOrderByWithRelationInput = {
+    id?: SortOrder
+    songId?: SortOrder
+    userId?: SortOrder
+    type?: SortOrder
+    song?: StreamSongOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type VoteWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: VoteWhereInput | VoteWhereInput[]
+    OR?: VoteWhereInput[]
+    NOT?: VoteWhereInput | VoteWhereInput[]
+    songId?: StringFilter<"Vote"> | string
+    userId?: StringFilter<"Vote"> | string
+    type?: EnumVoteTypeFilter<"Vote"> | $Enums.VoteType
+    song?: XOR<StreamSongScalarRelationFilter, StreamSongWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type VoteOrderByWithAggregationInput = {
+    id?: SortOrder
+    songId?: SortOrder
+    userId?: SortOrder
+    type?: SortOrder
+    _count?: VoteCountOrderByAggregateInput
+    _max?: VoteMaxOrderByAggregateInput
+    _min?: VoteMinOrderByAggregateInput
+  }
+
+  export type VoteScalarWhereWithAggregatesInput = {
+    AND?: VoteScalarWhereWithAggregatesInput | VoteScalarWhereWithAggregatesInput[]
+    OR?: VoteScalarWhereWithAggregatesInput[]
+    NOT?: VoteScalarWhereWithAggregatesInput | VoteScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Vote"> | string
+    songId?: StringWithAggregatesFilter<"Vote"> | string
+    userId?: StringWithAggregatesFilter<"Vote"> | string
+    type?: EnumVoteTypeWithAggregatesFilter<"Vote"> | $Enums.VoteType
+  }
+
   export type UserCreateInput = {
     id?: string
     firstName: string
     lastName: string
     email: string
     phoneNumber?: string | null
-    password: string
+    password?: string | null
+    socialLogin?: boolean
     role: $Enums.UserRole
     isSubscribed: boolean
     avatarUrl?: string | null
@@ -15638,6 +19599,9 @@ export namespace Prisma {
     starredSongs?: starredSongCreateNestedManyWithoutUserDetailsInput
     Subscription?: SubscriptionCreateNestedManyWithoutUserDetailsInput
     PaymentTransaction?: PaymentTransactionCreateNestedManyWithoutUserInput
+    Streams?: StreamCreateNestedManyWithoutHostInput
+    Votes?: VoteCreateNestedManyWithoutUserInput
+    StreamSongs?: StreamSongCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -15646,7 +19610,8 @@ export namespace Prisma {
     lastName: string
     email: string
     phoneNumber?: string | null
-    password: string
+    password?: string | null
+    socialLogin?: boolean
     role: $Enums.UserRole
     isSubscribed: boolean
     avatarUrl?: string | null
@@ -15657,6 +19622,9 @@ export namespace Prisma {
     starredSongs?: starredSongUncheckedCreateNestedManyWithoutUserDetailsInput
     Subscription?: SubscriptionUncheckedCreateNestedManyWithoutUserDetailsInput
     PaymentTransaction?: PaymentTransactionUncheckedCreateNestedManyWithoutUserInput
+    Streams?: StreamUncheckedCreateNestedManyWithoutHostInput
+    Votes?: VoteUncheckedCreateNestedManyWithoutUserInput
+    StreamSongs?: StreamSongUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -15665,7 +19633,8 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLogin?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -15676,6 +19645,9 @@ export namespace Prisma {
     starredSongs?: starredSongUpdateManyWithoutUserDetailsNestedInput
     Subscription?: SubscriptionUpdateManyWithoutUserDetailsNestedInput
     PaymentTransaction?: PaymentTransactionUpdateManyWithoutUserNestedInput
+    Streams?: StreamUpdateManyWithoutHostNestedInput
+    Votes?: VoteUpdateManyWithoutUserNestedInput
+    StreamSongs?: StreamSongUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -15684,7 +19656,8 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLogin?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -15695,6 +19668,9 @@ export namespace Prisma {
     starredSongs?: starredSongUncheckedUpdateManyWithoutUserDetailsNestedInput
     Subscription?: SubscriptionUncheckedUpdateManyWithoutUserDetailsNestedInput
     PaymentTransaction?: PaymentTransactionUncheckedUpdateManyWithoutUserNestedInput
+    Streams?: StreamUncheckedUpdateManyWithoutHostNestedInput
+    Votes?: VoteUncheckedUpdateManyWithoutUserNestedInput
+    StreamSongs?: StreamSongUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -15703,7 +19679,8 @@ export namespace Prisma {
     lastName: string
     email: string
     phoneNumber?: string | null
-    password: string
+    password?: string | null
+    socialLogin?: boolean
     role: $Enums.UserRole
     isSubscribed: boolean
     avatarUrl?: string | null
@@ -15718,7 +19695,8 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLogin?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -15733,7 +19711,8 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLogin?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -16378,6 +20357,177 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type StreamCreateInput = {
+    id?: string
+    streamName: string
+    createdAt?: Date | string
+    active?: boolean
+    host: UserCreateNestedOneWithoutStreamsInput
+    songs?: StreamSongCreateNestedManyWithoutStreamInput
+  }
+
+  export type StreamUncheckedCreateInput = {
+    id?: string
+    streamName: string
+    hostId: string
+    createdAt?: Date | string
+    active?: boolean
+    songs?: StreamSongUncheckedCreateNestedManyWithoutStreamInput
+  }
+
+  export type StreamUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    streamName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    host?: UserUpdateOneRequiredWithoutStreamsNestedInput
+    songs?: StreamSongUpdateManyWithoutStreamNestedInput
+  }
+
+  export type StreamUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    streamName?: StringFieldUpdateOperationsInput | string
+    hostId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    songs?: StreamSongUncheckedUpdateManyWithoutStreamNestedInput
+  }
+
+  export type StreamCreateManyInput = {
+    id?: string
+    streamName: string
+    hostId: string
+    createdAt?: Date | string
+    active?: boolean
+  }
+
+  export type StreamUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    streamName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type StreamUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    streamName?: StringFieldUpdateOperationsInput | string
+    hostId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type StreamSongCreateInput = {
+    id?: string
+    url: string
+    title?: string | null
+    addedAt?: Date | string
+    stream: StreamCreateNestedOneWithoutSongsInput
+    User: UserCreateNestedOneWithoutStreamSongsInput
+    votes?: VoteCreateNestedManyWithoutSongInput
+  }
+
+  export type StreamSongUncheckedCreateInput = {
+    id?: string
+    url: string
+    title?: string | null
+    streamId: string
+    userId: string
+    addedAt?: Date | string
+    votes?: VoteUncheckedCreateNestedManyWithoutSongInput
+  }
+
+  export type StreamSongUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stream?: StreamUpdateOneRequiredWithoutSongsNestedInput
+    User?: UserUpdateOneRequiredWithoutStreamSongsNestedInput
+    votes?: VoteUpdateManyWithoutSongNestedInput
+  }
+
+  export type StreamSongUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    streamId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    votes?: VoteUncheckedUpdateManyWithoutSongNestedInput
+  }
+
+  export type StreamSongCreateManyInput = {
+    id?: string
+    url: string
+    title?: string | null
+    streamId: string
+    userId: string
+    addedAt?: Date | string
+  }
+
+  export type StreamSongUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StreamSongUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    streamId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VoteCreateInput = {
+    id?: string
+    type: $Enums.VoteType
+    song: StreamSongCreateNestedOneWithoutVotesInput
+    user: UserCreateNestedOneWithoutVotesInput
+  }
+
+  export type VoteUncheckedCreateInput = {
+    id?: string
+    songId: string
+    userId: string
+    type: $Enums.VoteType
+  }
+
+  export type VoteUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumVoteTypeFieldUpdateOperationsInput | $Enums.VoteType
+    song?: StreamSongUpdateOneRequiredWithoutVotesNestedInput
+    user?: UserUpdateOneRequiredWithoutVotesNestedInput
+  }
+
+  export type VoteUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    songId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    type?: EnumVoteTypeFieldUpdateOperationsInput | $Enums.VoteType
+  }
+
+  export type VoteCreateManyInput = {
+    id?: string
+    songId: string
+    userId: string
+    type: $Enums.VoteType
+  }
+
+  export type VoteUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumVoteTypeFieldUpdateOperationsInput | $Enums.VoteType
+  }
+
+  export type VoteUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    songId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    type?: EnumVoteTypeFieldUpdateOperationsInput | $Enums.VoteType
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -16408,16 +20558,16 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type EnumUserRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
     in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
     notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
     not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
-  }
-
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -16455,6 +20605,24 @@ export namespace Prisma {
     none?: PaymentTransactionWhereInput
   }
 
+  export type StreamListRelationFilter = {
+    every?: StreamWhereInput
+    some?: StreamWhereInput
+    none?: StreamWhereInput
+  }
+
+  export type VoteListRelationFilter = {
+    every?: VoteWhereInput
+    some?: VoteWhereInput
+    none?: VoteWhereInput
+  }
+
+  export type StreamSongListRelationFilter = {
+    every?: StreamSongWhereInput
+    some?: StreamSongWhereInput
+    none?: StreamSongWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -16476,6 +20644,18 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type StreamOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type VoteOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type StreamSongOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     firstName?: SortOrder
@@ -16483,6 +20663,7 @@ export namespace Prisma {
     email?: SortOrder
     phoneNumber?: SortOrder
     password?: SortOrder
+    socialLogin?: SortOrder
     role?: SortOrder
     isSubscribed?: SortOrder
     avatarUrl?: SortOrder
@@ -16498,6 +20679,7 @@ export namespace Prisma {
     email?: SortOrder
     phoneNumber?: SortOrder
     password?: SortOrder
+    socialLogin?: SortOrder
     role?: SortOrder
     isSubscribed?: SortOrder
     avatarUrl?: SortOrder
@@ -16513,6 +20695,7 @@ export namespace Prisma {
     email?: SortOrder
     phoneNumber?: SortOrder
     password?: SortOrder
+    socialLogin?: SortOrder
     role?: SortOrder
     isSubscribed?: SortOrder
     avatarUrl?: SortOrder
@@ -16557,6 +20740,14 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
     in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
@@ -16565,14 +20756,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumUserRoleFilter<$PrismaModel>
     _max?: NestedEnumUserRoleFilter<$PrismaModel>
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -17092,6 +21275,105 @@ export namespace Prisma {
     _max?: NestedEnumVerificationCodeTypeFilter<$PrismaModel>
   }
 
+  export type StreamCountOrderByAggregateInput = {
+    id?: SortOrder
+    streamName?: SortOrder
+    hostId?: SortOrder
+    createdAt?: SortOrder
+    active?: SortOrder
+  }
+
+  export type StreamMaxOrderByAggregateInput = {
+    id?: SortOrder
+    streamName?: SortOrder
+    hostId?: SortOrder
+    createdAt?: SortOrder
+    active?: SortOrder
+  }
+
+  export type StreamMinOrderByAggregateInput = {
+    id?: SortOrder
+    streamName?: SortOrder
+    hostId?: SortOrder
+    createdAt?: SortOrder
+    active?: SortOrder
+  }
+
+  export type StreamScalarRelationFilter = {
+    is?: StreamWhereInput
+    isNot?: StreamWhereInput
+  }
+
+  export type StreamSongCountOrderByAggregateInput = {
+    id?: SortOrder
+    url?: SortOrder
+    title?: SortOrder
+    streamId?: SortOrder
+    userId?: SortOrder
+    addedAt?: SortOrder
+  }
+
+  export type StreamSongMaxOrderByAggregateInput = {
+    id?: SortOrder
+    url?: SortOrder
+    title?: SortOrder
+    streamId?: SortOrder
+    userId?: SortOrder
+    addedAt?: SortOrder
+  }
+
+  export type StreamSongMinOrderByAggregateInput = {
+    id?: SortOrder
+    url?: SortOrder
+    title?: SortOrder
+    streamId?: SortOrder
+    userId?: SortOrder
+    addedAt?: SortOrder
+  }
+
+  export type EnumVoteTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.VoteType | EnumVoteTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.VoteType[] | ListEnumVoteTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.VoteType[] | ListEnumVoteTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumVoteTypeFilter<$PrismaModel> | $Enums.VoteType
+  }
+
+  export type StreamSongScalarRelationFilter = {
+    is?: StreamSongWhereInput
+    isNot?: StreamSongWhereInput
+  }
+
+  export type VoteCountOrderByAggregateInput = {
+    id?: SortOrder
+    songId?: SortOrder
+    userId?: SortOrder
+    type?: SortOrder
+  }
+
+  export type VoteMaxOrderByAggregateInput = {
+    id?: SortOrder
+    songId?: SortOrder
+    userId?: SortOrder
+    type?: SortOrder
+  }
+
+  export type VoteMinOrderByAggregateInput = {
+    id?: SortOrder
+    songId?: SortOrder
+    userId?: SortOrder
+    type?: SortOrder
+  }
+
+  export type EnumVoteTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.VoteType | EnumVoteTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.VoteType[] | ListEnumVoteTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.VoteType[] | ListEnumVoteTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumVoteTypeWithAggregatesFilter<$PrismaModel> | $Enums.VoteType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumVoteTypeFilter<$PrismaModel>
+    _max?: NestedEnumVoteTypeFilter<$PrismaModel>
+  }
+
   export type PlaylistCreateNestedManyWithoutUserDetailsInput = {
     create?: XOR<PlaylistCreateWithoutUserDetailsInput, PlaylistUncheckedCreateWithoutUserDetailsInput> | PlaylistCreateWithoutUserDetailsInput[] | PlaylistUncheckedCreateWithoutUserDetailsInput[]
     connectOrCreate?: PlaylistCreateOrConnectWithoutUserDetailsInput | PlaylistCreateOrConnectWithoutUserDetailsInput[]
@@ -17118,6 +21400,27 @@ export namespace Prisma {
     connectOrCreate?: PaymentTransactionCreateOrConnectWithoutUserInput | PaymentTransactionCreateOrConnectWithoutUserInput[]
     createMany?: PaymentTransactionCreateManyUserInputEnvelope
     connect?: PaymentTransactionWhereUniqueInput | PaymentTransactionWhereUniqueInput[]
+  }
+
+  export type StreamCreateNestedManyWithoutHostInput = {
+    create?: XOR<StreamCreateWithoutHostInput, StreamUncheckedCreateWithoutHostInput> | StreamCreateWithoutHostInput[] | StreamUncheckedCreateWithoutHostInput[]
+    connectOrCreate?: StreamCreateOrConnectWithoutHostInput | StreamCreateOrConnectWithoutHostInput[]
+    createMany?: StreamCreateManyHostInputEnvelope
+    connect?: StreamWhereUniqueInput | StreamWhereUniqueInput[]
+  }
+
+  export type VoteCreateNestedManyWithoutUserInput = {
+    create?: XOR<VoteCreateWithoutUserInput, VoteUncheckedCreateWithoutUserInput> | VoteCreateWithoutUserInput[] | VoteUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: VoteCreateOrConnectWithoutUserInput | VoteCreateOrConnectWithoutUserInput[]
+    createMany?: VoteCreateManyUserInputEnvelope
+    connect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+  }
+
+  export type StreamSongCreateNestedManyWithoutUserInput = {
+    create?: XOR<StreamSongCreateWithoutUserInput, StreamSongUncheckedCreateWithoutUserInput> | StreamSongCreateWithoutUserInput[] | StreamSongUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: StreamSongCreateOrConnectWithoutUserInput | StreamSongCreateOrConnectWithoutUserInput[]
+    createMany?: StreamSongCreateManyUserInputEnvelope
+    connect?: StreamSongWhereUniqueInput | StreamSongWhereUniqueInput[]
   }
 
   export type PlaylistUncheckedCreateNestedManyWithoutUserDetailsInput = {
@@ -17148,6 +21451,27 @@ export namespace Prisma {
     connect?: PaymentTransactionWhereUniqueInput | PaymentTransactionWhereUniqueInput[]
   }
 
+  export type StreamUncheckedCreateNestedManyWithoutHostInput = {
+    create?: XOR<StreamCreateWithoutHostInput, StreamUncheckedCreateWithoutHostInput> | StreamCreateWithoutHostInput[] | StreamUncheckedCreateWithoutHostInput[]
+    connectOrCreate?: StreamCreateOrConnectWithoutHostInput | StreamCreateOrConnectWithoutHostInput[]
+    createMany?: StreamCreateManyHostInputEnvelope
+    connect?: StreamWhereUniqueInput | StreamWhereUniqueInput[]
+  }
+
+  export type VoteUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<VoteCreateWithoutUserInput, VoteUncheckedCreateWithoutUserInput> | VoteCreateWithoutUserInput[] | VoteUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: VoteCreateOrConnectWithoutUserInput | VoteCreateOrConnectWithoutUserInput[]
+    createMany?: VoteCreateManyUserInputEnvelope
+    connect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+  }
+
+  export type StreamSongUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<StreamSongCreateWithoutUserInput, StreamSongUncheckedCreateWithoutUserInput> | StreamSongCreateWithoutUserInput[] | StreamSongUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: StreamSongCreateOrConnectWithoutUserInput | StreamSongCreateOrConnectWithoutUserInput[]
+    createMany?: StreamSongCreateManyUserInputEnvelope
+    connect?: StreamSongWhereUniqueInput | StreamSongWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -17156,12 +21480,12 @@ export namespace Prisma {
     set?: string | null
   }
 
-  export type EnumUserRoleFieldUpdateOperationsInput = {
-    set?: $Enums.UserRole
-  }
-
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
+  }
+
+  export type EnumUserRoleFieldUpdateOperationsInput = {
+    set?: $Enums.UserRole
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -17224,6 +21548,48 @@ export namespace Prisma {
     deleteMany?: PaymentTransactionScalarWhereInput | PaymentTransactionScalarWhereInput[]
   }
 
+  export type StreamUpdateManyWithoutHostNestedInput = {
+    create?: XOR<StreamCreateWithoutHostInput, StreamUncheckedCreateWithoutHostInput> | StreamCreateWithoutHostInput[] | StreamUncheckedCreateWithoutHostInput[]
+    connectOrCreate?: StreamCreateOrConnectWithoutHostInput | StreamCreateOrConnectWithoutHostInput[]
+    upsert?: StreamUpsertWithWhereUniqueWithoutHostInput | StreamUpsertWithWhereUniqueWithoutHostInput[]
+    createMany?: StreamCreateManyHostInputEnvelope
+    set?: StreamWhereUniqueInput | StreamWhereUniqueInput[]
+    disconnect?: StreamWhereUniqueInput | StreamWhereUniqueInput[]
+    delete?: StreamWhereUniqueInput | StreamWhereUniqueInput[]
+    connect?: StreamWhereUniqueInput | StreamWhereUniqueInput[]
+    update?: StreamUpdateWithWhereUniqueWithoutHostInput | StreamUpdateWithWhereUniqueWithoutHostInput[]
+    updateMany?: StreamUpdateManyWithWhereWithoutHostInput | StreamUpdateManyWithWhereWithoutHostInput[]
+    deleteMany?: StreamScalarWhereInput | StreamScalarWhereInput[]
+  }
+
+  export type VoteUpdateManyWithoutUserNestedInput = {
+    create?: XOR<VoteCreateWithoutUserInput, VoteUncheckedCreateWithoutUserInput> | VoteCreateWithoutUserInput[] | VoteUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: VoteCreateOrConnectWithoutUserInput | VoteCreateOrConnectWithoutUserInput[]
+    upsert?: VoteUpsertWithWhereUniqueWithoutUserInput | VoteUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: VoteCreateManyUserInputEnvelope
+    set?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    disconnect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    delete?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    connect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    update?: VoteUpdateWithWhereUniqueWithoutUserInput | VoteUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: VoteUpdateManyWithWhereWithoutUserInput | VoteUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: VoteScalarWhereInput | VoteScalarWhereInput[]
+  }
+
+  export type StreamSongUpdateManyWithoutUserNestedInput = {
+    create?: XOR<StreamSongCreateWithoutUserInput, StreamSongUncheckedCreateWithoutUserInput> | StreamSongCreateWithoutUserInput[] | StreamSongUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: StreamSongCreateOrConnectWithoutUserInput | StreamSongCreateOrConnectWithoutUserInput[]
+    upsert?: StreamSongUpsertWithWhereUniqueWithoutUserInput | StreamSongUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: StreamSongCreateManyUserInputEnvelope
+    set?: StreamSongWhereUniqueInput | StreamSongWhereUniqueInput[]
+    disconnect?: StreamSongWhereUniqueInput | StreamSongWhereUniqueInput[]
+    delete?: StreamSongWhereUniqueInput | StreamSongWhereUniqueInput[]
+    connect?: StreamSongWhereUniqueInput | StreamSongWhereUniqueInput[]
+    update?: StreamSongUpdateWithWhereUniqueWithoutUserInput | StreamSongUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: StreamSongUpdateManyWithWhereWithoutUserInput | StreamSongUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: StreamSongScalarWhereInput | StreamSongScalarWhereInput[]
+  }
+
   export type PlaylistUncheckedUpdateManyWithoutUserDetailsNestedInput = {
     create?: XOR<PlaylistCreateWithoutUserDetailsInput, PlaylistUncheckedCreateWithoutUserDetailsInput> | PlaylistCreateWithoutUserDetailsInput[] | PlaylistUncheckedCreateWithoutUserDetailsInput[]
     connectOrCreate?: PlaylistCreateOrConnectWithoutUserDetailsInput | PlaylistCreateOrConnectWithoutUserDetailsInput[]
@@ -17278,6 +21644,48 @@ export namespace Prisma {
     update?: PaymentTransactionUpdateWithWhereUniqueWithoutUserInput | PaymentTransactionUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: PaymentTransactionUpdateManyWithWhereWithoutUserInput | PaymentTransactionUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: PaymentTransactionScalarWhereInput | PaymentTransactionScalarWhereInput[]
+  }
+
+  export type StreamUncheckedUpdateManyWithoutHostNestedInput = {
+    create?: XOR<StreamCreateWithoutHostInput, StreamUncheckedCreateWithoutHostInput> | StreamCreateWithoutHostInput[] | StreamUncheckedCreateWithoutHostInput[]
+    connectOrCreate?: StreamCreateOrConnectWithoutHostInput | StreamCreateOrConnectWithoutHostInput[]
+    upsert?: StreamUpsertWithWhereUniqueWithoutHostInput | StreamUpsertWithWhereUniqueWithoutHostInput[]
+    createMany?: StreamCreateManyHostInputEnvelope
+    set?: StreamWhereUniqueInput | StreamWhereUniqueInput[]
+    disconnect?: StreamWhereUniqueInput | StreamWhereUniqueInput[]
+    delete?: StreamWhereUniqueInput | StreamWhereUniqueInput[]
+    connect?: StreamWhereUniqueInput | StreamWhereUniqueInput[]
+    update?: StreamUpdateWithWhereUniqueWithoutHostInput | StreamUpdateWithWhereUniqueWithoutHostInput[]
+    updateMany?: StreamUpdateManyWithWhereWithoutHostInput | StreamUpdateManyWithWhereWithoutHostInput[]
+    deleteMany?: StreamScalarWhereInput | StreamScalarWhereInput[]
+  }
+
+  export type VoteUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<VoteCreateWithoutUserInput, VoteUncheckedCreateWithoutUserInput> | VoteCreateWithoutUserInput[] | VoteUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: VoteCreateOrConnectWithoutUserInput | VoteCreateOrConnectWithoutUserInput[]
+    upsert?: VoteUpsertWithWhereUniqueWithoutUserInput | VoteUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: VoteCreateManyUserInputEnvelope
+    set?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    disconnect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    delete?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    connect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    update?: VoteUpdateWithWhereUniqueWithoutUserInput | VoteUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: VoteUpdateManyWithWhereWithoutUserInput | VoteUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: VoteScalarWhereInput | VoteScalarWhereInput[]
+  }
+
+  export type StreamSongUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<StreamSongCreateWithoutUserInput, StreamSongUncheckedCreateWithoutUserInput> | StreamSongCreateWithoutUserInput[] | StreamSongUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: StreamSongCreateOrConnectWithoutUserInput | StreamSongCreateOrConnectWithoutUserInput[]
+    upsert?: StreamSongUpsertWithWhereUniqueWithoutUserInput | StreamSongUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: StreamSongCreateManyUserInputEnvelope
+    set?: StreamSongWhereUniqueInput | StreamSongWhereUniqueInput[]
+    disconnect?: StreamSongWhereUniqueInput | StreamSongWhereUniqueInput[]
+    delete?: StreamSongWhereUniqueInput | StreamSongWhereUniqueInput[]
+    connect?: StreamSongWhereUniqueInput | StreamSongWhereUniqueInput[]
+    update?: StreamSongUpdateWithWhereUniqueWithoutUserInput | StreamSongUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: StreamSongUpdateManyWithWhereWithoutUserInput | StreamSongUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: StreamSongScalarWhereInput | StreamSongScalarWhereInput[]
   }
 
   export type PlaylistSongCreateNestedManyWithoutSongDetailsInput = {
@@ -17804,6 +22212,164 @@ export namespace Prisma {
     set?: $Enums.VerificationCodeType
   }
 
+  export type UserCreateNestedOneWithoutStreamsInput = {
+    create?: XOR<UserCreateWithoutStreamsInput, UserUncheckedCreateWithoutStreamsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutStreamsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type StreamSongCreateNestedManyWithoutStreamInput = {
+    create?: XOR<StreamSongCreateWithoutStreamInput, StreamSongUncheckedCreateWithoutStreamInput> | StreamSongCreateWithoutStreamInput[] | StreamSongUncheckedCreateWithoutStreamInput[]
+    connectOrCreate?: StreamSongCreateOrConnectWithoutStreamInput | StreamSongCreateOrConnectWithoutStreamInput[]
+    createMany?: StreamSongCreateManyStreamInputEnvelope
+    connect?: StreamSongWhereUniqueInput | StreamSongWhereUniqueInput[]
+  }
+
+  export type StreamSongUncheckedCreateNestedManyWithoutStreamInput = {
+    create?: XOR<StreamSongCreateWithoutStreamInput, StreamSongUncheckedCreateWithoutStreamInput> | StreamSongCreateWithoutStreamInput[] | StreamSongUncheckedCreateWithoutStreamInput[]
+    connectOrCreate?: StreamSongCreateOrConnectWithoutStreamInput | StreamSongCreateOrConnectWithoutStreamInput[]
+    createMany?: StreamSongCreateManyStreamInputEnvelope
+    connect?: StreamSongWhereUniqueInput | StreamSongWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutStreamsNestedInput = {
+    create?: XOR<UserCreateWithoutStreamsInput, UserUncheckedCreateWithoutStreamsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutStreamsInput
+    upsert?: UserUpsertWithoutStreamsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutStreamsInput, UserUpdateWithoutStreamsInput>, UserUncheckedUpdateWithoutStreamsInput>
+  }
+
+  export type StreamSongUpdateManyWithoutStreamNestedInput = {
+    create?: XOR<StreamSongCreateWithoutStreamInput, StreamSongUncheckedCreateWithoutStreamInput> | StreamSongCreateWithoutStreamInput[] | StreamSongUncheckedCreateWithoutStreamInput[]
+    connectOrCreate?: StreamSongCreateOrConnectWithoutStreamInput | StreamSongCreateOrConnectWithoutStreamInput[]
+    upsert?: StreamSongUpsertWithWhereUniqueWithoutStreamInput | StreamSongUpsertWithWhereUniqueWithoutStreamInput[]
+    createMany?: StreamSongCreateManyStreamInputEnvelope
+    set?: StreamSongWhereUniqueInput | StreamSongWhereUniqueInput[]
+    disconnect?: StreamSongWhereUniqueInput | StreamSongWhereUniqueInput[]
+    delete?: StreamSongWhereUniqueInput | StreamSongWhereUniqueInput[]
+    connect?: StreamSongWhereUniqueInput | StreamSongWhereUniqueInput[]
+    update?: StreamSongUpdateWithWhereUniqueWithoutStreamInput | StreamSongUpdateWithWhereUniqueWithoutStreamInput[]
+    updateMany?: StreamSongUpdateManyWithWhereWithoutStreamInput | StreamSongUpdateManyWithWhereWithoutStreamInput[]
+    deleteMany?: StreamSongScalarWhereInput | StreamSongScalarWhereInput[]
+  }
+
+  export type StreamSongUncheckedUpdateManyWithoutStreamNestedInput = {
+    create?: XOR<StreamSongCreateWithoutStreamInput, StreamSongUncheckedCreateWithoutStreamInput> | StreamSongCreateWithoutStreamInput[] | StreamSongUncheckedCreateWithoutStreamInput[]
+    connectOrCreate?: StreamSongCreateOrConnectWithoutStreamInput | StreamSongCreateOrConnectWithoutStreamInput[]
+    upsert?: StreamSongUpsertWithWhereUniqueWithoutStreamInput | StreamSongUpsertWithWhereUniqueWithoutStreamInput[]
+    createMany?: StreamSongCreateManyStreamInputEnvelope
+    set?: StreamSongWhereUniqueInput | StreamSongWhereUniqueInput[]
+    disconnect?: StreamSongWhereUniqueInput | StreamSongWhereUniqueInput[]
+    delete?: StreamSongWhereUniqueInput | StreamSongWhereUniqueInput[]
+    connect?: StreamSongWhereUniqueInput | StreamSongWhereUniqueInput[]
+    update?: StreamSongUpdateWithWhereUniqueWithoutStreamInput | StreamSongUpdateWithWhereUniqueWithoutStreamInput[]
+    updateMany?: StreamSongUpdateManyWithWhereWithoutStreamInput | StreamSongUpdateManyWithWhereWithoutStreamInput[]
+    deleteMany?: StreamSongScalarWhereInput | StreamSongScalarWhereInput[]
+  }
+
+  export type StreamCreateNestedOneWithoutSongsInput = {
+    create?: XOR<StreamCreateWithoutSongsInput, StreamUncheckedCreateWithoutSongsInput>
+    connectOrCreate?: StreamCreateOrConnectWithoutSongsInput
+    connect?: StreamWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutStreamSongsInput = {
+    create?: XOR<UserCreateWithoutStreamSongsInput, UserUncheckedCreateWithoutStreamSongsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutStreamSongsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type VoteCreateNestedManyWithoutSongInput = {
+    create?: XOR<VoteCreateWithoutSongInput, VoteUncheckedCreateWithoutSongInput> | VoteCreateWithoutSongInput[] | VoteUncheckedCreateWithoutSongInput[]
+    connectOrCreate?: VoteCreateOrConnectWithoutSongInput | VoteCreateOrConnectWithoutSongInput[]
+    createMany?: VoteCreateManySongInputEnvelope
+    connect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+  }
+
+  export type VoteUncheckedCreateNestedManyWithoutSongInput = {
+    create?: XOR<VoteCreateWithoutSongInput, VoteUncheckedCreateWithoutSongInput> | VoteCreateWithoutSongInput[] | VoteUncheckedCreateWithoutSongInput[]
+    connectOrCreate?: VoteCreateOrConnectWithoutSongInput | VoteCreateOrConnectWithoutSongInput[]
+    createMany?: VoteCreateManySongInputEnvelope
+    connect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+  }
+
+  export type StreamUpdateOneRequiredWithoutSongsNestedInput = {
+    create?: XOR<StreamCreateWithoutSongsInput, StreamUncheckedCreateWithoutSongsInput>
+    connectOrCreate?: StreamCreateOrConnectWithoutSongsInput
+    upsert?: StreamUpsertWithoutSongsInput
+    connect?: StreamWhereUniqueInput
+    update?: XOR<XOR<StreamUpdateToOneWithWhereWithoutSongsInput, StreamUpdateWithoutSongsInput>, StreamUncheckedUpdateWithoutSongsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutStreamSongsNestedInput = {
+    create?: XOR<UserCreateWithoutStreamSongsInput, UserUncheckedCreateWithoutStreamSongsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutStreamSongsInput
+    upsert?: UserUpsertWithoutStreamSongsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutStreamSongsInput, UserUpdateWithoutStreamSongsInput>, UserUncheckedUpdateWithoutStreamSongsInput>
+  }
+
+  export type VoteUpdateManyWithoutSongNestedInput = {
+    create?: XOR<VoteCreateWithoutSongInput, VoteUncheckedCreateWithoutSongInput> | VoteCreateWithoutSongInput[] | VoteUncheckedCreateWithoutSongInput[]
+    connectOrCreate?: VoteCreateOrConnectWithoutSongInput | VoteCreateOrConnectWithoutSongInput[]
+    upsert?: VoteUpsertWithWhereUniqueWithoutSongInput | VoteUpsertWithWhereUniqueWithoutSongInput[]
+    createMany?: VoteCreateManySongInputEnvelope
+    set?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    disconnect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    delete?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    connect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    update?: VoteUpdateWithWhereUniqueWithoutSongInput | VoteUpdateWithWhereUniqueWithoutSongInput[]
+    updateMany?: VoteUpdateManyWithWhereWithoutSongInput | VoteUpdateManyWithWhereWithoutSongInput[]
+    deleteMany?: VoteScalarWhereInput | VoteScalarWhereInput[]
+  }
+
+  export type VoteUncheckedUpdateManyWithoutSongNestedInput = {
+    create?: XOR<VoteCreateWithoutSongInput, VoteUncheckedCreateWithoutSongInput> | VoteCreateWithoutSongInput[] | VoteUncheckedCreateWithoutSongInput[]
+    connectOrCreate?: VoteCreateOrConnectWithoutSongInput | VoteCreateOrConnectWithoutSongInput[]
+    upsert?: VoteUpsertWithWhereUniqueWithoutSongInput | VoteUpsertWithWhereUniqueWithoutSongInput[]
+    createMany?: VoteCreateManySongInputEnvelope
+    set?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    disconnect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    delete?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    connect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    update?: VoteUpdateWithWhereUniqueWithoutSongInput | VoteUpdateWithWhereUniqueWithoutSongInput[]
+    updateMany?: VoteUpdateManyWithWhereWithoutSongInput | VoteUpdateManyWithWhereWithoutSongInput[]
+    deleteMany?: VoteScalarWhereInput | VoteScalarWhereInput[]
+  }
+
+  export type StreamSongCreateNestedOneWithoutVotesInput = {
+    create?: XOR<StreamSongCreateWithoutVotesInput, StreamSongUncheckedCreateWithoutVotesInput>
+    connectOrCreate?: StreamSongCreateOrConnectWithoutVotesInput
+    connect?: StreamSongWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutVotesInput = {
+    create?: XOR<UserCreateWithoutVotesInput, UserUncheckedCreateWithoutVotesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutVotesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumVoteTypeFieldUpdateOperationsInput = {
+    set?: $Enums.VoteType
+  }
+
+  export type StreamSongUpdateOneRequiredWithoutVotesNestedInput = {
+    create?: XOR<StreamSongCreateWithoutVotesInput, StreamSongUncheckedCreateWithoutVotesInput>
+    connectOrCreate?: StreamSongCreateOrConnectWithoutVotesInput
+    upsert?: StreamSongUpsertWithoutVotesInput
+    connect?: StreamSongWhereUniqueInput
+    update?: XOR<XOR<StreamSongUpdateToOneWithWhereWithoutVotesInput, StreamSongUpdateWithoutVotesInput>, StreamSongUncheckedUpdateWithoutVotesInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutVotesNestedInput = {
+    create?: XOR<UserCreateWithoutVotesInput, UserUncheckedCreateWithoutVotesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutVotesInput
+    upsert?: UserUpsertWithoutVotesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutVotesInput, UserUpdateWithoutVotesInput>, UserUncheckedUpdateWithoutVotesInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -17832,16 +22398,16 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
     in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
     notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
     not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -17911,6 +22477,14 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
     in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
@@ -17919,14 +22493,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumUserRoleFilter<$PrismaModel>
     _max?: NestedEnumUserRoleFilter<$PrismaModel>
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -18001,6 +22567,23 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumVerificationCodeTypeFilter<$PrismaModel>
     _max?: NestedEnumVerificationCodeTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumVoteTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.VoteType | EnumVoteTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.VoteType[] | ListEnumVoteTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.VoteType[] | ListEnumVoteTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumVoteTypeFilter<$PrismaModel> | $Enums.VoteType
+  }
+
+  export type NestedEnumVoteTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.VoteType | EnumVoteTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.VoteType[] | ListEnumVoteTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.VoteType[] | ListEnumVoteTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumVoteTypeWithAggregatesFilter<$PrismaModel> | $Enums.VoteType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumVoteTypeFilter<$PrismaModel>
+    _max?: NestedEnumVoteTypeFilter<$PrismaModel>
   }
 
   export type PlaylistCreateWithoutUserDetailsInput = {
@@ -18106,6 +22689,82 @@ export namespace Prisma {
 
   export type PaymentTransactionCreateManyUserInputEnvelope = {
     data: PaymentTransactionCreateManyUserInput | PaymentTransactionCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type StreamCreateWithoutHostInput = {
+    id?: string
+    streamName: string
+    createdAt?: Date | string
+    active?: boolean
+    songs?: StreamSongCreateNestedManyWithoutStreamInput
+  }
+
+  export type StreamUncheckedCreateWithoutHostInput = {
+    id?: string
+    streamName: string
+    createdAt?: Date | string
+    active?: boolean
+    songs?: StreamSongUncheckedCreateNestedManyWithoutStreamInput
+  }
+
+  export type StreamCreateOrConnectWithoutHostInput = {
+    where: StreamWhereUniqueInput
+    create: XOR<StreamCreateWithoutHostInput, StreamUncheckedCreateWithoutHostInput>
+  }
+
+  export type StreamCreateManyHostInputEnvelope = {
+    data: StreamCreateManyHostInput | StreamCreateManyHostInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type VoteCreateWithoutUserInput = {
+    id?: string
+    type: $Enums.VoteType
+    song: StreamSongCreateNestedOneWithoutVotesInput
+  }
+
+  export type VoteUncheckedCreateWithoutUserInput = {
+    id?: string
+    songId: string
+    type: $Enums.VoteType
+  }
+
+  export type VoteCreateOrConnectWithoutUserInput = {
+    where: VoteWhereUniqueInput
+    create: XOR<VoteCreateWithoutUserInput, VoteUncheckedCreateWithoutUserInput>
+  }
+
+  export type VoteCreateManyUserInputEnvelope = {
+    data: VoteCreateManyUserInput | VoteCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type StreamSongCreateWithoutUserInput = {
+    id?: string
+    url: string
+    title?: string | null
+    addedAt?: Date | string
+    stream: StreamCreateNestedOneWithoutSongsInput
+    votes?: VoteCreateNestedManyWithoutSongInput
+  }
+
+  export type StreamSongUncheckedCreateWithoutUserInput = {
+    id?: string
+    url: string
+    title?: string | null
+    streamId: string
+    addedAt?: Date | string
+    votes?: VoteUncheckedCreateNestedManyWithoutSongInput
+  }
+
+  export type StreamSongCreateOrConnectWithoutUserInput = {
+    where: StreamSongWhereUniqueInput
+    create: XOR<StreamSongCreateWithoutUserInput, StreamSongUncheckedCreateWithoutUserInput>
+  }
+
+  export type StreamSongCreateManyUserInputEnvelope = {
+    data: StreamSongCreateManyUserInput | StreamSongCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -18220,6 +22879,87 @@ export namespace Prisma {
     paymentProvider?: StringFilter<"PaymentTransaction"> | string
     providerTransactionId?: StringFilter<"PaymentTransaction"> | string
     createdAt?: DateTimeFilter<"PaymentTransaction"> | Date | string
+  }
+
+  export type StreamUpsertWithWhereUniqueWithoutHostInput = {
+    where: StreamWhereUniqueInput
+    update: XOR<StreamUpdateWithoutHostInput, StreamUncheckedUpdateWithoutHostInput>
+    create: XOR<StreamCreateWithoutHostInput, StreamUncheckedCreateWithoutHostInput>
+  }
+
+  export type StreamUpdateWithWhereUniqueWithoutHostInput = {
+    where: StreamWhereUniqueInput
+    data: XOR<StreamUpdateWithoutHostInput, StreamUncheckedUpdateWithoutHostInput>
+  }
+
+  export type StreamUpdateManyWithWhereWithoutHostInput = {
+    where: StreamScalarWhereInput
+    data: XOR<StreamUpdateManyMutationInput, StreamUncheckedUpdateManyWithoutHostInput>
+  }
+
+  export type StreamScalarWhereInput = {
+    AND?: StreamScalarWhereInput | StreamScalarWhereInput[]
+    OR?: StreamScalarWhereInput[]
+    NOT?: StreamScalarWhereInput | StreamScalarWhereInput[]
+    id?: StringFilter<"Stream"> | string
+    streamName?: StringFilter<"Stream"> | string
+    hostId?: StringFilter<"Stream"> | string
+    createdAt?: DateTimeFilter<"Stream"> | Date | string
+    active?: BoolFilter<"Stream"> | boolean
+  }
+
+  export type VoteUpsertWithWhereUniqueWithoutUserInput = {
+    where: VoteWhereUniqueInput
+    update: XOR<VoteUpdateWithoutUserInput, VoteUncheckedUpdateWithoutUserInput>
+    create: XOR<VoteCreateWithoutUserInput, VoteUncheckedCreateWithoutUserInput>
+  }
+
+  export type VoteUpdateWithWhereUniqueWithoutUserInput = {
+    where: VoteWhereUniqueInput
+    data: XOR<VoteUpdateWithoutUserInput, VoteUncheckedUpdateWithoutUserInput>
+  }
+
+  export type VoteUpdateManyWithWhereWithoutUserInput = {
+    where: VoteScalarWhereInput
+    data: XOR<VoteUpdateManyMutationInput, VoteUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type VoteScalarWhereInput = {
+    AND?: VoteScalarWhereInput | VoteScalarWhereInput[]
+    OR?: VoteScalarWhereInput[]
+    NOT?: VoteScalarWhereInput | VoteScalarWhereInput[]
+    id?: StringFilter<"Vote"> | string
+    songId?: StringFilter<"Vote"> | string
+    userId?: StringFilter<"Vote"> | string
+    type?: EnumVoteTypeFilter<"Vote"> | $Enums.VoteType
+  }
+
+  export type StreamSongUpsertWithWhereUniqueWithoutUserInput = {
+    where: StreamSongWhereUniqueInput
+    update: XOR<StreamSongUpdateWithoutUserInput, StreamSongUncheckedUpdateWithoutUserInput>
+    create: XOR<StreamSongCreateWithoutUserInput, StreamSongUncheckedCreateWithoutUserInput>
+  }
+
+  export type StreamSongUpdateWithWhereUniqueWithoutUserInput = {
+    where: StreamSongWhereUniqueInput
+    data: XOR<StreamSongUpdateWithoutUserInput, StreamSongUncheckedUpdateWithoutUserInput>
+  }
+
+  export type StreamSongUpdateManyWithWhereWithoutUserInput = {
+    where: StreamSongScalarWhereInput
+    data: XOR<StreamSongUpdateManyMutationInput, StreamSongUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type StreamSongScalarWhereInput = {
+    AND?: StreamSongScalarWhereInput | StreamSongScalarWhereInput[]
+    OR?: StreamSongScalarWhereInput[]
+    NOT?: StreamSongScalarWhereInput | StreamSongScalarWhereInput[]
+    id?: StringFilter<"StreamSong"> | string
+    url?: StringFilter<"StreamSong"> | string
+    title?: StringNullableFilter<"StreamSong"> | string | null
+    streamId?: StringFilter<"StreamSong"> | string
+    userId?: StringFilter<"StreamSong"> | string
+    addedAt?: DateTimeFilter<"StreamSong"> | Date | string
   }
 
   export type PlaylistSongCreateWithoutSongDetailsInput = {
@@ -18389,7 +23129,8 @@ export namespace Prisma {
     lastName: string
     email: string
     phoneNumber?: string | null
-    password: string
+    password?: string | null
+    socialLogin?: boolean
     role: $Enums.UserRole
     isSubscribed: boolean
     avatarUrl?: string | null
@@ -18399,6 +23140,9 @@ export namespace Prisma {
     starredSongs?: starredSongCreateNestedManyWithoutUserDetailsInput
     Subscription?: SubscriptionCreateNestedManyWithoutUserDetailsInput
     PaymentTransaction?: PaymentTransactionCreateNestedManyWithoutUserInput
+    Streams?: StreamCreateNestedManyWithoutHostInput
+    Votes?: VoteCreateNestedManyWithoutUserInput
+    StreamSongs?: StreamSongCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPlaylistInput = {
@@ -18407,7 +23151,8 @@ export namespace Prisma {
     lastName: string
     email: string
     phoneNumber?: string | null
-    password: string
+    password?: string | null
+    socialLogin?: boolean
     role: $Enums.UserRole
     isSubscribed: boolean
     avatarUrl?: string | null
@@ -18417,6 +23162,9 @@ export namespace Prisma {
     starredSongs?: starredSongUncheckedCreateNestedManyWithoutUserDetailsInput
     Subscription?: SubscriptionUncheckedCreateNestedManyWithoutUserDetailsInput
     PaymentTransaction?: PaymentTransactionUncheckedCreateNestedManyWithoutUserInput
+    Streams?: StreamUncheckedCreateNestedManyWithoutHostInput
+    Votes?: VoteUncheckedCreateNestedManyWithoutUserInput
+    StreamSongs?: StreamSongUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPlaylistInput = {
@@ -18462,7 +23210,8 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLogin?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18472,6 +23221,9 @@ export namespace Prisma {
     starredSongs?: starredSongUpdateManyWithoutUserDetailsNestedInput
     Subscription?: SubscriptionUpdateManyWithoutUserDetailsNestedInput
     PaymentTransaction?: PaymentTransactionUpdateManyWithoutUserNestedInput
+    Streams?: StreamUpdateManyWithoutHostNestedInput
+    Votes?: VoteUpdateManyWithoutUserNestedInput
+    StreamSongs?: StreamSongUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPlaylistInput = {
@@ -18480,7 +23232,8 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLogin?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18490,6 +23243,9 @@ export namespace Prisma {
     starredSongs?: starredSongUncheckedUpdateManyWithoutUserDetailsNestedInput
     Subscription?: SubscriptionUncheckedUpdateManyWithoutUserDetailsNestedInput
     PaymentTransaction?: PaymentTransactionUncheckedUpdateManyWithoutUserNestedInput
+    Streams?: StreamUncheckedUpdateManyWithoutHostNestedInput
+    Votes?: VoteUncheckedUpdateManyWithoutUserNestedInput
+    StreamSongs?: StreamSongUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PlaylistSongUpsertWithWhereUniqueWithoutPlaylistDetailsInput = {
@@ -18750,7 +23506,8 @@ export namespace Prisma {
     lastName: string
     email: string
     phoneNumber?: string | null
-    password: string
+    password?: string | null
+    socialLogin?: boolean
     role: $Enums.UserRole
     isSubscribed: boolean
     avatarUrl?: string | null
@@ -18760,6 +23517,9 @@ export namespace Prisma {
     Playlist?: PlaylistCreateNestedManyWithoutUserDetailsInput
     Subscription?: SubscriptionCreateNestedManyWithoutUserDetailsInput
     PaymentTransaction?: PaymentTransactionCreateNestedManyWithoutUserInput
+    Streams?: StreamCreateNestedManyWithoutHostInput
+    Votes?: VoteCreateNestedManyWithoutUserInput
+    StreamSongs?: StreamSongCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutStarredSongsInput = {
@@ -18768,7 +23528,8 @@ export namespace Prisma {
     lastName: string
     email: string
     phoneNumber?: string | null
-    password: string
+    password?: string | null
+    socialLogin?: boolean
     role: $Enums.UserRole
     isSubscribed: boolean
     avatarUrl?: string | null
@@ -18778,6 +23539,9 @@ export namespace Prisma {
     Playlist?: PlaylistUncheckedCreateNestedManyWithoutUserDetailsInput
     Subscription?: SubscriptionUncheckedCreateNestedManyWithoutUserDetailsInput
     PaymentTransaction?: PaymentTransactionUncheckedCreateNestedManyWithoutUserInput
+    Streams?: StreamUncheckedCreateNestedManyWithoutHostInput
+    Votes?: VoteUncheckedCreateNestedManyWithoutUserInput
+    StreamSongs?: StreamSongUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutStarredSongsInput = {
@@ -18834,7 +23598,8 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLogin?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18844,6 +23609,9 @@ export namespace Prisma {
     Playlist?: PlaylistUpdateManyWithoutUserDetailsNestedInput
     Subscription?: SubscriptionUpdateManyWithoutUserDetailsNestedInput
     PaymentTransaction?: PaymentTransactionUpdateManyWithoutUserNestedInput
+    Streams?: StreamUpdateManyWithoutHostNestedInput
+    Votes?: VoteUpdateManyWithoutUserNestedInput
+    StreamSongs?: StreamSongUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStarredSongsInput = {
@@ -18852,7 +23620,8 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLogin?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18862,6 +23631,9 @@ export namespace Prisma {
     Playlist?: PlaylistUncheckedUpdateManyWithoutUserDetailsNestedInput
     Subscription?: SubscriptionUncheckedUpdateManyWithoutUserDetailsNestedInput
     PaymentTransaction?: PaymentTransactionUncheckedUpdateManyWithoutUserNestedInput
+    Streams?: StreamUncheckedUpdateManyWithoutHostNestedInput
+    Votes?: VoteUncheckedUpdateManyWithoutUserNestedInput
+    StreamSongs?: StreamSongUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SongUpsertWithoutStarredSongsInput = {
@@ -19002,7 +23774,8 @@ export namespace Prisma {
     lastName: string
     email: string
     phoneNumber?: string | null
-    password: string
+    password?: string | null
+    socialLogin?: boolean
     role: $Enums.UserRole
     isSubscribed: boolean
     avatarUrl?: string | null
@@ -19012,6 +23785,9 @@ export namespace Prisma {
     Playlist?: PlaylistCreateNestedManyWithoutUserDetailsInput
     starredSongs?: starredSongCreateNestedManyWithoutUserDetailsInput
     PaymentTransaction?: PaymentTransactionCreateNestedManyWithoutUserInput
+    Streams?: StreamCreateNestedManyWithoutHostInput
+    Votes?: VoteCreateNestedManyWithoutUserInput
+    StreamSongs?: StreamSongCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSubscriptionInput = {
@@ -19020,7 +23796,8 @@ export namespace Prisma {
     lastName: string
     email: string
     phoneNumber?: string | null
-    password: string
+    password?: string | null
+    socialLogin?: boolean
     role: $Enums.UserRole
     isSubscribed: boolean
     avatarUrl?: string | null
@@ -19030,6 +23807,9 @@ export namespace Prisma {
     Playlist?: PlaylistUncheckedCreateNestedManyWithoutUserDetailsInput
     starredSongs?: starredSongUncheckedCreateNestedManyWithoutUserDetailsInput
     PaymentTransaction?: PaymentTransactionUncheckedCreateNestedManyWithoutUserInput
+    Streams?: StreamUncheckedCreateNestedManyWithoutHostInput
+    Votes?: VoteUncheckedCreateNestedManyWithoutUserInput
+    StreamSongs?: StreamSongUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSubscriptionInput = {
@@ -19115,7 +23895,8 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLogin?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19125,6 +23906,9 @@ export namespace Prisma {
     Playlist?: PlaylistUpdateManyWithoutUserDetailsNestedInput
     starredSongs?: starredSongUpdateManyWithoutUserDetailsNestedInput
     PaymentTransaction?: PaymentTransactionUpdateManyWithoutUserNestedInput
+    Streams?: StreamUpdateManyWithoutHostNestedInput
+    Votes?: VoteUpdateManyWithoutUserNestedInput
+    StreamSongs?: StreamSongUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSubscriptionInput = {
@@ -19133,7 +23917,8 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLogin?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19143,6 +23928,9 @@ export namespace Prisma {
     Playlist?: PlaylistUncheckedUpdateManyWithoutUserDetailsNestedInput
     starredSongs?: starredSongUncheckedUpdateManyWithoutUserDetailsNestedInput
     PaymentTransaction?: PaymentTransactionUncheckedUpdateManyWithoutUserNestedInput
+    Streams?: StreamUncheckedUpdateManyWithoutHostNestedInput
+    Votes?: VoteUncheckedUpdateManyWithoutUserNestedInput
+    StreamSongs?: StreamSongUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PricingPackageUpsertWithoutSubscriptionInput = {
@@ -19199,7 +23987,8 @@ export namespace Prisma {
     lastName: string
     email: string
     phoneNumber?: string | null
-    password: string
+    password?: string | null
+    socialLogin?: boolean
     role: $Enums.UserRole
     isSubscribed: boolean
     avatarUrl?: string | null
@@ -19209,6 +23998,9 @@ export namespace Prisma {
     Playlist?: PlaylistCreateNestedManyWithoutUserDetailsInput
     starredSongs?: starredSongCreateNestedManyWithoutUserDetailsInput
     Subscription?: SubscriptionCreateNestedManyWithoutUserDetailsInput
+    Streams?: StreamCreateNestedManyWithoutHostInput
+    Votes?: VoteCreateNestedManyWithoutUserInput
+    StreamSongs?: StreamSongCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPaymentTransactionInput = {
@@ -19217,7 +24009,8 @@ export namespace Prisma {
     lastName: string
     email: string
     phoneNumber?: string | null
-    password: string
+    password?: string | null
+    socialLogin?: boolean
     role: $Enums.UserRole
     isSubscribed: boolean
     avatarUrl?: string | null
@@ -19227,6 +24020,9 @@ export namespace Prisma {
     Playlist?: PlaylistUncheckedCreateNestedManyWithoutUserDetailsInput
     starredSongs?: starredSongUncheckedCreateNestedManyWithoutUserDetailsInput
     Subscription?: SubscriptionUncheckedCreateNestedManyWithoutUserDetailsInput
+    Streams?: StreamUncheckedCreateNestedManyWithoutHostInput
+    Votes?: VoteUncheckedCreateNestedManyWithoutUserInput
+    StreamSongs?: StreamSongUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPaymentTransactionInput = {
@@ -19299,7 +24095,8 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLogin?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19309,6 +24106,9 @@ export namespace Prisma {
     Playlist?: PlaylistUpdateManyWithoutUserDetailsNestedInput
     starredSongs?: starredSongUpdateManyWithoutUserDetailsNestedInput
     Subscription?: SubscriptionUpdateManyWithoutUserDetailsNestedInput
+    Streams?: StreamUpdateManyWithoutHostNestedInput
+    Votes?: VoteUpdateManyWithoutUserNestedInput
+    StreamSongs?: StreamSongUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPaymentTransactionInput = {
@@ -19317,7 +24117,8 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLogin?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isSubscribed?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19327,6 +24128,9 @@ export namespace Prisma {
     Playlist?: PlaylistUncheckedUpdateManyWithoutUserDetailsNestedInput
     starredSongs?: starredSongUncheckedUpdateManyWithoutUserDetailsNestedInput
     Subscription?: SubscriptionUncheckedUpdateManyWithoutUserDetailsNestedInput
+    Streams?: StreamUncheckedUpdateManyWithoutHostNestedInput
+    Votes?: VoteUncheckedUpdateManyWithoutUserNestedInput
+    StreamSongs?: StreamSongUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PricingPackageUpsertWithoutPaymentTransactionInput = {
@@ -19389,6 +24193,500 @@ export namespace Prisma {
     transactionId?: IntFieldUpdateOperationsInput | number
   }
 
+  export type UserCreateWithoutStreamsInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    phoneNumber?: string | null
+    password?: string | null
+    socialLogin?: boolean
+    role: $Enums.UserRole
+    isSubscribed: boolean
+    avatarUrl?: string | null
+    publicId?: string | null
+    createdAt?: Date | string
+    updateAt?: Date | string
+    Playlist?: PlaylistCreateNestedManyWithoutUserDetailsInput
+    starredSongs?: starredSongCreateNestedManyWithoutUserDetailsInput
+    Subscription?: SubscriptionCreateNestedManyWithoutUserDetailsInput
+    PaymentTransaction?: PaymentTransactionCreateNestedManyWithoutUserInput
+    Votes?: VoteCreateNestedManyWithoutUserInput
+    StreamSongs?: StreamSongCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutStreamsInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    phoneNumber?: string | null
+    password?: string | null
+    socialLogin?: boolean
+    role: $Enums.UserRole
+    isSubscribed: boolean
+    avatarUrl?: string | null
+    publicId?: string | null
+    createdAt?: Date | string
+    updateAt?: Date | string
+    Playlist?: PlaylistUncheckedCreateNestedManyWithoutUserDetailsInput
+    starredSongs?: starredSongUncheckedCreateNestedManyWithoutUserDetailsInput
+    Subscription?: SubscriptionUncheckedCreateNestedManyWithoutUserDetailsInput
+    PaymentTransaction?: PaymentTransactionUncheckedCreateNestedManyWithoutUserInput
+    Votes?: VoteUncheckedCreateNestedManyWithoutUserInput
+    StreamSongs?: StreamSongUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutStreamsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutStreamsInput, UserUncheckedCreateWithoutStreamsInput>
+  }
+
+  export type StreamSongCreateWithoutStreamInput = {
+    id?: string
+    url: string
+    title?: string | null
+    addedAt?: Date | string
+    User: UserCreateNestedOneWithoutStreamSongsInput
+    votes?: VoteCreateNestedManyWithoutSongInput
+  }
+
+  export type StreamSongUncheckedCreateWithoutStreamInput = {
+    id?: string
+    url: string
+    title?: string | null
+    userId: string
+    addedAt?: Date | string
+    votes?: VoteUncheckedCreateNestedManyWithoutSongInput
+  }
+
+  export type StreamSongCreateOrConnectWithoutStreamInput = {
+    where: StreamSongWhereUniqueInput
+    create: XOR<StreamSongCreateWithoutStreamInput, StreamSongUncheckedCreateWithoutStreamInput>
+  }
+
+  export type StreamSongCreateManyStreamInputEnvelope = {
+    data: StreamSongCreateManyStreamInput | StreamSongCreateManyStreamInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutStreamsInput = {
+    update: XOR<UserUpdateWithoutStreamsInput, UserUncheckedUpdateWithoutStreamsInput>
+    create: XOR<UserCreateWithoutStreamsInput, UserUncheckedCreateWithoutStreamsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutStreamsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutStreamsInput, UserUncheckedUpdateWithoutStreamsInput>
+  }
+
+  export type UserUpdateWithoutStreamsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLogin?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isSubscribed?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Playlist?: PlaylistUpdateManyWithoutUserDetailsNestedInput
+    starredSongs?: starredSongUpdateManyWithoutUserDetailsNestedInput
+    Subscription?: SubscriptionUpdateManyWithoutUserDetailsNestedInput
+    PaymentTransaction?: PaymentTransactionUpdateManyWithoutUserNestedInput
+    Votes?: VoteUpdateManyWithoutUserNestedInput
+    StreamSongs?: StreamSongUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutStreamsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLogin?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isSubscribed?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Playlist?: PlaylistUncheckedUpdateManyWithoutUserDetailsNestedInput
+    starredSongs?: starredSongUncheckedUpdateManyWithoutUserDetailsNestedInput
+    Subscription?: SubscriptionUncheckedUpdateManyWithoutUserDetailsNestedInput
+    PaymentTransaction?: PaymentTransactionUncheckedUpdateManyWithoutUserNestedInput
+    Votes?: VoteUncheckedUpdateManyWithoutUserNestedInput
+    StreamSongs?: StreamSongUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type StreamSongUpsertWithWhereUniqueWithoutStreamInput = {
+    where: StreamSongWhereUniqueInput
+    update: XOR<StreamSongUpdateWithoutStreamInput, StreamSongUncheckedUpdateWithoutStreamInput>
+    create: XOR<StreamSongCreateWithoutStreamInput, StreamSongUncheckedCreateWithoutStreamInput>
+  }
+
+  export type StreamSongUpdateWithWhereUniqueWithoutStreamInput = {
+    where: StreamSongWhereUniqueInput
+    data: XOR<StreamSongUpdateWithoutStreamInput, StreamSongUncheckedUpdateWithoutStreamInput>
+  }
+
+  export type StreamSongUpdateManyWithWhereWithoutStreamInput = {
+    where: StreamSongScalarWhereInput
+    data: XOR<StreamSongUpdateManyMutationInput, StreamSongUncheckedUpdateManyWithoutStreamInput>
+  }
+
+  export type StreamCreateWithoutSongsInput = {
+    id?: string
+    streamName: string
+    createdAt?: Date | string
+    active?: boolean
+    host: UserCreateNestedOneWithoutStreamsInput
+  }
+
+  export type StreamUncheckedCreateWithoutSongsInput = {
+    id?: string
+    streamName: string
+    hostId: string
+    createdAt?: Date | string
+    active?: boolean
+  }
+
+  export type StreamCreateOrConnectWithoutSongsInput = {
+    where: StreamWhereUniqueInput
+    create: XOR<StreamCreateWithoutSongsInput, StreamUncheckedCreateWithoutSongsInput>
+  }
+
+  export type UserCreateWithoutStreamSongsInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    phoneNumber?: string | null
+    password?: string | null
+    socialLogin?: boolean
+    role: $Enums.UserRole
+    isSubscribed: boolean
+    avatarUrl?: string | null
+    publicId?: string | null
+    createdAt?: Date | string
+    updateAt?: Date | string
+    Playlist?: PlaylistCreateNestedManyWithoutUserDetailsInput
+    starredSongs?: starredSongCreateNestedManyWithoutUserDetailsInput
+    Subscription?: SubscriptionCreateNestedManyWithoutUserDetailsInput
+    PaymentTransaction?: PaymentTransactionCreateNestedManyWithoutUserInput
+    Streams?: StreamCreateNestedManyWithoutHostInput
+    Votes?: VoteCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutStreamSongsInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    phoneNumber?: string | null
+    password?: string | null
+    socialLogin?: boolean
+    role: $Enums.UserRole
+    isSubscribed: boolean
+    avatarUrl?: string | null
+    publicId?: string | null
+    createdAt?: Date | string
+    updateAt?: Date | string
+    Playlist?: PlaylistUncheckedCreateNestedManyWithoutUserDetailsInput
+    starredSongs?: starredSongUncheckedCreateNestedManyWithoutUserDetailsInput
+    Subscription?: SubscriptionUncheckedCreateNestedManyWithoutUserDetailsInput
+    PaymentTransaction?: PaymentTransactionUncheckedCreateNestedManyWithoutUserInput
+    Streams?: StreamUncheckedCreateNestedManyWithoutHostInput
+    Votes?: VoteUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutStreamSongsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutStreamSongsInput, UserUncheckedCreateWithoutStreamSongsInput>
+  }
+
+  export type VoteCreateWithoutSongInput = {
+    id?: string
+    type: $Enums.VoteType
+    user: UserCreateNestedOneWithoutVotesInput
+  }
+
+  export type VoteUncheckedCreateWithoutSongInput = {
+    id?: string
+    userId: string
+    type: $Enums.VoteType
+  }
+
+  export type VoteCreateOrConnectWithoutSongInput = {
+    where: VoteWhereUniqueInput
+    create: XOR<VoteCreateWithoutSongInput, VoteUncheckedCreateWithoutSongInput>
+  }
+
+  export type VoteCreateManySongInputEnvelope = {
+    data: VoteCreateManySongInput | VoteCreateManySongInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type StreamUpsertWithoutSongsInput = {
+    update: XOR<StreamUpdateWithoutSongsInput, StreamUncheckedUpdateWithoutSongsInput>
+    create: XOR<StreamCreateWithoutSongsInput, StreamUncheckedCreateWithoutSongsInput>
+    where?: StreamWhereInput
+  }
+
+  export type StreamUpdateToOneWithWhereWithoutSongsInput = {
+    where?: StreamWhereInput
+    data: XOR<StreamUpdateWithoutSongsInput, StreamUncheckedUpdateWithoutSongsInput>
+  }
+
+  export type StreamUpdateWithoutSongsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    streamName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    host?: UserUpdateOneRequiredWithoutStreamsNestedInput
+  }
+
+  export type StreamUncheckedUpdateWithoutSongsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    streamName?: StringFieldUpdateOperationsInput | string
+    hostId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type UserUpsertWithoutStreamSongsInput = {
+    update: XOR<UserUpdateWithoutStreamSongsInput, UserUncheckedUpdateWithoutStreamSongsInput>
+    create: XOR<UserCreateWithoutStreamSongsInput, UserUncheckedCreateWithoutStreamSongsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutStreamSongsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutStreamSongsInput, UserUncheckedUpdateWithoutStreamSongsInput>
+  }
+
+  export type UserUpdateWithoutStreamSongsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLogin?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isSubscribed?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Playlist?: PlaylistUpdateManyWithoutUserDetailsNestedInput
+    starredSongs?: starredSongUpdateManyWithoutUserDetailsNestedInput
+    Subscription?: SubscriptionUpdateManyWithoutUserDetailsNestedInput
+    PaymentTransaction?: PaymentTransactionUpdateManyWithoutUserNestedInput
+    Streams?: StreamUpdateManyWithoutHostNestedInput
+    Votes?: VoteUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutStreamSongsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLogin?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isSubscribed?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Playlist?: PlaylistUncheckedUpdateManyWithoutUserDetailsNestedInput
+    starredSongs?: starredSongUncheckedUpdateManyWithoutUserDetailsNestedInput
+    Subscription?: SubscriptionUncheckedUpdateManyWithoutUserDetailsNestedInput
+    PaymentTransaction?: PaymentTransactionUncheckedUpdateManyWithoutUserNestedInput
+    Streams?: StreamUncheckedUpdateManyWithoutHostNestedInput
+    Votes?: VoteUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type VoteUpsertWithWhereUniqueWithoutSongInput = {
+    where: VoteWhereUniqueInput
+    update: XOR<VoteUpdateWithoutSongInput, VoteUncheckedUpdateWithoutSongInput>
+    create: XOR<VoteCreateWithoutSongInput, VoteUncheckedCreateWithoutSongInput>
+  }
+
+  export type VoteUpdateWithWhereUniqueWithoutSongInput = {
+    where: VoteWhereUniqueInput
+    data: XOR<VoteUpdateWithoutSongInput, VoteUncheckedUpdateWithoutSongInput>
+  }
+
+  export type VoteUpdateManyWithWhereWithoutSongInput = {
+    where: VoteScalarWhereInput
+    data: XOR<VoteUpdateManyMutationInput, VoteUncheckedUpdateManyWithoutSongInput>
+  }
+
+  export type StreamSongCreateWithoutVotesInput = {
+    id?: string
+    url: string
+    title?: string | null
+    addedAt?: Date | string
+    stream: StreamCreateNestedOneWithoutSongsInput
+    User: UserCreateNestedOneWithoutStreamSongsInput
+  }
+
+  export type StreamSongUncheckedCreateWithoutVotesInput = {
+    id?: string
+    url: string
+    title?: string | null
+    streamId: string
+    userId: string
+    addedAt?: Date | string
+  }
+
+  export type StreamSongCreateOrConnectWithoutVotesInput = {
+    where: StreamSongWhereUniqueInput
+    create: XOR<StreamSongCreateWithoutVotesInput, StreamSongUncheckedCreateWithoutVotesInput>
+  }
+
+  export type UserCreateWithoutVotesInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    phoneNumber?: string | null
+    password?: string | null
+    socialLogin?: boolean
+    role: $Enums.UserRole
+    isSubscribed: boolean
+    avatarUrl?: string | null
+    publicId?: string | null
+    createdAt?: Date | string
+    updateAt?: Date | string
+    Playlist?: PlaylistCreateNestedManyWithoutUserDetailsInput
+    starredSongs?: starredSongCreateNestedManyWithoutUserDetailsInput
+    Subscription?: SubscriptionCreateNestedManyWithoutUserDetailsInput
+    PaymentTransaction?: PaymentTransactionCreateNestedManyWithoutUserInput
+    Streams?: StreamCreateNestedManyWithoutHostInput
+    StreamSongs?: StreamSongCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutVotesInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    phoneNumber?: string | null
+    password?: string | null
+    socialLogin?: boolean
+    role: $Enums.UserRole
+    isSubscribed: boolean
+    avatarUrl?: string | null
+    publicId?: string | null
+    createdAt?: Date | string
+    updateAt?: Date | string
+    Playlist?: PlaylistUncheckedCreateNestedManyWithoutUserDetailsInput
+    starredSongs?: starredSongUncheckedCreateNestedManyWithoutUserDetailsInput
+    Subscription?: SubscriptionUncheckedCreateNestedManyWithoutUserDetailsInput
+    PaymentTransaction?: PaymentTransactionUncheckedCreateNestedManyWithoutUserInput
+    Streams?: StreamUncheckedCreateNestedManyWithoutHostInput
+    StreamSongs?: StreamSongUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutVotesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutVotesInput, UserUncheckedCreateWithoutVotesInput>
+  }
+
+  export type StreamSongUpsertWithoutVotesInput = {
+    update: XOR<StreamSongUpdateWithoutVotesInput, StreamSongUncheckedUpdateWithoutVotesInput>
+    create: XOR<StreamSongCreateWithoutVotesInput, StreamSongUncheckedCreateWithoutVotesInput>
+    where?: StreamSongWhereInput
+  }
+
+  export type StreamSongUpdateToOneWithWhereWithoutVotesInput = {
+    where?: StreamSongWhereInput
+    data: XOR<StreamSongUpdateWithoutVotesInput, StreamSongUncheckedUpdateWithoutVotesInput>
+  }
+
+  export type StreamSongUpdateWithoutVotesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stream?: StreamUpdateOneRequiredWithoutSongsNestedInput
+    User?: UserUpdateOneRequiredWithoutStreamSongsNestedInput
+  }
+
+  export type StreamSongUncheckedUpdateWithoutVotesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    streamId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUpsertWithoutVotesInput = {
+    update: XOR<UserUpdateWithoutVotesInput, UserUncheckedUpdateWithoutVotesInput>
+    create: XOR<UserCreateWithoutVotesInput, UserUncheckedCreateWithoutVotesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutVotesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutVotesInput, UserUncheckedUpdateWithoutVotesInput>
+  }
+
+  export type UserUpdateWithoutVotesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLogin?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isSubscribed?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Playlist?: PlaylistUpdateManyWithoutUserDetailsNestedInput
+    starredSongs?: starredSongUpdateManyWithoutUserDetailsNestedInput
+    Subscription?: SubscriptionUpdateManyWithoutUserDetailsNestedInput
+    PaymentTransaction?: PaymentTransactionUpdateManyWithoutUserNestedInput
+    Streams?: StreamUpdateManyWithoutHostNestedInput
+    StreamSongs?: StreamSongUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutVotesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLogin?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isSubscribed?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Playlist?: PlaylistUncheckedUpdateManyWithoutUserDetailsNestedInput
+    starredSongs?: starredSongUncheckedUpdateManyWithoutUserDetailsNestedInput
+    Subscription?: SubscriptionUncheckedUpdateManyWithoutUserDetailsNestedInput
+    PaymentTransaction?: PaymentTransactionUncheckedUpdateManyWithoutUserNestedInput
+    Streams?: StreamUncheckedUpdateManyWithoutHostNestedInput
+    StreamSongs?: StreamSongUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type PlaylistCreateManyUserDetailsInput = {
     id?: number
     playlistName: string
@@ -19420,6 +24718,27 @@ export namespace Prisma {
     paymentProvider: string
     providerTransactionId: string
     createdAt?: Date | string
+  }
+
+  export type StreamCreateManyHostInput = {
+    id?: string
+    streamName: string
+    createdAt?: Date | string
+    active?: boolean
+  }
+
+  export type VoteCreateManyUserInput = {
+    id?: string
+    songId: string
+    type: $Enums.VoteType
+  }
+
+  export type StreamSongCreateManyUserInput = {
+    id?: string
+    url: string
+    title?: string | null
+    streamId: string
+    addedAt?: Date | string
   }
 
   export type PlaylistUpdateWithoutUserDetailsInput = {
@@ -19519,6 +24838,73 @@ export namespace Prisma {
     paymentProvider?: StringFieldUpdateOperationsInput | string
     providerTransactionId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StreamUpdateWithoutHostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    streamName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    songs?: StreamSongUpdateManyWithoutStreamNestedInput
+  }
+
+  export type StreamUncheckedUpdateWithoutHostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    streamName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    songs?: StreamSongUncheckedUpdateManyWithoutStreamNestedInput
+  }
+
+  export type StreamUncheckedUpdateManyWithoutHostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    streamName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type VoteUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumVoteTypeFieldUpdateOperationsInput | $Enums.VoteType
+    song?: StreamSongUpdateOneRequiredWithoutVotesNestedInput
+  }
+
+  export type VoteUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    songId?: StringFieldUpdateOperationsInput | string
+    type?: EnumVoteTypeFieldUpdateOperationsInput | $Enums.VoteType
+  }
+
+  export type VoteUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    songId?: StringFieldUpdateOperationsInput | string
+    type?: EnumVoteTypeFieldUpdateOperationsInput | $Enums.VoteType
+  }
+
+  export type StreamSongUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stream?: StreamUpdateOneRequiredWithoutSongsNestedInput
+    votes?: VoteUpdateManyWithoutSongNestedInput
+  }
+
+  export type StreamSongUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    streamId?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    votes?: VoteUncheckedUpdateManyWithoutSongNestedInput
+  }
+
+  export type StreamSongUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    streamId?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PlaylistSongCreateManySongDetailsInput = {
@@ -19757,6 +25143,64 @@ export namespace Prisma {
     paymentProvider?: StringFieldUpdateOperationsInput | string
     providerTransactionId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StreamSongCreateManyStreamInput = {
+    id?: string
+    url: string
+    title?: string | null
+    userId: string
+    addedAt?: Date | string
+  }
+
+  export type StreamSongUpdateWithoutStreamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    User?: UserUpdateOneRequiredWithoutStreamSongsNestedInput
+    votes?: VoteUpdateManyWithoutSongNestedInput
+  }
+
+  export type StreamSongUncheckedUpdateWithoutStreamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    votes?: VoteUncheckedUpdateManyWithoutSongNestedInput
+  }
+
+  export type StreamSongUncheckedUpdateManyWithoutStreamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VoteCreateManySongInput = {
+    id?: string
+    userId: string
+    type: $Enums.VoteType
+  }
+
+  export type VoteUpdateWithoutSongInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumVoteTypeFieldUpdateOperationsInput | $Enums.VoteType
+    user?: UserUpdateOneRequiredWithoutVotesNestedInput
+  }
+
+  export type VoteUncheckedUpdateWithoutSongInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    type?: EnumVoteTypeFieldUpdateOperationsInput | $Enums.VoteType
+  }
+
+  export type VoteUncheckedUpdateManyWithoutSongInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    type?: EnumVoteTypeFieldUpdateOperationsInput | $Enums.VoteType
   }
 
 

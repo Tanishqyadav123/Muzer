@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useState } from "react";
 import Button from "../Components/Button";
@@ -9,9 +9,11 @@ import { signInSchema } from "../validations/signIn.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Link from "next/link";
-import axios from 'axios';
-import toast from 'react-hot-toast';
+import axios from "axios";
+import toast from "react-hot-toast";
 import { useAuth } from "../Context/AuthContext";
+import { initiateOAuthService } from "../service/auth.service";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   type SignInFormData = z.infer<typeof signInSchema>;
@@ -23,18 +25,19 @@ const page = () => {
     resolver: zodResolver(signInSchema),
     mode: "onChange",
   });
-  const [isloading , setIsLoading] = useState<boolean>(false);
-  const {login} = useAuth();
+  const router = useRouter();
+  const [isloading, setIsLoading] = useState<boolean>(false);
+  const { login } = useAuth();
 
   const submitForm = async (data: SignInFormData) => {
     setIsLoading(true);
-    await login(data)
+    await login(data);
 
-    
+    setIsLoading(false);
+  };
 
-     setIsLoading(false);
-  
-
+  const handleSocialLogin = async () => {
+    router.push(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/google`);
   };
 
   return (
@@ -59,7 +62,7 @@ const page = () => {
             />
 
             {errors.email?.message && (
-              <p className= "text-red-500 text-sm">{errors.email?.message}</p>
+              <p className="text-red-500 text-sm">{errors.email?.message}</p>
             )}
           </div>
           <div className="flex flex-col items-start gap-2">
@@ -89,9 +92,15 @@ const page = () => {
           </div>
 
           {/* Button for signIn  */}
-         {
-          isloading ?  <Button btnText="Signing..." color="bg-gray-600" isDisabled = {true}   /> :  <Button btnText="Sign In" color="bg-gray-500" isDisabled = {false}/>
-         }
+          {isloading ? (
+            <Button
+              btnText="Signing..."
+              color="bg-gray-600"
+              isDisabled={true}
+            />
+          ) : (
+            <Button btnText="Sign In" color="bg-gray-500" isDisabled={false} />
+          )}
         </form>
 
         <p className=" flex items-center justify-center text-gray-600 my-8 mx-3 text-xs  w-full ">
@@ -107,13 +116,14 @@ const page = () => {
           btnText="Continue with Google"
           btnIcon={FaGoogle}
           color="transparent"
-          isDisabled = {false}
+          isDisabled={false}
+          onClickHandler={handleSocialLogin}
         />
         <Button
           btnText="Continue with Github"
           btnIcon={FaGithub}
           color="transparent"
-          isDisabled = {false}
+          isDisabled={false}
         />
       </div>
     </div>

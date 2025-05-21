@@ -1,6 +1,7 @@
 import React from "react";
 import PricingCard from "../Components/PricingCard";
 import { PricingPackages } from "../lib/pricingPackageDetails";
+import FAQSection from "../Components/FAQSection";
 
 function page() {
   return (
@@ -39,6 +40,10 @@ function page() {
           pricingPackageName="Share With Family"
         />
       </div>
+
+      {/* FAQ Section  */}
+
+      <FAQSection />
     </div>
   );
 }

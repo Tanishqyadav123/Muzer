@@ -9,21 +9,14 @@ import passport from "passport";
 import { prisma } from "./DB";
 import { Server, Socket } from "socket.io";
 import { createServer } from "http";
+import { app, httpServer } from "./config/socket";
 
-const app = express();
 
 // Creating a Socket Server using the express Server :-
 
-const httpServer = createServer(app);
-const io = new Server(httpServer);
 
-io.on("connection", (socket: Socket) => {
-  console.log("Socket Connected SuccessFully ", socket.id);
 
-    io.on("disconnect", () => {
-      io.emit("disconnect-msg   ", socket.id);
-    });
-});
+
 const PORT = process.env.PORT || 8080;
 
 // Middleware for express :-

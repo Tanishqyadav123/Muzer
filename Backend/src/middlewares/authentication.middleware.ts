@@ -42,7 +42,6 @@ export async function AuthenticationMiddleware (req : Request , res : Response ,
           }
     }
 
-    console.log(req.user , "My Request User Details")
 
     next();
    }

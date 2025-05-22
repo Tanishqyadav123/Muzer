@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { MdDriveFileRenameOutline } from "react-icons/md";
 import { RiDeleteBin7Line } from "react-icons/ri";
-function StreamCard({ streamId }: { streamId: string }) {
+function StreamCard({ streamId , streamName , createdBy }: { streamId: string , streamName : string , createdBy : string }) {
   let user = true;
   const [active, setActive] = useState<boolean>(true);
 
@@ -17,9 +17,9 @@ function StreamCard({ streamId }: { streamId: string }) {
     <div className="h-[15vh] w-[80%] bg-gray-900 mx-auto my-5 p-6 flex items-center justify-between cursor-pointer">
       <Link href={`/streams/${streamId}`}>
         <div className="flex items-start gap-5 flex-col">
-          <h1 className="stream-Name text-3xl">Friday Night Vibes</h1>
+          <h1 className="stream-Name text-3xl">{streamName}</h1>
 
-          <h6 className="text-sm text-gray-600">Created By : Tanishq Yadav</h6>
+          <h6 className="text-sm text-gray-600">Created By : {createdBy}</h6>
         </div>
       </Link>
 

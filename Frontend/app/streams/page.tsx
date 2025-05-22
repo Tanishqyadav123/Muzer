@@ -5,23 +5,47 @@ import StreamCard from "../Components/StreamCard";
 import { io } from "socket.io-client";
 import CreateStreamModel from "../Components/CreateStreamModel";
 import { socket } from "../socket";
+import { getAllStreams } from "../service/stream.service";
 
 function page() {
   const [showCreateModal, setShowCreateModal] = useState(false);
-  // const socket = io("http://localhost:8080");
-  useEffect(() => {
-    console.log(socket);
-    socket.on("connect", () => {
-      console.log("Connected to socket server");
-    });
+  const [allStreams , setAllStreams] = useState<any[]>([])
 
-    socket.on("join-stream", (data) => {
-      console.log("data is ", data);
-    });
-  }, []);
+   const getStreams = async () => {
+        const streamsData = await getAllStreams();
+      console.log("streamsData " , streamsData)
+        if (streamsData) {
+           setAllStreams(streamsData)
+        }
+  };
+
+  useEffect(() =>{
+    
+     
+    getStreams();
+
+  } , [showCreateModal])
+
+  useEffect(() =>{
+    
+    socket.on("join-stream" , (data) =>{
+       console.log(data)
+    })
+
+  } , [])
+
+  
+ if (!allStreams) {
+    return <>Loading...</>
+ }
+
+
+ console.log(allStreams)
 
   return (
-    <div className="  min-h-[70vh] w-full p-1">
+        <>
+           {
+            !allStreams ? "Loading..." :  <div className="  min-h-[70vh] w-full p-1">
       {showCreateModal ? (
         <div className="flex items-center justify-center h-[80vh]">
           <CreateStreamModel setShowCreateModal={setShowCreateModal} />
@@ -38,13 +62,16 @@ function page() {
             </button>
           </div>
 
-          <StreamCard streamId="1" />
-          <StreamCard streamId="2" />
-          <StreamCard streamId="3" />
-          <StreamCard streamId="4" />
+         {
+           allStreams.map((streamDetails , index) =>{
+              return <StreamCard streamName= {streamDetails.streamName} createdBy={`${streamDetails?.host?.firstName} ${streamDetails?.host?.lastName} `} streamId={streamDetails.id} key={streamDetails.id} />
+           })
+         }
         </div>
       )}
     </div>
+           }
+        </>
   );
 }
 

@@ -7,8 +7,6 @@ dotenv.config({ path: ".env" });
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import passport from "passport";
 import { prisma } from "./DB";
-import { Server, Socket } from "socket.io";
-import { createServer } from "http";
 import { app, httpServer } from "./config/socket";
 
 

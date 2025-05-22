@@ -10,17 +10,30 @@ export async function createNewStream(data: createStreamInterface) {
     },
   });
 }
-export async function getAllStreams() : Promise<any> {
+export async function getAllStreams(): Promise<any> {
   return await prisma.stream.findMany({
-     include : {
-       host : true
-     }
+    include: {
+      host: true,
+    },
   });
 }
-export async function getSingleStreamById(streamId : string) : Promise<any> {
-  return await prisma.stream.findUnique({
-     where : {
-       id : streamId
-     }
+export async function getSingleStreamByIdWithSongs(
+  streamId: string
+): Promise<any> {
+  const streamData = await prisma.stream.findUnique({
+    where: {
+      id: streamId,
+    },
+    include: {
+      host: true,
+    },
   });
+
+  const streamSongs = await prisma.streamSong.findMany({
+    where: {
+      streamId: streamId,
+    },
+  });
+
+  return { ...streamData, songs: streamSongs };
 }

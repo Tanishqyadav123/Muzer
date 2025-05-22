@@ -2,7 +2,7 @@ import { NextFunction, Request, response, Response } from "express";
 import { createStreamSchema } from "../schemaValidation/stream.schema";
 import { formatError } from "../utils/formaterror";
 import { ErrorHandler } from "../middlewares/error.middleware";
-import { createNewStream, getAllStreams, getSingleStreamById } from "../Repo/stream.repo";
+import { createNewStream, getAllStreams, getSingleStreamByIdWithSongs } from "../Repo/stream.repo";
 import { io } from "../config/socket";
 import { responseHandler } from "../handlers/response.handler";
 import { getUserByIdAndRole } from "../Repo/user.repo";
@@ -51,10 +51,9 @@ async function createStream(req: Request, res: Response, next: NextFunction) : P
 async function allStreams (req : Request , res : Response , next : NextFunction) : Promise<any> {
 
     try {
-     console.log("Inside allStreams Backend")
+ 
       const Streams = await getAllStreams();
-      console.log("Streams " , Streams)
-      
+ 
       return responseHandler(res , 200 , "All Streams Data" , Streams)
       
     }
@@ -72,7 +71,7 @@ async function getStreamById(req : Request , res : Response , next : NextFunctio
 
        
 
-        const streamDetails = await getSingleStreamById(streamId)
+        const streamDetails = await getSingleStreamByIdWithSongs(streamId)
 
         return responseHandler(res , 200 , "Request Stream" , streamDetails)
 

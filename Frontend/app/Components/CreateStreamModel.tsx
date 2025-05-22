@@ -23,25 +23,22 @@ function CreateStreamModel({
     mode: "onChange",
   });
   const { isAuthenticated, userId } = useAuth();
-  const [isLoading , setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   console.log("line 26", isAuthenticated, userId);
   const handleCreateStream = async ({ streamName }: createStreamSchemaType) => {
-    
-       // hit an API for create Stream with the token from localStorage :-
-       setIsLoading(true)
-     const isCreated = await createStreamService({streamName , socketId : socket.id!})
-     setIsLoading (false)
+    // hit an API for create Stream with the token from localStorage :-
+    setIsLoading(true);
+    console.log("My socket", socket);
+    const isCreated = await createStreamService({
+      streamName,
+      socketId: socket.id!,
+    });
+    setIsLoading(false);
 
-     if (isCreated){
-       setShowCreateModal(false)
-     }
-
-
-     
-
-
-
+    if (isCreated) {
+      setShowCreateModal(false);
+    }
   };
 
   return (
@@ -64,7 +61,10 @@ function CreateStreamModel({
           <p className="text-red-500 text-sm">{errors.streamName?.message}</p>
         )}
         <div className="flex items-center justify-center mt-12">
-          <button disabled={isLoading ? true : false} className="bg-white text-black p-2 rounded-md px-5 cursor-pointer">
+          <button
+            disabled={isLoading ? true : false}
+            className="bg-white text-black p-2 rounded-md px-5 cursor-pointer"
+          >
             {isLoading ? "Creating..." : "Create"}
           </button>
         </div>

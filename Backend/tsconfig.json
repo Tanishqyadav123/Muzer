@@ -25,7 +25,7 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-   "include": ["src/**/*.ts", "global.d.ts"],
+   "include": ["src/**/*.ts", "global.d.ts", "../Frontend/app/utils/convertSecondToMinute.ts"],
      "exclude": [
     "node_modules"
   ],

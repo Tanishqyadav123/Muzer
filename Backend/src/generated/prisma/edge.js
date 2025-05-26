@@ -280,7 +280,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "E:\\My code\\MyProjects\\Muzer\\Backend\\src\\generated\\prisma",
+      "value": "D:\\My code\\My Personal Projects\\Muzer\\Backend\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -294,7 +294,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "E:\\My code\\MyProjects\\Muzer\\Backend\\prisma\\schema.prisma",
+    "sourceFilePath": "D:\\My code\\My Personal Projects\\Muzer\\Backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -312,7 +312,7 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://postgres:Tanishq@16@localhost:5432/Muzer"
+        "value": "postgresql://postgres:Password@localhost:5432/Muzer"
       }
     }
   },

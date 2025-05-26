@@ -33,7 +33,7 @@ passport.use(
     {
       clientID: process.env.OAUTH_CLIENT_ID!,
       clientSecret: process.env.OAUTH_CLIENT_SECRET!,
-      callbackURL: `http://localhost:8080/api/v1/auth/google/callback`,
+      callbackURL: `http://localhost:${PORT}/api/v1/auth/google/callback`,
     },
     async (_, _a, profile, done) => {
       // Check in the DB is user with email already exist :-

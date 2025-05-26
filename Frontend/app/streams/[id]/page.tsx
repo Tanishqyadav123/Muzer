@@ -14,71 +14,71 @@ function page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
 
   const [showAddSong, setShowAddSong] = useState<boolean>(false);
-  const [allSongs , setAllSongs] = useState<any[]>([])
+  const [allSongs, setAllSongs] = useState<any[]>([]);
+
   // const [songsDummy, setSongsDummy] = useState<any[]>()
-  const [userId , setUserId] = useState<string | null>("")
+  const [userId, setUserId] = useState<string | null>("");
 
-  useEffect(() =>{
-    
-    const token : any = jwt.decode(localStorage.getItem("isAuthenticated")!);
+  useEffect(() => {
+    const token: any = jwt.decode(localStorage.getItem("isAuthenticated")!);
 
-    token.userId ? setUserId(token.userId) : setUserId(null)
-    
-
-  } , [userId])
-
-
+    token.userId ? setUserId(token.userId) : setUserId(null);
+  }, [userId]);
 
   async function fetchStreamDetails(streamId: string) {
     const stream = await getStreamById(streamId);
 
-
     if (stream) {
-        socket.emit("some-add" , {socketId : socket.id , streamId : id})
+      socket.emit("some-add", { socketId: socket.id, streamId: id });
       setStreamData(stream);
-      setAllSongs(stream?.songs)
-      console.log("my stream Data line 29 " , stream)
+      setAllSongs((prevSongs) => {
+        const sortedSongs = [...stream?.songs].sort(
+          (a, b) => b.totalVotes - a.totalVotes
+        );
+
+        console.log("SortedSOngs", sortedSongs);
+        return sortedSongs;
+      });
     }
   }
   useEffect(() => {
     fetchStreamDetails(id);
   }, []);
 
-  useEffect(() =>{
-     socket.on("new-song-added" , (data) =>{
-       console.log("Song added Data ",data )
-       setAllSongs((prev) => [...prev , data])
-     })
-  }, [])
+  useEffect(() => {
+    socket.on("new-song-added", (data) => {
+      console.log("Song added Data socket ", data);
+      setAllSongs((prev) => [...prev, data]);
+    });
+  }, []);
 
   useEffect(() => {
     const handleVoteUpdate = (updatedSong: any) => {
-      setAllSongs(prevSongs => {
-        const updatedList = prevSongs.map(song =>
+      setAllSongs((prevSongs) => {
+        const updatedList = prevSongs.map((song) =>
           song.id === updatedSong.id ? { ...updatedSong } : song
         );
-        const sortedSongs = [...updatedList].sort((a, b) => b.totalVotes - a.totalVotes);
-  
-        console.log("SortedSOngs" , sortedSongs)
+        const sortedSongs = [...updatedList].sort(
+          (a, b) => b.totalVotes - a.totalVotes
+        );
+
+        console.log("SortedSOngs", sortedSongs);
         return sortedSongs;
       });
-  
-      setSong(updatedSong); // Update current song view
+
+      // setSong(updatedSong); // Update current song view
     };
-  
+
     socket.on("voted-for-song", handleVoteUpdate);
-  
+
     return () => {
       socket.off("voted-for-song", handleVoteUpdate); // cleanup
     };
-  }, [allSongs]);
-  
+  }, []);
 
-  useEffect(() =>{
-     
-  } , [allSongs])
+  useEffect(() => {}, [allSongs]);
 
-  console.log("all SOngs in ID Stream " , allSongs)
+  console.log("all SOngs in ID Stream ", allSongs);
 
   return showAddSong ? (
     <div className="flex items-center justify-center h-[80vh]">
@@ -113,8 +113,18 @@ function page({ params }: { params: Promise<{ id: string }> }) {
 
         {allSongs?.length ? (
           <div className="flex flex-col gap-4">
-            {allSongs?.map((songsDetails: any , index : number)  => {
-              return <NextSong key={songsDetails.id} songDetails = {songsDetails} index={index} allSongs={allSongs} setAllSongs={setAllSongs} streamId={id} userId = {userId!} />;
+            {allSongs?.map((songsDetails: any, index: number) => {
+              return (
+                <NextSong
+                  key={songsDetails.id}
+                  songDetails={songsDetails}
+                  index={index}
+                  allSongs={allSongs}
+                  setAllSongs={setAllSongs}
+                  streamId={id}
+                  userId={userId!}
+                />
+              );
             })}
           </div>
         ) : (

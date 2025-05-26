@@ -23,12 +23,15 @@ io.on("connection", (socket: Socket) => {
   //     console.log("Stream Created successfully ", data);
   //   });
 
-  socket.on("some-add" , (data : {socketId : string , streamId : string} ) =>{
-     const socket = io.sockets.sockets.get(data.socketId);
-     socket?.join(data.streamId)
+  socket.on("some-add", (data: { socketId: string; streamId: string }) => {
+    console.log("Some add event got triggered");
+    const socket = io.sockets.sockets.get(data.socketId);
+    socket?.join(data.streamId);
 
-     console.log(`socket id ${data.socketId} is connected in stream id ${data.streamId}`)
-  })
+    console.log(
+      `socket id ${data.socketId} is connected in stream id ${data.streamId}`
+    );
+  });
 });
 
 export { io, httpServer, app };

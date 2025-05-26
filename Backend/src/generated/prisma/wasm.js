@@ -277,8 +277,8 @@ exports.VerificationCodeType = exports.$Enums.VerificationCodeType = {
 };
 
 exports.VoteType = exports.$Enums.VoteType = {
-  UP: 'UP',
-  DOWN: 'DOWN'
+  UPVOTE: 'UPVOTE',
+  DOWNVOTE: 'DOWNVOTE'
 };
 
 exports.Prisma.ModelName = {

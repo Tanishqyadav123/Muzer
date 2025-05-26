@@ -17,7 +17,6 @@ function Player() {
   };
 
   useEffect(() => {
-    console.log("isPlaying ", isPlaying);
   }, [isPlaying]);
   return (
     <div className="w-[100%] h-[10vh] bg-[#1f2a38] my-5 p-2">

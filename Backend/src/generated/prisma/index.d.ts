@@ -89,8 +89,8 @@ export type Vote = $Result.DefaultSelection<Prisma.$VotePayload>
  */
 export namespace $Enums {
   export const VoteType: {
-  UP: 'UP',
-  DOWN: 'DOWN'
+  UPVOTE: 'UPVOTE',
+  DOWNVOTE: 'DOWNVOTE'
 };
 
 export type VoteType = (typeof VoteType)[keyof typeof VoteType]
@@ -19551,6 +19551,7 @@ export namespace Prisma {
 
   export type VoteWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    userId_songId?: VoteUserIdSongIdCompoundUniqueInput
     AND?: VoteWhereInput | VoteWhereInput[]
     OR?: VoteWhereInput[]
     NOT?: VoteWhereInput | VoteWhereInput[]
@@ -19559,7 +19560,7 @@ export namespace Prisma {
     type?: EnumVoteTypeFilter<"Vote"> | $Enums.VoteType
     song?: XOR<StreamSongScalarRelationFilter, StreamSongWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id">
+  }, "id" | "userId_songId">
 
   export type VoteOrderByWithAggregationInput = {
     id?: SortOrder
@@ -21341,6 +21342,11 @@ export namespace Prisma {
   export type StreamSongScalarRelationFilter = {
     is?: StreamSongWhereInput
     isNot?: StreamSongWhereInput
+  }
+
+  export type VoteUserIdSongIdCompoundUniqueInput = {
+    userId: string
+    songId: string
   }
 
   export type VoteCountOrderByAggregateInput = {

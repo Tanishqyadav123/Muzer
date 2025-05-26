@@ -245,14 +245,16 @@ model Vote {
   userId String
   type   VoteType
 
-  song StreamSong @relation(fields: [songId], references: [id])
-  user User       @relation(fields: [userId], references: [id])
+  song StreamSong @relation(fields: [songId], references: [id], onDelete: Cascade)
+  user User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, songId])
 }
 
 // Enum for upvote/downvote
 enum VoteType {
-  UP
-  DOWN
+  UPVOTE
+  DOWNVOTE
 }
 
 enum UserRole {

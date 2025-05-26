@@ -1,9 +1,11 @@
-import React, { Dispatch, SetStateAction, useEffect } from "react";
+"use client";
+import React, { Dispatch, SetStateAction, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { AddSongSchema } from "../validations/addSong.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname } from "next/navigation";
+import { addSongToStream } from "../service/stream.service";
 
 type AddSongSchemaType = z.infer<typeof AddSongSchema>;
 function AddSongModel({
@@ -11,11 +13,11 @@ function AddSongModel({
 }: {
   setShowAddSong: Dispatch<SetStateAction<boolean>>;
 }) {
-  useEffect(() => {
-    const pathName =
-      usePathname().split("/")[usePathname().split("/").length - 1];
-    console.log("My PathName again ", pathName);
-  }, []);
+
+  const PathUrl = usePathname();
+
+  const pathName = PathUrl.split("/")[usePathname().split("/").length - 1];
+ 
   const {
     register,
     handleSubmit,
@@ -25,8 +27,14 @@ function AddSongModel({
     mode: "onChange",
   });
 
-  const handleAddSong = ({ title, url }: AddSongSchemaType) => {
-    console.log("Add Songs Data", title, url);
+  const handleAddSong = async ({ title, url }: AddSongSchemaType) => {
+    
+      const songAdded = await addSongToStream({streamId : pathName , title , url})
+
+      if (songAdded) {
+         setShowAddSong(false)
+      }
+
   };
 
   return (

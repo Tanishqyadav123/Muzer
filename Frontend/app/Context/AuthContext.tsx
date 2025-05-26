@@ -40,8 +40,7 @@ export const AuthContextProvider = ({
   let currentPathArr = ["/signin", "/verify-email", "verify-otp", "/signup"];
   useEffect(() => {
     const isAuth = localStorage.getItem("isAuthenticated");
-    console.log("Is  ", isAuth);
-    console.log("Current Path", currentPath);
+
     if (!isAuth && !currentPathArr.includes(currentPath)) {
       router.push("/signin");
       setIsAuthenticated(false);
